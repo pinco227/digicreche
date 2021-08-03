@@ -49,3 +49,7 @@
     - Timeline-styled day activities.
     - Profile page.
     - Contact page.
+
+## Database
+  - ### Entity Relationship Diagram
+    ![ER Diagram](https://github.com/pinco227/digicreche/blob/main/docs/db-er.png) 
