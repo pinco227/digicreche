@@ -40,6 +40,15 @@
     - The content is organised and prioritised by importance from top to bottom and left to right.
     - For consistency, the information is presented in the rule of 3 on large screens and individual on small screens.
     - The information is structured mostly in nested lists.
+  - ### Skeleton
+    - ### Wireframes
+      - Authentication [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/auth-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/auth-md-lg.png)
+      - Parent/Guardian landing [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/parents-landing-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/parents-landing-md-lg.png)
+      - Manager landing [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/manager-landing-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/manager-landing-md-lg.png)
+      - Rooms [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/rooms-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/rooms-md-lg.png)
+      - Activities [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/activities-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/activities-md-lg.png)
+      - Chat [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/chat-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/chat-md-lg.png)
+      - Profile [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/profile-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/profile-md-lg.png)
 
 ## Features
   - ### Planned features
