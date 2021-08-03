@@ -31,6 +31,15 @@
     - be able to see billing info an pay for subscription.
     - be able to add classes(rooms), add children and assign them to rooms, assign children to parent accounts, assign staff to rooms, and revert any of these changes.
     - be able to contact parents.
+- ### Structure
+    The app is designed to be consistent, intuitive and learnable.
+  - Interaction design
+    - For predictability, the interface interacts with user actions as the user expects. The scroll/swipe actions respond with the normal behaviour and buttons acts instantly on press.
+    - For consistency, the interface offers a subtle visual feedback to the user (on hover, focus and press of buttons and fields) which is similar throughout the application and helps the user to quickly learn the functionality.
+  - Information architecture
+    - The content is organised and prioritised by importance from top to bottom and left to right.
+    - For consistency, the information is presented in the rule of 3 on large screens and individual on small screens.
+    - The information is structured mostly in nested lists.
 
 ## Features
   - ### Planned features
