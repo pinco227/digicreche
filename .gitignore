@@ -1,0 +1,7 @@
+__pycache__
+venv
+.vscode
+*.sqlite3
+*.csv
+uploads
+staticfiles
