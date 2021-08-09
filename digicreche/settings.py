@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     # imported
     'django.contrib.sites',
     # installed
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken',
+    # custom
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -140,3 +143,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # django.contrib.sites
 SITE_ID = 1
+
+# Custom User Model
+AUTH_USER_MODEL = 'users.DigiCrecheUser'
