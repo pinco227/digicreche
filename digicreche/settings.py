@@ -46,6 +46,13 @@ INSTALLED_APPS = [
     # installed
     'rest_framework',
     'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_auth',
+    'rest_auth.registration',
+    'crispy_forms',
+    'crispy_bootstrap5',
     # custom
     'users'
 ]
@@ -146,3 +153,17 @@ SITE_ID = 1
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.DigiCrecheUser'
+
+# Auth
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# crispy-bootstrap5
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+# django-crispy-forms
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# django.allauth
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = (True)
