@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django_registration.backends.one_step.views import RegistrationView
-from users.forms import DigiCrecheUserForm
+from accounts.forms import DigiCrecheUserForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),

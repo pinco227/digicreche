@@ -53,8 +53,9 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'crispy_forms',
     'crispy_bootstrap5',
+    'phonenumber_field',
     # custom
-    'users'
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -152,7 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
 # Custom User Model
-AUTH_USER_MODEL = 'users.DigiCrecheUser'
+AUTH_USER_MODEL = 'accounts.DigiCrecheUser'
 
 # Auth
 LOGIN_URL = '/accounts/login/'
@@ -160,8 +161,10 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # django.allauth
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_EMAIL_REQUIRED = (True)
+ACCOUNT_USER_MODEL_USERNAME_FIELD = "email"
 
 # Django-REST-Framework
 REST_FRAMEWORK = {
