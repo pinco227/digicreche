@@ -41,9 +41,9 @@ class CustomUserManager(BaseUserManager):
 class DigiCrecheUser(AbstractUser):
 
     USER_TYPE_CHOICES = (
-        (1, 'manager'),
-        (2, 'teacher'),
-        (3, 'parent'),
+        (1, 'Manager'),
+        (2, 'Teacher'),
+        (3, 'Parent'),
     )
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

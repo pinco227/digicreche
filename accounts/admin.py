@@ -4,11 +4,6 @@ from .models import DigiCrecheUser
 from django.utils.translation import ugettext_lazy as _
 
 
-# class DigiCrecheUserAdmin(UserAdmin):
-#     model = DigiCrecheUser
-#     list_display = ['email', 'user_type']
-#     ordering = ('email',)
-
 class DigiCrecheUserAdmin(UserAdmin):
     """Define admin model for custom User model with no email field."""
 
