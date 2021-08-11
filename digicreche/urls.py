@@ -36,4 +36,6 @@ urlpatterns = [
          include('rest_auth.urls')),
     path('api/rest-auth/registration',
          include('rest_auth.registration.urls')),
+    # APIViews
+    path('api/', include('accounts.api.urls')),
 ]
