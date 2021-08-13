@@ -13,12 +13,15 @@ class CustomRegisterSerializer(RegisterSerializer):
         choices=DigiCrecheUser.USER_TYPE_CHOICES)
     first_name = serializers.CharField(max_length=150, required=True)
     last_name = serializers.CharField(max_length=150, required=True)
-    phone_number = PhoneNumberField(allow_null=True)
-    street_address1 = serializers.CharField(max_length=100, allow_null=True)
-    street_address2 = serializers.CharField(max_length=100, allow_null=True)
+    phone_number = PhoneNumberField(allow_null=True, allow_blank=True)
+    street_address1 = serializers.CharField(
+        max_length=100, allow_null=True, allow_blank=True)
+    street_address2 = serializers.CharField(
+        max_length=100, allow_null=True, allow_blank=True)
     town_or_city = serializers.CharField(max_length=40, required=True)
     county = serializers.CharField(max_length=80, required=True)
-    postcode = serializers.CharField(max_length=20, allow_null=True)
+    postcode = serializers.CharField(
+        max_length=20, allow_null=True, allow_blank=True)
     country = CountryField()
 
     # Define transaction.atomic to rollback the save operation in case of error

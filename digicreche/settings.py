@@ -176,6 +176,7 @@ REST_AUTH_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'rest-auth.serializers.CustomLoginSerializer',
     'USER_DETAILS_SERIALIZER': 'rest-auth.serializers.CustomUserDetailsSerializer',
 }
+ACCOUNT_LOGOUT_ON_GET = True
 
 # Django-REST-Framework
 REST_FRAMEWORK = {
