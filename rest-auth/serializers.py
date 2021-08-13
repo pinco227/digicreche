@@ -3,6 +3,7 @@ from django.db import transaction
 from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_auth.registration.serializers import RegisterSerializer
+from rest_auth.serializers import LoginSerializer
 from rest_framework import serializers
 
 
@@ -36,3 +37,20 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.country = self.validated_data.get('country')
         user.save()
         return user
+
+
+class CustomLoginSerializer(LoginSerializer):
+    username = None
+
+
+class CustomUserDetailsSerializer(serializers.ModelSerializer):
+    country = CountryField()
+
+    class Meta:
+        model = DigiCrecheUser
+        fields = ('pk', 'email', 'user_type', 'first_name', 'last_name',
+                  'phone_number', 'street_address1', 'street_address2',
+                  'town_or_city', 'county', 'postcode', 'country',
+                  'last_login', 'date_joined')
+        read_only_fields = ('pk', 'email', 'user_type', 'last_login',
+                            'date_joined')

@@ -172,6 +172,10 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'rest-auth.serializers.CustomRegisterSerializer',
 }
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'rest-auth.serializers.CustomLoginSerializer',
+    'USER_DETAILS_SERIALIZER': 'rest-auth.serializers.CustomUserDetailsSerializer',
+}
 
 # Django-REST-Framework
 REST_FRAMEWORK = {
