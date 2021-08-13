@@ -29,7 +29,7 @@ class DigiCrecheUser(AbstractUser):
         _('first name'), max_length=150, null=False, blank=False)
     last_name = models.CharField(
         _('last name'), max_length=150, null=False, blank=False)
-    phone_number = PhoneNumberField(null=False, blank=False, unique=True)
+    phone_number = PhoneNumberField(null=True, blank=True, unique=True)
     street_address1 = models.CharField(max_length=100, null=True, blank=True)
     street_address2 = models.CharField(max_length=100, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=False, blank=False)
