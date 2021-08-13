@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'phonenumber_field',
     # custom
-    'accounts'
+    'accounts',
+    'schools'
 ]
 
 MIDDLEWARE = [
