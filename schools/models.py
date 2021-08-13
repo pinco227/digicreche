@@ -7,7 +7,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 class School(models.Model):
 
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,
-                                blank=False, on_delete=models.SET_NULL)
+                                blank=False, on_delete=models.SET_NULL,
+                                related_name='manager')
     slug = models.SlugField(max_length=255, unique=True)
     name = models.CharField(max_length=255, unique=True,
                             null=False, blank=False)
