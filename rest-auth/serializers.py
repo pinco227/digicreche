@@ -5,6 +5,7 @@ from phonenumber_field.serializerfields import PhoneNumberField
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_auth.serializers import LoginSerializer
 from rest_framework import serializers
+from schools.models import School
 
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -23,6 +24,8 @@ class CustomRegisterSerializer(RegisterSerializer):
     postcode = serializers.CharField(
         max_length=20, allow_null=True, allow_blank=True)
     country = CountryField()
+    school = serializers.ChoiceField(
+        choices=[('', 'None')] + list(School.objects.all().values_list('id', 'name')), required=False)
 
     # Define transaction.atomic to rollback the save operation in case of error
     @transaction.atomic
@@ -38,6 +41,9 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.county = self.validated_data.get('county')
         user.postcode = self.validated_data.get('postcode')
         user.country = self.validated_data.get('country')
+        if self.data.get('school'):
+            user.school = School.objects.get(
+                pk=self.validated_data.get('school'))
         user.save()
         return user
 
@@ -51,7 +57,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DigiCrecheUser
-        fields = ('pk', 'email', 'user_type', 'first_name', 'last_name',
+        fields = ('pk', 'email', 'user_type', 'school', 'first_name', 'last_name',
                   'phone_number', 'street_address1', 'street_address2',
                   'town_or_city', 'county', 'postcode', 'country',
                   'last_login', 'date_joined')

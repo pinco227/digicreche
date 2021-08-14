@@ -29,14 +29,14 @@ class DigiCrecheUser(AbstractUser):
         _('first name'), max_length=150, null=False, blank=False)
     last_name = models.CharField(
         _('last name'), max_length=150, null=False, blank=False)
-    phone_number = PhoneNumberField(null=True, blank=True, unique=True)
+    phone_number = PhoneNumberField(null=True, blank=True)
     street_address1 = models.CharField(max_length=100, null=True, blank=True)
     street_address2 = models.CharField(max_length=100, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=False, blank=False)
     county = models.CharField(max_length=80, null=False, blank=False)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     country = CountryField(blank_label="Country ", null=False, blank=False)
-    school = models.OneToOneField(
+    school = models.ForeignKey(
         "schools.School", on_delete=models.DO_NOTHING, null=True,
         blank=True, related_name='school')
 
