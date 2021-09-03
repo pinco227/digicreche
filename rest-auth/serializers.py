@@ -25,7 +25,9 @@ class CustomRegisterSerializer(RegisterSerializer):
         max_length=20, allow_null=True, allow_blank=True)
     country = CountryField()
     school = serializers.ChoiceField(
-        choices=[('', 'None')] + list(School.objects.all().values_list('id', 'name')), required=False)
+        choices=[('', 'None')] + list(
+            School.objects.all().values_list('id', 'name')),
+        required=False)
 
     # Define transaction.atomic to rollback the save operation in case of error
     @transaction.atomic
@@ -57,9 +59,9 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DigiCrecheUser
-        fields = ('pk', 'email', 'user_type', 'school', 'first_name', 'last_name',
-                  'phone_number', 'street_address1', 'street_address2',
-                  'town_or_city', 'county', 'postcode', 'country',
-                  'last_login', 'date_joined')
+        fields = ('pk', 'email', 'user_type', 'school', 'first_name',
+                  'last_name', 'phone_number', 'street_address1',
+                  'street_address2', 'town_or_city', 'county', 'postcode',
+                  'country', 'last_login', 'date_joined')
         read_only_fields = ('pk', 'email', 'user_type', 'last_login',
                             'date_joined')
