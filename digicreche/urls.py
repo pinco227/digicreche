@@ -17,6 +17,14 @@ from django.contrib import admin
 from django.urls import include, path
 from django_registration.backends.one_step.views import RegistrationView
 from accounts.forms import DigiCrecheUserForm
+from patches import routers
+
+from schools.api.urls import router as schools_router
+from rooms.api.urls import router as rooms_router
+
+router = routers.DefaultRouter()
+router.extend(schools_router)
+router.extend(rooms_router)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +45,5 @@ urlpatterns = [
     path('api/rest-auth/registration/',
          include('rest_auth.registration.urls')),
     # APIViews
-    path('api/', include('schools.api.urls')),
-    path('api/', include('rooms.api.urls')),
+    path('api/', include(router.urls)),
 ]

@@ -1,10 +1,5 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from rooms.api import views as sv
 
-router = DefaultRouter()
+router = SimpleRouter()
 router.register(r'rooms', sv.RoomViewSet)
-
-urlpatterns = [
-    path('', include(router.urls)),
-]
