@@ -38,4 +38,5 @@ urlpatterns = [
          include('rest_auth.registration.urls')),
     # APIViews
     path('api/', include('schools.api.urls')),
+    path('api/', include('rooms.api.urls')),
 ]

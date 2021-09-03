@@ -11,7 +11,6 @@ class Room(models.Model):
     name = models.CharField(max_length=255, unique=True,
                             null=False, blank=False)
     description = models.TextField()
-    email = models.EmailField(max_length=255, unique=True)
     teacher = models.OneToOneField(get_user_model(), null=True,
                                    blank=False, on_delete=models.SET_NULL,
                                    related_name='teacher')
