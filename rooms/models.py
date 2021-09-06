@@ -7,7 +7,7 @@ class Room(models.Model):
 
     school = models.ForeignKey(School, null=False,
                                blank=False, on_delete=models.CASCADE,
-                               related_name='school')
+                               related_name='rooms')
     name = models.CharField(max_length=255, unique=True,
                             null=False, blank=False)
     description = models.TextField()
