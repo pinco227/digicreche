@@ -32,3 +32,9 @@ class RoomRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsSchoolManagerRUD]
+
+
+# class RoomTeacherRUAPIView(generics.RetrieveUpdateAPIView):
+#     queryset = Room.objects.all()
+#     serializer_class = RoomTeacherSerializer
+#     permission_classes = [IsSchoolManagerRUD]

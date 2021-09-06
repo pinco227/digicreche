@@ -13,7 +13,7 @@ class Room(models.Model):
     description = models.TextField()
     teacher = models.OneToOneField(get_user_model(), null=True,
                                    blank=False, on_delete=models.SET_NULL,
-                                   related_name='teacher')
+                                   related_name='room')
 
     def __str__(self):
         return self.name

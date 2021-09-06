@@ -13,7 +13,7 @@ class DigiCrecheUserAdmin(UserAdmin):
         (_('Personal info'), {
             'fields': ('first_name', 'last_name', 'phone_number',
                        'street_address1', 'street_address2', 'town_or_city',
-                       'county', 'postcode', 'country')}),
+                       'county', 'postcode', 'country', 'school')}),
         (_('Permissions'), {
             'fields': ('user_type', 'is_active', 'is_staff', 'is_superuser',
                        'groups', 'user_permissions')}),
@@ -26,7 +26,7 @@ class DigiCrecheUserAdmin(UserAdmin):
                        'is_active', 'user_type'),
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'user_type')
+    list_display = ('email', 'first_name', 'last_name', 'user_type', 'school')
     list_filter = ('email', 'first_name', 'last_name', 'user_type')
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
