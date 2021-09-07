@@ -3,14 +3,21 @@ from rooms.models import Room
 from django.contrib.auth import get_user_model
 
 
+class TeacherRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        queryset = get_user_model().objects.filter(
+            user_type=2,
+            room=None,
+            school__slug=self.context['request'].resolver_match.kwargs.get(
+                'slug'))
+        return queryset
+
+
 class RoomSerializer(serializers.ModelSerializer):
     school_slug = serializers.SerializerMethodField()
     has_teacher = serializers.SerializerMethodField()
     teacher_name = serializers.SerializerMethodField()
-    teacher = serializers.PrimaryKeyRelatedField(
-        queryset=get_user_model().objects.filter(
-            user_type=2, room=None),
-        required=False)
+    teacher = TeacherRelatedField()
 
     class Meta:
         model = Room

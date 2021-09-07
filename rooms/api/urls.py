@@ -10,7 +10,7 @@ urlpatterns = [
          qv.RoomCreateAPIView.as_view(),
          name='room-create'),
 
-    path('rooms/<int:pk>/',
+    path('schools/<slug:slug>/rooms/<int:pk>/',
          qv.RoomRUDAPIView.as_view(),
          name='room-detail'),
 
