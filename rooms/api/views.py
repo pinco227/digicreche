@@ -3,13 +3,14 @@ from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rooms.api.serializers import RoomSerializer
 from rooms.models import Room
-from rooms.api.permissions import IsSchoolManagerCL, IsSchoolManagerRUD
+from rooms.api.permissions import (IsSchoolManager,
+                                   IsSchoolManagerOrTeacherReadOnly)
 
 
 class RoomCreateAPIView(generics.CreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsSchoolManagerCL]
+    permission_classes = [IsSchoolManager]
 
     def perform_create(self, serializer):
         kwarg_slug = self.kwargs.get('slug')
@@ -20,7 +21,7 @@ class RoomCreateAPIView(generics.CreateAPIView):
 
 class RoomListAPIView(generics.ListAPIView):
     serializer_class = RoomSerializer
-    permission_classes = [IsSchoolManagerCL]
+    permission_classes = [IsSchoolManager]
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get('slug')
@@ -31,7 +32,7 @@ class RoomListAPIView(generics.ListAPIView):
 class RoomRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsSchoolManagerRUD]
+    permission_classes = [IsSchoolManagerOrTeacherReadOnly]
 
 
 # class RoomTeacherRUAPIView(generics.RetrieveUpdateAPIView):

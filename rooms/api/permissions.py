@@ -3,14 +3,16 @@ from rest_framework.generics import get_object_or_404
 from schools.models import School
 
 
-class IsSchoolManagerRUD(permissions.BasePermission):
+class IsSchoolManagerOrTeacherReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
-        return obj.school.manager == request.user
+        return obj.school.manager == request.user or (
+            request.method in permissions.SAFE_METHODS and
+            obj.teacher == request.user)
 
 
-class IsSchoolManagerCL(permissions.BasePermission):
+class IsSchoolManager(permissions.BasePermission):
 
     def has_permission(self, request, view):
         try:
