@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     # custom
     'accounts',
     'schools',
-    'rooms'
+    'rooms',
+    'pupils'
 ]
 
 MIDDLEWARE = [
