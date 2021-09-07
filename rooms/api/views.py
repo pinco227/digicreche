@@ -1,10 +1,11 @@
-from schools.models import School
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.generics import get_object_or_404
-from rooms.api.serializers import RoomSerializer
-from rooms.models import Room
+from rest_framework.response import Response
 from rooms.api.permissions import (IsSchoolManager,
                                    IsSchoolManagerOrTeacherReadOnly)
+from rooms.api.serializers import RoomSerializer, RoomTeacherSerializer
+from rooms.models import Room
+from schools.models import School
 
 
 class RoomCreateAPIView(generics.CreateAPIView):
@@ -35,7 +36,12 @@ class RoomRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsSchoolManagerOrTeacherReadOnly]
 
 
-# class RoomTeacherRUAPIView(generics.RetrieveUpdateAPIView):
-#     queryset = Room.objects.all()
-#     serializer_class = RoomTeacherSerializer
-#     permission_classes = [IsSchoolManagerRUD]
+class RoomTeacherRUAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomTeacherSerializer
+    permission_classes = [IsSchoolManagerOrTeacherReadOnly]
+
+    def delete(self, request, *args, **kwargs):
+        room = self.get_object()
+        room.remove_teacher()
+        return Response(status=status.HTTP_204_NO_CONTENT)

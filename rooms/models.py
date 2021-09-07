@@ -17,3 +17,7 @@ class Room(models.Model):
 
     def __str__(self):
         return self.name
+
+    def remove_teacher(self):
+        self.teacher = None
+        self.save()

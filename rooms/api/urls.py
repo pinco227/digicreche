@@ -14,7 +14,8 @@ urlpatterns = [
          qv.RoomRUDAPIView.as_view(),
          name='room-detail'),
 
-    #     path('rooms/<int:pk>/teacher/',
-    #          qv.RoomTeacherRUAPIView.as_view(),
-    #          name='room-teacher'),
+    path('schools/<slug:slug>/rooms/<int:pk>/teacher/',
+         qv.RoomTeacherRUAPIView.as_view(),
+         name='teacher-detail'),
+
 ]

@@ -17,11 +17,10 @@ class RoomSerializer(serializers.ModelSerializer):
     school_slug = serializers.SerializerMethodField()
     has_teacher = serializers.SerializerMethodField()
     teacher_name = serializers.SerializerMethodField()
-    teacher = TeacherRelatedField()
 
     class Meta:
         model = Room
-        exclude = ['school']
+        exclude = ['school', 'teacher']
 
     def get_school_slug(self, instance):
         return instance.school.slug
@@ -37,12 +36,9 @@ class RoomSerializer(serializers.ModelSerializer):
             return None
 
 
-# class RoomTeacherSerializer(serializers.ModelSerializer):
-#     teacher_queryset = get_user_model().objects.filter(user_type=2)
-#     teacher = serializers.PrimaryKeyRelatedField(
-#         queryset=teacher_queryset,
-#         required=False)
+class RoomTeacherSerializer(serializers.ModelSerializer):
+    teacher = TeacherRelatedField()
 
-#     class Meta:
-#         model = Room
-#         fields = ['teacher']
+    class Meta:
+        model = Room
+        fields = ['teacher']
