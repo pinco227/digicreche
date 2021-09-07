@@ -3,12 +3,14 @@ from rest_framework.generics import get_object_or_404
 from schools.models import School
 from pupils.models import Pupil
 from pupils.api.serializers import PupilSerializer
+from pupils.api.permissions import (IsSchoolManagerTeacherSafe,
+                                    IsSchoolManagerParentTeacherRUD)
 
 
 class PupilListCreateAPIView(generics.ListCreateAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer
-    # permission_classes = [IsSchoolManager]
+    permission_classes = [IsSchoolManagerTeacherSafe]
 
     def perform_create(self, serializer):
         kwarg_slug = self.kwargs.get('slug')
@@ -25,4 +27,4 @@ class PupilListCreateAPIView(generics.ListCreateAPIView):
 class PupilRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer
-    # permission_classes = [IsSchoolManagerRUD]
+    permission_classes = [IsSchoolManagerParentTeacherRUD]
