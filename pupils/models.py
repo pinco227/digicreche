@@ -19,3 +19,7 @@ class Pupil(models.Model):
 
     def __str__(self):
         return self.name
+
+    def remove_room(self):
+        self.room = None
+        self.save()
