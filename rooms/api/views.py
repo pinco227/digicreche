@@ -8,7 +8,7 @@ from rooms.models import Room
 from schools.models import School
 
 
-class RoomCreateAPIView(generics.CreateAPIView):
+class RoomListCreateAPIView(generics.ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsSchoolManager]
@@ -18,11 +18,6 @@ class RoomCreateAPIView(generics.CreateAPIView):
         school = get_object_or_404(School, slug=kwarg_slug)
 
         serializer.save(school=school)
-
-
-class RoomListAPIView(generics.ListAPIView):
-    serializer_class = RoomSerializer
-    permission_classes = [IsSchoolManager]
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get('slug')
