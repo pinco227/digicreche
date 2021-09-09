@@ -18,7 +18,7 @@ class Pupil(models.Model):
     parents = models.ManyToManyField(DigiCrecheUser, related_name='children')
 
     def __str__(self):
-        return self.name
+        return self.first_name + ' ' + self.last_name
 
     def remove_room(self):
         self.room = None
