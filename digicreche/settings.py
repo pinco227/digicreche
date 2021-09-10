@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'schools',
     'rooms',
     'pupils',
-    'activities'
+    'activities',
+    'chat'
 ]
 
 MIDDLEWARE = [

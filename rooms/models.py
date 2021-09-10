@@ -1,6 +1,6 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from schools.models import School
-from django.contrib.auth import get_user_model
 
 
 class Room(models.Model):
