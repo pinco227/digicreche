@@ -1,12 +1,13 @@
-from rest_framework import generics, viewsets
-from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAdminUser
+from activities.api.permissions import (IsSchoolManagerTeacherParentRUD,
+                                        IsSchoolManagerTeacherParentSafe)
 from activities.api.serializers import (ActivitySerializer,
                                         ActivityTypeSerializer)
 from activities.models import Activity, ActivityType
 from pupils.models import Pupil
-from activities.api.permissions import (IsSchoolManagerTeacherParentSafe,
-                                        IsSchoolManagerTeacherParentRUD)
+from rest_framework import generics, status, viewsets
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
 
 
 class ActivityTypeViewSet(viewsets.ModelViewSet):
@@ -19,6 +20,19 @@ class ActivityListCreateAPIView(generics.ListCreateAPIView):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
     permission_classes = [IsSchoolManagerTeacherParentSafe]
+
+    def create(self, request, *args, **kwargs):
+        """ CREDIT https://www.py4u.net/discuss/192406"""
+
+        file_fields = list(request.FILES.keys())
+        serializer = self.get_serializer(
+            data=request.data, file_fields=file_fields)
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED,
+                        headers=headers)
 
     def perform_create(self, serializer):
         kwarg_pk = self.kwargs.get('pk')

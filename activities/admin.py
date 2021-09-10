@@ -1,6 +1,9 @@
 from django.contrib import admin
 from .models import Activity, ActivityType, ActivityImage
 
+# CREDIT:
+# https://soshace.com/upload-multiple-images-to-a-django-model-without-plugins/
+
 
 class ActivityImageAdmin(admin.StackedInline):
     model = ActivityImage
