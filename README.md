@@ -62,3 +62,7 @@
 ## Database
   - ### Entity Relationship Diagram
     ![ER Diagram](https://github.com/pinco227/digicreche/blob/main/docs/db-er.png) 
+
+## Credits
+- ### Code
+  - [This article](https://soshace.com/upload-multiple-images-to-a-django-model-without-plugins/) and [this solution](https://www.py4u.net/discuss/192406) for multiple file upload using admin and API.
