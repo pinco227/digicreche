@@ -43,4 +43,5 @@ urlpatterns = [
     path('api/', include('rooms.api.urls')),
     path('api/', include('pupils.api.urls')),
     path('api/', include('activities.api.urls')),
+    path('api/', include('chat.api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

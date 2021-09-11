@@ -1,10 +1,11 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
-from .managers import CustomUserManager
 from schools.models import School
+
+from .managers import CustomUserManager
 
 
 class DigiCrecheUser(AbstractUser):
@@ -44,4 +45,4 @@ class DigiCrecheUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.first_name+' '+self.last_name
