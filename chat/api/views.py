@@ -28,4 +28,8 @@ class MessageReadAPIView(generics.ListCreateAPIView):
         queryset = Message.objects.filter(
             Q(sender__pk=user, receiver__pk=receiver) |
             Q(sender__pk=receiver, receiver__pk=user)).order_by('timestamp')
+        for message in queryset:
+            if message.receiver.id == user and message.is_read is False:
+                message.is_read = True
+                message.save()
         return queryset
