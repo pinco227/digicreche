@@ -26,7 +26,8 @@ class DigiCrecheUserAdmin(UserAdmin):
                        'is_active', 'user_type'),
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'user_type', 'school')
+    list_display = ('id', 'email', 'first_name',
+                    'last_name', 'user_type', 'school')
     list_filter = ('email', 'first_name', 'last_name', 'user_type')
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)

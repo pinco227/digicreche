@@ -45,4 +45,5 @@ class DigiCrecheUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.first_name+' '+self.last_name
+        return (self.first_name+' '+self.last_name +
+                ' ('+self.get_user_type_display()+')')
