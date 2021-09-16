@@ -19,6 +19,16 @@ class UnassignedListAPIView(generics.ListAPIView):
             school__slug=kwarg_slug, room=None).order_by('last_name')
 
 
+class ChildrenListAPIView(generics.ListAPIView):
+    queryset = Pupil.objects.all()
+    serializer_class = PupilSerializer
+
+    def get_queryset(self):
+        parent = self.request.user.id
+        return Pupil.objects.filter(
+            parents__id__contains=parent).order_by('first_name')
+
+
 class PupilListCreateAPIView(generics.ListCreateAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer
@@ -40,3 +50,9 @@ class PupilRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer
     permission_classes = [IsSchoolManagerParentTeacherRUD]
+
+    def perform_update(self, serializer):
+        kwarg_slug = self.kwargs.get('slug')
+        school = get_object_or_404(School, slug=kwarg_slug)
+
+        serializer.save(school=school)

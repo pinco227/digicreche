@@ -27,4 +27,5 @@ class PupilSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pupil
-        exclude = ['school']
+        # exclude = ['school']
+        fields = '__all__'

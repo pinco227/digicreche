@@ -10,6 +10,7 @@ class IsSchoolManagerParentTeacherRUD(permissions.BasePermission):
         return request.user.is_authenticated and (
             obj.school.manager == request.user or (
                 request.method in permissions.SAFE_METHODS and
+                obj.room is not None and
                 obj.room.teacher == request.user
             ) or (
                 request.user in obj.parents.all() and
