@@ -22,7 +22,7 @@ class ParentRelatedField(serializers.PrimaryKeyRelatedField):
 
 
 class PupilSerializer(serializers.ModelSerializer):
-    room = RoomRelatedField()
+    room = RoomRelatedField(allow_null=True)
     parents = ParentRelatedField(many=True)
 
     class Meta:

@@ -3,8 +3,20 @@ from rest_framework.generics import get_object_or_404
 from schools.models import School
 from pupils.models import Pupil
 from pupils.api.serializers import PupilSerializer
-from pupils.api.permissions import (IsSchoolManagerTeacherSafe,
+from pupils.api.permissions import (IsSchoolManager,
+                                    IsSchoolManagerTeacherSafe,
                                     IsSchoolManagerParentTeacherRUD)
+
+
+class UnassignedListAPIView(generics.ListAPIView):
+    queryset = Pupil.objects.all()
+    serializer_class = PupilSerializer
+    permission_classes = [IsSchoolManager]
+
+    def get_queryset(self):
+        kwarg_slug = self.kwargs.get('slug')
+        return Pupil.objects.filter(
+            school__slug=kwarg_slug, room=None).order_by('last_name')
 
 
 class PupilListCreateAPIView(generics.ListCreateAPIView):

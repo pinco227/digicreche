@@ -6,6 +6,10 @@ urlpatterns = [
          qv.PupilListCreateAPIView.as_view(),
          name='pupil-list-create'),
 
+    path('schools/<slug:slug>/unassigned/',
+         qv.UnassignedListAPIView.as_view(),
+         name='pupil-list-create'),
+
     path('schools/<slug:slug>/pupils/<int:pk>/',
          qv.PupilRUDAPIView.as_view(),
          name='pupil-detail'),

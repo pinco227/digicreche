@@ -35,3 +35,16 @@ class IsSchoolManagerTeacherSafe(permissions.BasePermission):
                 request.user.school == school
             )
         )
+
+
+class IsSchoolManager(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+
+        try:
+            kwarg_slug = request.parser_context['kwargs']['slug']
+            school = get_object_or_404(School, slug=kwarg_slug)
+        except Exception:
+            return False
+
+        return request.user.is_authenticated and school.manager == request.user
