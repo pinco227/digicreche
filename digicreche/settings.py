@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'phonenumber_field',
     'storages',
+    'webpack_loader',
     # custom
     'accounts',
     'schools',
@@ -212,3 +213,11 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # phonenumber_field
 PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+
+# VUE
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'dist/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json'),
+    }
+}
