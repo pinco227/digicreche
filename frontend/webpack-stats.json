@@ -6,15 +6,30 @@
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/img/logo.82b9c7a5.png",
       "publicPath": "http://0.0.0.0:8080/img/logo.82b9c7a5.png"
     },
-    "js/about.js": {
-      "name": "js/about.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/js/about.js",
-      "publicPath": "http://0.0.0.0:8080/js/about.js"
+    "js/about.cdf7c727.js": {
+      "name": "js/about.cdf7c727.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/js/about.cdf7c727.js",
+      "publicPath": "http://0.0.0.0:8080/js/about.cdf7c727.js"
+    },
+    "css/app.ecdb05b1.css": {
+      "name": "css/app.ecdb05b1.css",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/css/app.ecdb05b1.css",
+      "publicPath": "http://0.0.0.0:8080/css/app.ecdb05b1.css"
     },
     "bundle.js": {
       "name": "bundle.js",
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/bundle.js",
       "publicPath": "http://0.0.0.0:8080/bundle.js"
+    },
+    "js/about.cdf7c727.js.map": {
+      "name": "js/about.cdf7c727.js.map",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/js/about.cdf7c727.js.map",
+      "publicPath": "http://0.0.0.0:8080/js/about.cdf7c727.js.map"
+    },
+    "bundle.js.map": {
+      "name": "bundle.js.map",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/bundle.js.map",
+      "publicPath": "http://0.0.0.0:8080/bundle.js.map"
     },
     "index.html": {
       "name": "index.html",
@@ -29,7 +44,10 @@
   },
   "chunks": {
     "app": [
-      "bundle.js"
+      "css/app.ecdb05b1.css",
+      "bundle.js",
+      "css/app.ecdb05b1.css.map",
+      "bundle.js.map"
     ]
   },
   "publicPath": "http://0.0.0.0:8080/"

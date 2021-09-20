@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
+
+    <noscript>
+        <strong>DigiCreche requires JavaScript for functioning. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+
+    <!-- built files will be auto injected -->
+    {% render_bundle "app" %}
+
+{% endblock content %}
