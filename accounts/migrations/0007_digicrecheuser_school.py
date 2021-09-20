@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='digicrecheuser',
             name='school',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='school', to='schools.school'),
+            field=models.OneToOneField(
+                blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='school', to='schools.school'),
         ),
     ]

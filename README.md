@@ -63,6 +63,12 @@
   - ### Entity Relationship Diagram
     ![ER Diagram](https://github.com/pinco227/digicreche/blob/main/docs/db-er.png) 
 
+## Testing
+
+### Encountered issues
+  - `django.db.utils.OperationalError: no such table: schools_school` This error was given when trying to migrate or to create migrations. Issue was found during deployment and it revealed that **CustomRegisterSerializer** was creating this issue as it was trying to extract the school list to add it in a choice field before school database was even created.
+  - **FIXED**: by following this [StackOverflow answer](https://stackoverflow.com/a/52732608) that is recommending using lazy django utils.
+
 ## Credits
 - ### Code
   - [This article](https://soshace.com/upload-multiple-images-to-a-django-model-without-plugins/) and [this solution](https://www.py4u.net/discuss/192406) for multiple file upload using admin and API.

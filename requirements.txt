@@ -24,9 +24,11 @@ lazy-object-proxy==1.6.0
 mccabe==0.6.1
 oauthlib==3.1.1
 phonenumberslite==8.12.29
+psycopg2-binary==2.9.1
 pycodestyle==2.7.0
 pycparser==2.20
 pyflakes==2.3.1
+PyJWT==1.7.1
 pylint==2.9.6
 python3-openid==3.2.0
 pytz==2021.1

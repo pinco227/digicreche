@@ -6,6 +6,17 @@ from rest_auth.registration.serializers import RegisterSerializer
 from rest_auth.serializers import LoginSerializer
 from rest_framework import serializers
 from schools.models import School
+from django.utils.functional import lazy
+
+
+# CREDIT: https://stackoverflow.com/a/52732608
+def get_schools():
+    try:
+        _schools = [('', 'None')] + \
+            list(School.objects.all().values_list('id', 'name'))
+    except Exception:
+        _schools = list(tuple())
+    return _schools
 
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -24,9 +35,12 @@ class CustomRegisterSerializer(RegisterSerializer):
     postcode = serializers.CharField(
         max_length=20, allow_null=True, allow_blank=True)
     country = CountryField()
+    # school = serializers.ChoiceField(
+    #     choices=[('', 'None')] + list(
+    #         School.objects.all().values_list('id', 'name')),
+    #     required=False)
     school = serializers.ChoiceField(
-        choices=[('', 'None')] + list(
-            School.objects.all().values_list('id', 'name')),
+        choices=lazy(get_schools, tuple)(),
         required=False)
 
     # Define transaction.atomic to rollback the save operation in case of error
