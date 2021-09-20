@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django_registration.backends.one_step.views import RegistrationView
 from accounts.forms import DigiCrecheUserForm
 from django.conf import settings
 from django.conf.urls.static import static
+from core.views import IndexTemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,4 +45,8 @@ urlpatterns = [
     path('api/', include('pupils.api.urls')),
     path('api/', include('activities.api.urls')),
     path('api/', include('chat.api.urls')),
+
+    # Redirect to index
+    re_path(r'^.*$', IndexTemplateView.as_view(), name='entry-point'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
