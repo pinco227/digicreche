@@ -1,0 +1,1 @@
+web: gunicorn digicreche.wsgi:application
