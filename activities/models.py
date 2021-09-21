@@ -32,6 +32,13 @@ class Activity(models.Model):
                 self.type.name + ' > ' +
                 self.created_at.strftime("%d/%m/%y %H:%M"))
 
+    def delete(self, *args, **kwargs):
+        for activity_image in self.images.all():
+            storage = activity_image.image.storage
+            path = activity_image.image.path
+            storage.delete(path)
+        super(Activity, self).delete(*args, **kwargs)
+
 
 def get_upload_path(instance, filename):
     pupil = instance.activity.pupil
