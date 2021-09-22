@@ -2,8 +2,8 @@ from django.db import models
 from django.utils.text import slugify
 from pupils.models import Pupil
 import os
-import boto3
-from django.conf import settings
+# import boto3
+# from django.conf import settings
 
 
 class ActivityType(models.Model):
@@ -33,20 +33,6 @@ class Activity(models.Model):
                 self.pupil.last_name + ' > ' +
                 self.type.name + ' > ' +
                 self.created_at.strftime("%d/%m/%y %H:%M"))
-
-    def delete(self, *args, **kwargs):
-        for activity_image in self.images.all():
-            if settings.USE_AWS:
-                client = boto3.client('s3')
-                client.delete_object(
-                    Bucket=settings.AWS_STORAGE_BUCKET_NAME,
-                    Key=activity_image.image.name)
-            else:
-                storage = activity_image.image.storage
-                path = activity_image.image.path
-                storage.delete(path)
-
-        super(Activity, self).delete(*args, **kwargs)
 
 
 def get_upload_path(instance, filename):
