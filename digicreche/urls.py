@@ -36,5 +36,8 @@ urlpatterns = [
     # Redirect to index
     re_path(redirect_regx, IndexTemplateView.as_view(), name='entry-point'),
 
-] + static(settings.MEDIA_URL,
-           document_root=settings.MEDIA_ROOT) if not settings.USE_AWS else None
+]
+
+if not settings.USE_AWS:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

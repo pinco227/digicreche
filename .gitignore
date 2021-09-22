@@ -6,3 +6,4 @@ venv
 uploads
 staticfiles
 backups
+media
