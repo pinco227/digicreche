@@ -9,5 +9,6 @@
             {{ form|crispy }}
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
+        <p class="mt-2">Already registered? <a href="{% url 'login' %}">Sign in</a></p>
     </div>
 {% endblock auth %}
