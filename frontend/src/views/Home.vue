@@ -1,18 +1,48 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="row">
+      <div class="col-12 text-end">
+        <a href="#" class="btn btn-default">Add School</a>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div
+        v-for="school in schools"
+        :key="school.pk"
+        class="col-xs-6 col-md-4 col-lg-3 text-center"
+      >
+        <h2>
+          <a href="#">
+            {{ school.name }}
+          </a>
+        </h2>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+// import HelloWorld from "@/components/HelloWorld.vue";
+import { apiService } from "../common/api.service";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      schools: [],
+    };
+  },
+  methods: {
+    getSchools() {
+      const endpoint = "api/my-schools/";
+      apiService(endpoint).then((data) => {
+        this.schools.push(...data);
+      });
+    },
+  },
+  created() {
+    this.getSchools();
   },
 };
 </script>

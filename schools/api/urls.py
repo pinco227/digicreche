@@ -7,4 +7,8 @@ router.register(r'schools', sv.SchoolViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+
+    path('my-schools/',
+         sv.ManagerSchoolList.as_view(),
+         name='manager-schools-list'),
 ]
