@@ -1,0 +1,46 @@
+<template>
+  <div class="schools">
+    <div class="row">
+      <div class="col-12 text-end">
+        <a href="#" class="btn btn-default">Add School</a>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div
+        v-for="school in schools"
+        :key="school.pk"
+        class="col-xs-6 col-md-4 col-lg-3 text-center"
+      >
+        <h2>
+          <a href="#">
+            {{ school.name }}
+          </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { apiService } from "../common/api.service";
+
+export default {
+  name: "Schools",
+  data() {
+    return {
+      schools: [],
+    };
+  },
+  methods: {
+    getSchools() {
+      const endpoint = "/api/my-schools/";
+      apiService(endpoint).then((data) => {
+        this.schools.push(...data);
+      });
+    },
+  },
+  created() {
+    this.getSchools();
+  },
+};
+</script>

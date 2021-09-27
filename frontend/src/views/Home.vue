@@ -1,48 +1,23 @@
 <template>
-  <div class="home">
-    <div class="row">
-      <div class="col-12 text-end">
-        <a href="#" class="btn btn-default">Add School</a>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div
-        v-for="school in schools"
-        :key="school.pk"
-        class="col-xs-6 col-md-4 col-lg-3 text-center"
-      >
-        <h2>
-          <a href="#">
-            {{ school.name }}
-          </a>
-        </h2>
-      </div>
-    </div>
-  </div>
+  <div class="home"></div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
-import { apiService } from "../common/api.service";
-
 export default {
   name: "Home",
-  data() {
-    return {
-      schools: [],
-    };
-  },
-  methods: {
-    getSchools() {
-      const endpoint = "api/my-schools/";
-      apiService(endpoint).then((data) => {
-        this.schools.push(...data);
-      });
-    },
-  },
-  created() {
-    this.getSchools();
+  beforeCreate() {
+    switch (window.localStorage.getItem("user_type")) {
+      case "1":
+        this.$router.push("/schools");
+        break;
+      case "2":
+        this.$router.push("/schools");
+        break;
+
+      default:
+        this.$router.push("/schools");
+        break;
+    }
   },
 };
 </script>
