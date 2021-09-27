@@ -18,6 +18,8 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Arima+Madurai:wght@300;400;500;700;800;900&family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
 :root {
     --body-bg: #ebebeb;
     --light-bg: #fffdfd;
@@ -26,7 +28,10 @@ export default {
     --orange-accent-light: #ffa13c;
     --orange-accent: #e25a00;
 }
+
 body {
     background-color: #ebebeb;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
 }
 </style>
