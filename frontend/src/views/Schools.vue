@@ -1,8 +1,8 @@
 <template>
-  <div class="schools">
+  <div class="schools mt-2">
     <div class="row">
       <div class="col-12 text-end">
-        <a href="#" class="btn btn-default">Add School</a>
+        <a href="#" class="btn btn-success">Add School</a>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { apiService } from "../common/api.service";
+import { apiService } from "@/common/api.service.js";
+import { setPageTitle } from "@/common/functions.js";
 
 export default {
   name: "Schools",
@@ -43,6 +44,7 @@ export default {
   },
   created() {
     this.getSchools();
+    setPageTitle("Schools List");
   },
 };
 </script>
