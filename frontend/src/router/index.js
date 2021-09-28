@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Schools from "../views/Schools.vue";
 import SchoolRooms from "../views/SchoolRooms.vue";
+import SchoolEditor from "../views/SchoolEditor.vue"
 
 const routes = [
   {
@@ -13,6 +14,11 @@ const routes = [
     path: "/schools",
     name: "manager-schools",
     component: Schools,
+  },
+  {
+    path: "/schools/add",
+    name: "school-editor",
+    component: SchoolEditor,
   },
   {
     path: "/schools/:slug",

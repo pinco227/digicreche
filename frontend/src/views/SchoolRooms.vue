@@ -7,7 +7,7 @@
         >
       </div>
       <div class="col-6 text-end">
-        <a href="#" class="btn btn-light">Edit School</a>
+        <a href="#" class="btn btn-light mx-2">Edit School</a>
         <a href="#" class="btn btn-success">Add Room</a>
       </div>
     </div>
