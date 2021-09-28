@@ -12,9 +12,11 @@
         class="col-xs-6 col-md-4 col-lg-3 text-center"
       >
         <h2>
-          <a href="#">
+          <router-link
+            :to="{ name: 'school-rooms', params: { slug: school.slug } }"
+          >
             {{ school.name }}
-          </a>
+          </router-link>
         </h2>
       </div>
     </div>
