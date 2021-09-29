@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Schools from "../views/Schools.vue";
 import SchoolRooms from "../views/SchoolRooms.vue";
-import SchoolEditor from "../views/SchoolEditor.vue"
+import SchoolEditor from "../views/SchoolEditor.vue";
 
 const routes = [
   {

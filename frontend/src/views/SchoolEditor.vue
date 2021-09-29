@@ -114,13 +114,21 @@
           </div>
           <div class="mb-3">
             <label for="country" class="form-label">Country</label>
-            <input
+            <select
               v-model="country"
               type="text"
-              class="form-control"
+              class="form-select"
               id="country"
               name="country"
-            />
+            >
+              <option
+                v-for="(country_item, index) in country_list"
+                :key="index"
+                :value="country_item.code"
+              >
+                {{ country_item.name }}
+              </option>
+            </select>
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -151,6 +159,7 @@ export default {
       postcode: null,
       country: null,
       error: null,
+      country_list: [],
     };
   },
   methods: {
@@ -182,9 +191,16 @@ export default {
         });
       }
     },
+    getCountries() {
+      const endpoint = "/api/countries/";
+      apiService(endpoint).then((data) => {
+        this.country_list.push(...data);
+      });
+    },
   },
   created() {
     setPageTitle("School Form");
+    this.getCountries();
   },
 };
 </script>
