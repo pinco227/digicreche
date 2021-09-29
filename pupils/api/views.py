@@ -19,6 +19,18 @@ class UnassignedListAPIView(generics.ListAPIView):
             school__slug=kwarg_slug, room=None).order_by('last_name')
 
 
+class PupilRoomListAPIView(generics.ListAPIView):
+    queryset = Pupil.objects.all()
+    serializer_class = PupilSerializer
+    permission_classes = [IsSchoolManagerTeacherSafe]
+
+    def get_queryset(self):
+        school_slug = self.kwargs.get('slug')
+        room_id = self.kwargs.get('pk')
+        return Pupil.objects.filter(
+            school__slug=school_slug, room__pk=room_id).order_by('last_name')
+
+
 class ChildrenListAPIView(generics.ListAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer

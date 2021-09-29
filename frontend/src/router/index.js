@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import Schools from "../views/Schools.vue";
-import SchoolRooms from "../views/SchoolRooms.vue";
-import SchoolEditor from "../views/SchoolEditor.vue";
-import RoomPupils from "../views/RoomPupils.vue"
+import Home from "@/views/Home.vue";
+import Schools from "@/views/Schools.vue";
+import SchoolRooms from "@/views/SchoolRooms.vue";
+import SchoolEditor from "@/views/SchoolEditor.vue";
+import RoomPupils from "@/views/RoomPupils.vue";
 
 const routes = [
   {
@@ -34,7 +34,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/schools/:schoolSlug/rooms/:id",
+    path: "/schools/:schoolSlug/:id",
     name: "room-pupils",
     component: RoomPupils,
     props: true,

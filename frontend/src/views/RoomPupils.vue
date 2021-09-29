@@ -29,14 +29,16 @@
         </p>
       </div>
     </div>
-    <div class="row justify-content-center">PupilComponent</div>
+    <div class="row justify-content-center">
+      <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
+    </div>
   </div>
 </template>
 
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
-// import PupilComponent from "@/components/Pupil.vue";
+import PupilComponent from "@/components/Pupil.vue";
 
 export default {
   name: "RoomPupils",
@@ -50,9 +52,9 @@ export default {
       required: true,
     },
   },
-  //   components: {
-  //     PupilComponent,
-  //   },
+  components: {
+    PupilComponent,
+  },
   data() {
     return {
       room: {},
@@ -67,16 +69,16 @@ export default {
         setPageTitle(data.name);
       });
     },
-    // getRoomPupils() {
-    //   let endpoint = `/api/schools/${this.slug}/rooms/${this.id}/pupils`;
-    //   apiService(endpoint).then((data) => {
-    //     this.pupils = data;
-    //   });
-    // },
+    getRoomPupils() {
+      let endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/pupils/`;
+      apiService(endpoint).then((data) => {
+        this.pupils = data;
+      });
+    },
   },
   created() {
     this.getRoomData();
-    // this.getRoomPupils();
+    this.getRoomPupils();
   },
 };
 </script>

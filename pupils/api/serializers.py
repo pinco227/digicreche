@@ -24,8 +24,12 @@ class ParentRelatedField(serializers.PrimaryKeyRelatedField):
 class PupilSerializer(serializers.ModelSerializer):
     room = RoomRelatedField(allow_null=True)
     parents = ParentRelatedField(many=True)
+    school_slug = serializers.SerializerMethodField()
 
     class Meta:
         model = Pupil
         # exclude = ['school']
         fields = '__all__'
+
+    def get_school_slug(self, instance):
+        return instance.school.slug
