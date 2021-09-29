@@ -1,7 +1,12 @@
 <template>
   <div class="single-room col-xs-6 col-md-4 col-lg-3 text-center">
     <h2>
-      <router-link :to="{ name: 'manager-schools' }">
+      <router-link
+        :to="{
+          name: 'room-pupils',
+          params: { schoolSlug: room.school_slug, id: room.id },
+        }"
+      >
         {{ room.name }}
       </router-link>
     </h2>

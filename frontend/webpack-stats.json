@@ -300,13 +300,43 @@
       "name": "98493dfb82245e83917b.hot-update.json",
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/98493dfb82245e83917b.hot-update.json",
       "publicPath": "http://0.0.0.0:8080/98493dfb82245e83917b.hot-update.json"
+    },
+    "app.dfe1576548ce68356a99.hot-update.js": {
+      "name": "app.dfe1576548ce68356a99.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.dfe1576548ce68356a99.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.dfe1576548ce68356a99.hot-update.js"
+    },
+    "dfe1576548ce68356a99.hot-update.json": {
+      "name": "dfe1576548ce68356a99.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/dfe1576548ce68356a99.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/dfe1576548ce68356a99.hot-update.json"
+    },
+    "app.a36fba7d1ce9ba1e97ec.hot-update.js": {
+      "name": "app.a36fba7d1ce9ba1e97ec.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.a36fba7d1ce9ba1e97ec.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.a36fba7d1ce9ba1e97ec.hot-update.js"
+    },
+    "a36fba7d1ce9ba1e97ec.hot-update.json": {
+      "name": "a36fba7d1ce9ba1e97ec.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/a36fba7d1ce9ba1e97ec.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/a36fba7d1ce9ba1e97ec.hot-update.json"
+    },
+    "app.dea6f5e0d79e84f82947.hot-update.js": {
+      "name": "app.dea6f5e0d79e84f82947.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.dea6f5e0d79e84f82947.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.dea6f5e0d79e84f82947.hot-update.js"
+    },
+    "dea6f5e0d79e84f82947.hot-update.json": {
+      "name": "dea6f5e0d79e84f82947.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/dea6f5e0d79e84f82947.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/dea6f5e0d79e84f82947.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "bundle.css",
       "bundle.js",
-      "app.98493dfb82245e83917b.hot-update.js"
+      "app.dea6f5e0d79e84f82947.hot-update.js"
     ]
   },
   "publicPath": "http://0.0.0.0:8080/",

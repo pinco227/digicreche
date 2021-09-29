@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Schools from "../views/Schools.vue";
 import SchoolRooms from "../views/SchoolRooms.vue";
 import SchoolEditor from "../views/SchoolEditor.vue";
+import RoomPupils from "../views/RoomPupils.vue"
 
 const routes = [
   {
@@ -30,6 +31,12 @@ const routes = [
     path: "/schools/:slug",
     name: "school-rooms",
     component: SchoolRooms,
+    props: true,
+  },
+  {
+    path: "/schools/:schoolSlug/rooms/:id",
+    name: "room-pupils",
+    component: RoomPupils,
     props: true,
   },
   {
