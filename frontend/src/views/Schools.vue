@@ -2,9 +2,9 @@
   <div class="schools mt-2">
     <div class="row">
       <div class="col-12 text-end">
-        <router-link :to="{ name: 'school-editor' }" class="btn btn-success"
-          >Add School</router-link
-        >
+        <router-link :to="{ name: 'school-add' }" class="btn btn-success">
+          Add School
+        </router-link>
       </div>
     </div>
     <div class="row justify-content-center">

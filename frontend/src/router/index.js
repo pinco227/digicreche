@@ -17,8 +17,14 @@ const routes = [
   },
   {
     path: "/schools/add",
-    name: "school-editor",
+    name: "school-add",
     component: SchoolEditor,
+  },
+  {
+    path: "/schools/:schoolSlug/edit",
+    name: "school-edit",
+    component: SchoolEditor,
+    props: true,
   },
   {
     path: "/schools/:slug",

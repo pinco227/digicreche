@@ -2,12 +2,17 @@
   <div class="school mt-2">
     <div class="row">
       <div class="col-6">
-        <router-link :to="{ name: 'manager-schools' }" class="btn btn-light"
-          >Back</router-link
-        >
+        <router-link :to="{ name: 'manager-schools' }" class="btn btn-light">
+          Back
+        </router-link>
       </div>
       <div class="col-6 text-end">
-        <a href="#" class="btn btn-light mx-2">Edit School</a>
+        <router-link
+          :to="{ name: 'school-edit', params: { schoolSlug: school.slug } }"
+          class="btn btn-light mx-2"
+        >
+          Edit School
+        </router-link>
         <a href="#" class="btn btn-success">Add Room</a>
       </div>
     </div>

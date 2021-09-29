@@ -2,14 +2,25 @@
   <div class="school-editor mt-2">
     <div class="row">
       <div class="col-12">
-        <router-link :to="{ name: 'manager-schools' }" class="btn btn-light"
-          >Back</router-link
+        <router-link
+          v-if="schoolSlug"
+          :to="{ name: 'school-rooms', params: { slug: schoolSlug } }"
+          class="btn btn-light"
         >
+          Back
+        </router-link>
+        <router-link
+          v-else
+          :to="{ name: 'manager-schools' }"
+          class="btn btn-light"
+        >
+          Back
+        </router-link>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-xs-12 col-md-10 col-lg-8">
-        <h1 class="mb-3" v-if="name">Edit school</h1>
+        <h1 class="mb-3" v-if="schoolSlug">Edit {{ name }}</h1>
         <h1 class="mb-3" v-else>Add a school</h1>
         <form @submit.prevent="onSubmit">
           <div class="mb-3">
@@ -145,6 +156,14 @@ import { setPageTitle } from "@/common/functions.js";
 
 export default {
   name: "SchoolEditor",
+  props: {
+    // Optional School's slug prop
+    // if prop is sent, form edits a school, else add new school
+    schoolSlug: {
+      type: String,
+      required: false,
+    },
+  },
   data() {
     return {
       slug: null,
@@ -163,13 +182,44 @@ export default {
     };
   },
   methods: {
+    getSchoolData() {
+      if (this.schoolSlug) {
+        const endpoint = `/api/schools/${this.schoolSlug}/`;
+        apiService(endpoint).then((data) => {
+          this.slug = data.slug;
+          this.name = data.name;
+          this.description = data.description;
+          this.email = data.email;
+          this.phone_number = data.phone_number;
+          this.street_address1 = data.street_address1;
+          this.street_address2 = data.street_address2;
+          this.town_or_city = data.town_or_city;
+          this.county = data.county;
+          this.postcode = data.postcode;
+          this.country = data.country;
+          setPageTitle("Edit " + data.name);
+        });
+      }
+    },
+    getCountries() {
+      const endpoint = "/api/countries/";
+      apiService(endpoint).then((data) => {
+        this.country_list.push(...data);
+      });
+    },
     onSubmit() {
       if (!this.name) this.error = "Name is required!";
       else if (this.name.length > 100)
         this.error = "Name cannot be longer than 100 charachters!";
       else {
-        const endpoint = "/api/schools/";
-        const method = "POST";
+        let endpoint = "/api/schools/";
+        let method = "POST";
+
+        if (this.schoolSlug) {
+          endpoint = `/api/schools/${this.schoolSlug}/`;
+          method = "PUT";
+        }
+
         const payload = {
           slug: this.slug,
           name: this.name,
@@ -191,15 +241,13 @@ export default {
         });
       }
     },
-    getCountries() {
-      const endpoint = "/api/countries/";
-      apiService(endpoint).then((data) => {
-        this.country_list.push(...data);
-      });
-    },
   },
   created() {
-    setPageTitle("School Form");
+    if (this.schoolSlug) {
+      this.getSchoolData();
+    } else {
+      setPageTitle("Add School");
+    }
     this.getCountries();
   },
 };
