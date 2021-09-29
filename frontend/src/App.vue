@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import DefaultNavbarComponent from "./components/Navbar.vue";
-import { apiService } from "./common/api.service.js";
+import DefaultNavbarComponent from "@/components/Navbar.vue";
+import { apiService } from "@/common/api.service.js";
 
 export default {
   name: "App",

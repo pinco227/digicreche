@@ -11,19 +11,27 @@
         <a href="#" class="btn btn-success">Add Room</a>
       </div>
     </div>
-    <h2>{{ school.name }}</h2>
-    <p>
-      Rooms: {{ school.rooms_count }} <br />
-      Teachers: {{ school.teachers_count }} <br />
-      Pupils: {{ school.pupils_count }}
-      <br />
-    </p>
+    <div class="row">
+      <div class="col-12">
+        <h2>{{ school.name }}</h2>
+        <p>
+          Rooms: {{ school.rooms_count }} <br />
+          Teachers: {{ school.teachers_count }} <br />
+          Pupils: {{ school.pupils_count }}
+          <br />
+        </p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <RoomComponent v-for="room in rooms" :room="room" :key="room.id" />
+    </div>
   </div>
 </template>
 
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import RoomComponent from "@/components/Room.vue";
 
 export default {
   name: "SchoolRooms",
@@ -33,9 +41,13 @@ export default {
       required: true,
     },
   },
+  components: {
+    RoomComponent,
+  },
   data() {
     return {
       school: {},
+      rooms: [],
     };
   },
   methods: {
@@ -46,9 +58,16 @@ export default {
         setPageTitle(data.name);
       });
     },
+    getSchoolRooms() {
+      let endpoint = `/api/schools/${this.slug}/rooms/`;
+      apiService(endpoint).then((data) => {
+        this.rooms = data;
+      });
+    },
   },
   created() {
     this.getSchoolData();
+    this.getSchoolRooms();
   },
 };
 </script>
