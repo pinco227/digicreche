@@ -11,7 +11,10 @@
       </div>
       <div class="col-6 text-end">
         <router-link
-          :to="{ name: 'school-edit', params: { schoolSlug: schoolSlug } }"
+          :to="{
+            name: 'room-edit',
+            params: { schoolSlug: schoolSlug, id: id },
+          }"
           class="btn btn-light mx-2"
         >
           Edit Room

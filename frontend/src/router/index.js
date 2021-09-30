@@ -4,6 +4,7 @@ import Schools from "@/views/Schools.vue";
 import SchoolRooms from "@/views/SchoolRooms.vue";
 import SchoolEditor from "@/views/SchoolEditor.vue";
 import RoomPupils from "@/views/RoomPupils.vue";
+import RoomEditor from "@/views/RoomEditor.vue";
 
 const routes = [
   {
@@ -37,6 +38,18 @@ const routes = [
     path: "/schools/:schoolSlug/:id",
     name: "room-pupils",
     component: RoomPupils,
+    props: true,
+  },
+  {
+    path: "/schools/:schoolSlug/add",
+    name: "room-add",
+    component: RoomEditor,
+    props: true,
+  },
+  {
+    path: "/schools/:schoolSlug/:id/edit",
+    name: "room-edit",
+    component: RoomEditor,
     props: true,
   },
   {

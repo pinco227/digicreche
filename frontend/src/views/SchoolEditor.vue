@@ -176,8 +176,8 @@ export default {
       county: null,
       postcode: null,
       country: null,
-      error: null,
       country_list: [],
+      error: null,
     };
   },
   methods: {
@@ -235,7 +235,7 @@ export default {
         apiService(endpoint, method, payload).then((school_data) => {
           this.$router.push({
             name: "school-rooms",
-            params: { slug: school_data.slug },
+            params: { schoolSlug: school_data.slug },
           });
         });
       }

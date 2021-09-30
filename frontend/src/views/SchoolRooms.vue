@@ -13,7 +13,12 @@
         >
           Edit School
         </router-link>
-        <a href="#" class="btn btn-success">Add Room</a>
+        <router-link
+          :to="{ name: 'room-add', params: { schoolSlug: schoolSlug } }"
+          class="btn btn-success"
+        >
+          Add Room
+        </router-link>
       </div>
     </div>
     <div class="row">
