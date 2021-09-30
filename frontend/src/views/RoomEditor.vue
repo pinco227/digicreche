@@ -48,6 +48,9 @@
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
+          <a v-if="id" @click="deleteRoom" class="btn btn-danger float-end">
+            Delete Room
+          </a>
         </form>
         <p v-if="error" class="muted mt-2">{{ error }}</p>
       </div>
@@ -137,6 +140,19 @@ export default {
         } else {
           this.error = "There was an error! Please try again!";
         }
+      }
+    },
+    async deleteRoom() {
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
+      const method = "DELETE";
+      try {
+        await apiService(endpoint, method);
+        this.$router.push({
+          name: "school-rooms",
+          params: { schoolSlug: this.schoolSlug },
+        });
+      } catch (err) {
+        this.error = err;
       }
     },
   },
