@@ -1,5 +1,5 @@
 <template>
-  <div class="room-editor mt-2">
+  <div v-if="permission" class="room-editor mt-2">
     <div class="row">
       <div class="col-12">
         <router-link
@@ -53,6 +53,18 @@
       </div>
     </div>
   </div>
+  <div v-else class="mt-2 row justify-content-center">
+    <div class="col-12">
+      <router-link :to="{ name: 'home' }" class="btn btn-light">
+        Back
+      </router-link>
+    </div>
+    <div class="col-xs-12 col-md-10 col-lg-8">
+      <div class="alert alert-warning">
+        You do not have permission to see this page!
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -78,20 +90,25 @@ export default {
       name: null,
       description: null,
       error: null,
+      permission: true,
     };
   },
   methods: {
-    getRoomData() {
+    async getRoomData() {
       if (this.id) {
         const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
-        apiService(endpoint).then((data) => {
+        const data = await apiService(endpoint);
+        if (data !== 403) {
           this.name = data.name;
           this.description = data.description;
           setPageTitle("Edit " + data.name);
-        });
+        } else {
+          this.permission = false;
+          setPageTitle("Forbidden");
+        }
       }
     },
-    onSubmit() {
+    async onSubmit() {
       if (!this.name) this.error = "Name is required!";
       else if (this.name.length > 100)
         this.error = "Name cannot be longer than 100 charachters!";
@@ -108,7 +125,8 @@ export default {
           name: this.name,
           description: this.description,
         };
-        apiService(endpoint, method, payload).then((room_data) => {
+        const room_data = await apiService(endpoint, method, payload);
+        if (room_data && room_data !== 403) {
           this.$router.push({
             name: "room-pupils",
             params: {
@@ -116,7 +134,9 @@ export default {
               id: room_data.id,
             },
           });
-        });
+        } else {
+          this.error = "There was an error! Please try again!";
+        }
       }
     },
   },

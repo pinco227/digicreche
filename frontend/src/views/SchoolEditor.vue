@@ -1,5 +1,5 @@
 <template>
-  <div class="school-editor mt-2">
+  <div v-if="permission" class="school-editor mt-2">
     <div class="row">
       <div class="col-12">
         <router-link
@@ -131,6 +131,9 @@
               id="country"
               name="country"
             >
+              <option v-if="!schoolSlug" :value="null" disabled selected>
+                - Please select -
+              </option>
               <option
                 v-for="(country_item, index) in country_list"
                 :key="index"
@@ -144,6 +147,18 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <p v-if="error" class="muted mt-2">{{ error }}</p>
+      </div>
+    </div>
+  </div>
+  <div v-else class="mt-2 row justify-content-center">
+    <div class="col-12">
+      <router-link :to="{ name: 'home' }" class="btn btn-light">
+        Back
+      </router-link>
+    </div>
+    <div class="col-xs-12 col-md-10 col-lg-8">
+      <div class="alert alert-warning">
+        You do not have permission to see this page!
       </div>
     </div>
   </div>
@@ -178,13 +193,15 @@ export default {
       country: null,
       country_list: [],
       error: null,
+      permission: true,
     };
   },
   methods: {
-    getSchoolData() {
+    async getSchoolData() {
       if (this.schoolSlug) {
         const endpoint = `/api/schools/${this.schoolSlug}/`;
-        apiService(endpoint).then((data) => {
+        const data = await apiService(endpoint);
+        if (data !== 403) {
           this.slug = data.slug;
           this.name = data.name;
           this.description = data.description;
@@ -197,16 +214,18 @@ export default {
           this.postcode = data.postcode;
           this.country = data.country;
           setPageTitle("Edit " + data.name);
-        });
+        } else {
+          this.permission = false;
+          setPageTitle("Forbidden");
+        }
       }
     },
-    getCountries() {
+    async getCountries() {
       const endpoint = "/api/countries/";
-      apiService(endpoint).then((data) => {
-        this.country_list.push(...data);
-      });
+      const data = await apiService(endpoint);
+      this.country_list = data;
     },
-    onSubmit() {
+    async onSubmit() {
       if (!this.name) this.error = "Name is required!";
       else if (this.name.length > 100)
         this.error = "Name cannot be longer than 100 charachters!";
@@ -232,12 +251,15 @@ export default {
           postcode: this.postcode,
           country: this.country,
         };
-        apiService(endpoint, method, payload).then((school_data) => {
+        const school_data = await apiService(endpoint, method, payload);
+        if (school_data && school_data !== 403) {
           this.$router.push({
             name: "school-rooms",
             params: { schoolSlug: school_data.slug },
           });
-        });
+        } else {
+          this.error = "There was an error! Please try again!";
+        }
       }
     },
   },

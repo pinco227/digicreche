@@ -1,5 +1,5 @@
 <template>
-  <div class="room mt-2">
+  <div v-if="permission" class="room mt-2">
     <div class="row">
       <div class="col-6">
         <router-link
@@ -37,6 +37,18 @@
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
     </div>
   </div>
+  <div v-else class="mt-2 row justify-content-center">
+    <div class="col-12">
+      <router-link :to="{ name: 'home' }" class="btn btn-light">
+        Back
+      </router-link>
+    </div>
+    <div class="col-xs-12 col-md-10 col-lg-8">
+      <div class="alert alert-warning">
+        You do not have permission to see this page!
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -63,21 +75,30 @@ export default {
     return {
       room: {},
       pupils: [],
+      permission: true,
     };
   },
   methods: {
-    getRoomData() {
+    async getRoomData() {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
-      apiService(endpoint).then((data) => {
+      const data = await apiService(endpoint);
+      if (data !== 403) {
         this.room = data;
         setPageTitle(data.name);
-      });
+      } else {
+        this.permission = false;
+        setPageTitle("Forbidden");
+      }
     },
-    getRoomPupils() {
-      let endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/pupils/`;
-      apiService(endpoint).then((data) => {
+    async getRoomPupils() {
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/pupils/`;
+      const data = await apiService(endpoint);
+      if (data !== 403) {
         this.pupils = data;
-      });
+      } else {
+        this.permission = false;
+        setPageTitle("Forbidden");
+      }
     },
   },
   created() {

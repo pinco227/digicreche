@@ -7,9 +7,12 @@ class IsSchoolManagerOrTeacherReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
-        return obj.school.manager == request.user or (
+        kwarg_slug = request.parser_context['kwargs']['slug']
+
+        return ((obj.school.manager == request.user or (
             request.method in permissions.SAFE_METHODS and
-            obj.teacher == request.user)
+            obj.teacher == request.user)) and
+            obj.school.slug == kwarg_slug)
 
 
 class IsSchoolManager(permissions.BasePermission):
