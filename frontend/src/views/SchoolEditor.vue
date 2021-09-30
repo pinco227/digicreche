@@ -4,7 +4,7 @@
       <div class="col-12">
         <router-link
           v-if="schoolSlug"
-          :to="{ name: 'school-rooms', params: { slug: schoolSlug } }"
+          :to="{ name: 'school-rooms', params: { schoolSlug: schoolSlug } }"
           class="btn btn-light"
         >
           Back
@@ -127,7 +127,6 @@
             <label for="country" class="form-label">Country</label>
             <select
               v-model="country"
-              type="text"
               class="form-select"
               id="country"
               name="country"

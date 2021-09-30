@@ -17,6 +17,7 @@ class RoomSerializer(serializers.ModelSerializer):
     school_slug = serializers.SerializerMethodField()
     has_teacher = serializers.SerializerMethodField()
     teacher_name = serializers.SerializerMethodField()
+    pupils_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Room
@@ -34,6 +35,9 @@ class RoomSerializer(serializers.ModelSerializer):
                 instance.teacher.first_name + ' ' + instance.teacher.last_name)
         else:
             return None
+
+    def get_pupils_count(self, instance):
+        return instance.pupils.count()
 
 
 class RoomTeacherSerializer(serializers.ModelSerializer):

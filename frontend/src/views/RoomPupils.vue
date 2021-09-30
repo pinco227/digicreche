@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-6">
         <router-link
-          :to="{ name: 'school-rooms', params: { slug: schoolSlug } }"
+          :to="{ name: 'school-rooms', params: { schoolSlug: schoolSlug } }"
           class="btn btn-light"
         >
           Back
@@ -25,6 +25,7 @@
         <span v-if="room.has_teacher">Teacher(s): {{ room.teacher_name }}</span>
         <span v-else>Assign a teacher</span>
         <p>
+          Pupils: {{ room.pupils_count }} <br />
           {{ room.description }}
         </p>
       </div>

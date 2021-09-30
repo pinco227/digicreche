@@ -8,7 +8,7 @@
       </div>
       <div class="col-6 text-end">
         <router-link
-          :to="{ name: 'school-edit', params: { schoolSlug: school.slug } }"
+          :to="{ name: 'school-edit', params: { schoolSlug: schoolSlug } }"
           class="btn btn-light mx-2"
         >
           Edit School
@@ -41,7 +41,7 @@ import RoomComponent from "@/components/Room.vue";
 export default {
   name: "SchoolRooms",
   props: {
-    slug: {
+    schoolSlug: {
       type: String,
       required: true,
     },
@@ -57,14 +57,14 @@ export default {
   },
   methods: {
     getSchoolData() {
-      const endpoint = `/api/schools/${this.slug}/`;
+      const endpoint = `/api/schools/${this.schoolSlug}/`;
       apiService(endpoint).then((data) => {
         this.school = data;
         setPageTitle(data.name);
       });
     },
     getSchoolRooms() {
-      let endpoint = `/api/schools/${this.slug}/rooms/`;
+      let endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
       apiService(endpoint).then((data) => {
         this.rooms = data;
       });

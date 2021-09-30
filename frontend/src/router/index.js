@@ -28,7 +28,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/schools/:slug",
+    path: "/schools/:schoolSlug",
     name: "school-rooms",
     component: SchoolRooms,
     props: true,

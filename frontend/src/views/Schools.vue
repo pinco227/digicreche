@@ -15,7 +15,7 @@
       >
         <h2>
           <router-link
-            :to="{ name: 'school-rooms', params: { slug: school.slug } }"
+            :to="{ name: 'school-rooms', params: { schoolSlug: school.slug } }"
           >
             {{ school.name }}
           </router-link>
