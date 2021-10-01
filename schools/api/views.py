@@ -1,5 +1,8 @@
+from accounts.models import DigiCrecheUser
+from accounts.api.serializers import UserSerializer
 from rest_framework import generics, viewsets
-from schools.api.permissions import IsManager, IsManagerOrListOnly
+from schools.api.permissions import (IsManager, IsManagerOrListOnly,
+                                     IsSchoolManager)
 from schools.api.serializers import SchoolSerializer
 from schools.models import School
 
@@ -22,3 +25,13 @@ class ManagerSchoolList(generics.ListAPIView):
         manager = self.request.user.id
         return School.objects.filter(
             manager__id=manager).order_by('name')
+
+
+class SchoolTeachersList(generics.ListAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsSchoolManager]
+
+    def get_queryset(self):
+        kwarg_slug = self.kwargs.get('slug')
+        return DigiCrecheUser.objects.filter(
+            school__slug=kwarg_slug).order_by('first_name')

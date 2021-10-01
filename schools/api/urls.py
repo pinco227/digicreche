@@ -11,4 +11,8 @@ urlpatterns = [
     path('my-schools/',
          sv.ManagerSchoolList.as_view(),
          name='manager-schools-list'),
+
+    path('schools/<slug:slug>/teachers/',
+         sv.SchoolTeachersList.as_view(),
+         name='school-teachers-list'),
 ]
