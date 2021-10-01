@@ -10,7 +10,14 @@
         {{ room.name }}
       </router-link>
     </h2>
-    <span v-if="room.has_teacher">Teacher(s): {{ room.teacher_name }}</span>
+    <span v-if="room.has_teacher">
+      <span v-if="room.teachers.length > 1">
+        Teacher(s): {{ room.teachers.length }}
+      </span>
+      <span v-else v-for="teacher in room.teachers" :key="teacher.id">
+        Teacher: {{ teacher.name }}
+      </span>
+    </span>
     <span v-else>Assign a teacher</span>
     <p>Pupils: {{ room.pupils_count }}</p>
   </div>

@@ -25,7 +25,16 @@
     <div class="row">
       <div class="col-12">
         <h2>{{ room.name }}</h2>
-        <span v-if="room.has_teacher">Teacher(s): {{ room.teacher_name }}</span>
+        <span v-if="room.has_teacher">
+          Teacher(s):
+          <span
+            v-for="teacher in room.teachers"
+            :key="teacher.id"
+            class="badge bg-light text-dark me-1"
+          >
+            {{ teacher.name }}
+          </span>
+        </span>
         <span v-else>Assign a teacher</span>
         <p>
           Pupils: {{ room.pupils_count }} <br />
