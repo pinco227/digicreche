@@ -1,5 +1,8 @@
-from rest_framework import generics
+from django.contrib.auth import get_user_model
+from rest_framework import generics, status
 from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rooms.api.permissions import (IsSchoolManager,
                                    IsSchoolManagerOrTeacherReadOnly)
 from rooms.api.serializers import RoomSerializer
@@ -30,12 +33,30 @@ class RoomRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsSchoolManagerOrTeacherReadOnly]
 
 
-# class RoomTeacherRUAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Room.objects.all()
-#     serializer_class = RoomTeacherSerializer
-#     permission_classes = [IsSchoolManagerOrTeacherReadOnly]
+class RemoveTeacher(APIView):
+    permission_classes = [IsSchoolManager]
 
-#     def delete(self, request, *args, **kwargs):
-#         room = self.get_object()
-#         room.remove_teacher()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, *args, **kwargs):
+        try:
+            kwarg_id = self.kwargs.get('id')
+            teacher = get_object_or_404(get_user_model(), id=kwarg_id)
+            teacher.remove_from_room()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class AssignTeacher(APIView):
+    permission_classes = [IsSchoolManager]
+
+    def post(self, request, *args, **kwargs):
+        teacher_id = request.data.get('id')
+        room_id = self.kwargs.get('pk')
+        try:
+            teacher = get_object_or_404(get_user_model(), id=teacher_id)
+            room = get_object_or_404(Room, id=room_id)
+
+            teacher.assign_to_room(room)
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

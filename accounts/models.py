@@ -52,6 +52,10 @@ class DigiCrecheUser(AbstractUser):
         return (self.first_name+' '+self.last_name +
                 ' ('+self.get_user_type_display()+')')
 
-    def remove_teacher(self):
+    def remove_from_room(self):
         self.room = None
+        self.save()
+
+    def assign_to_room(self, room):
+        self.room = room
         self.save()
