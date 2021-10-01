@@ -38,7 +38,11 @@ const routes = [
     path: "/schools/:schoolSlug/:id",
     name: "room-pupils",
     component: RoomPupils,
-    props: true,
+    props: (route) => {
+      const schoolSlug = route.params.schoolSlug;
+      const id = parseInt(route.params.id);
+      return { schoolSlug, id };
+    },
   },
   {
     path: "/schools/:schoolSlug/add",
@@ -50,7 +54,11 @@ const routes = [
     path: "/schools/:schoolSlug/:id/edit",
     name: "room-edit",
     component: RoomEditor,
-    props: true,
+    props: (route) => {
+      const schoolSlug = route.params.schoolSlug;
+      const id = parseInt(route.params.id);
+      return { schoolSlug, id };
+    },
   },
   {
     path: "/:pathMatch(.*)*",
