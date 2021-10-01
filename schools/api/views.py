@@ -1,4 +1,4 @@
-from accounts.models import DigiCrecheUser
+from django.contrib.auth import get_user_model
 from accounts.api.serializers import UserSerializer
 from rest_framework import generics, viewsets
 from schools.api.permissions import (IsManager, IsManagerOrListOnly,
@@ -33,5 +33,5 @@ class SchoolTeachersList(generics.ListAPIView):
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get('slug')
-        return DigiCrecheUser.objects.filter(
+        return get_user_model().objects.filter(
             school__slug=kwarg_slug).order_by('first_name')

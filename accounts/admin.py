@@ -13,7 +13,7 @@ class DigiCrecheUserAdmin(UserAdmin):
         (_('Personal info'), {
             'fields': ('first_name', 'last_name', 'phone_number',
                        'street_address1', 'street_address2', 'town_or_city',
-                       'county', 'postcode', 'country', 'school')}),
+                       'county', 'postcode', 'country', 'school', 'room')}),
         (_('Permissions'), {
             'fields': ('user_type', 'is_active', 'is_staff', 'is_superuser',
                        'groups', 'user_permissions')}),

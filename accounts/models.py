@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from schools.models import School
+from rooms.models import Room
 
 from .managers import CustomUserManager
 
@@ -41,9 +42,16 @@ class DigiCrecheUser(AbstractUser):
     school = models.ForeignKey(
         School, on_delete=models.DO_NOTHING, null=True,
         blank=True, related_name='institution')
+    room = models.ForeignKey(
+        Room, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name='teachers')
 
     objects = CustomUserManager()
 
     def __str__(self):
         return (self.first_name+' '+self.last_name +
                 ' ('+self.get_user_type_display()+')')
+
+    def remove_teacher(self):
+        self.room = None
+        self.save()
