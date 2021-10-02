@@ -145,14 +145,16 @@ export default {
     async deleteRoom() {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
       const method = "DELETE";
-      try {
-        await apiService(endpoint, method);
-        this.$router.push({
-          name: "school-rooms",
-          params: { schoolSlug: this.schoolSlug },
-        });
-      } catch (err) {
-        this.error = err;
+      if (confirm(`Are you sure you want to delete ${this.name} ?`)) {
+        try {
+          await apiService(endpoint, method);
+          this.$router.push({
+            name: "school-rooms",
+            params: { schoolSlug: this.schoolSlug },
+          });
+        } catch (err) {
+          this.error = err;
+        }
       }
     },
   },

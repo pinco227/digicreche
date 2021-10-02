@@ -10,15 +10,17 @@
         {{ room.name }}
       </router-link>
     </h2>
-    <span v-if="room.has_teacher">
-      <span v-if="room.teachers.length > 1">
-        Teacher(s): {{ room.teachers.length }}
+    <span v-if="hasTeacher">
+      <span v-if="room.teachers.length > 1"
+        >Teachers: {{ room.teachers.length }}
       </span>
       <span v-else v-for="teacher in room.teachers" :key="teacher.id">
         Teacher: {{ teacher.name }}
       </span>
     </span>
-    <span v-else>Assign a teacher</span>
+    <button class="btn btn-sm btn-outline-success" v-else>
+      Assign a teacher
+    </button>
     <p>Pupils: {{ room.pupils_count }}</p>
   </div>
 </template>
@@ -30,6 +32,11 @@ export default {
     room: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    hasTeacher() {
+      return this.room.teachers && this.room.teachers.length > 0;
     },
   },
 };

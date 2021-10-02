@@ -25,17 +25,21 @@
     <div class="row">
       <div class="col-12">
         <h2>{{ room.name }}</h2>
-        <span v-if="room.has_teacher">
-          Teacher(s):
-          <span
+        Teacher(s):
+        <span v-if="hasTeacher">
+          <AssignedTeacherComponent
             v-for="teacher in room.teachers"
             :key="teacher.id"
-            class="badge bg-light text-dark me-1"
-          >
-            {{ teacher.name }}
-          </span>
+            :teacher="teacher"
+            @unassign-teacher="unassignTeacher"
+          />
+          <button class="btn btn-sm btn-outline-success">
+            <i class="fas fa-plus"></i>
+          </button>
         </span>
-        <span v-else>Assign a teacher</span>
+        <button v-else class="btn btn-sm btn-outline-success">
+          <i class="fas fa-plus"></i> Assign a teacher
+        </button>
         <p>
           Pupils: {{ room.pupils_count }} <br />
           {{ room.description }}
@@ -64,6 +68,7 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import PupilComponent from "@/components/Pupil.vue";
+import AssignedTeacherComponent from "@/components/AssignedTeacher.vue";
 
 export default {
   name: "RoomPupils",
@@ -79,6 +84,7 @@ export default {
   },
   components: {
     PupilComponent,
+    AssignedTeacherComponent,
   },
   data() {
     return {
@@ -86,6 +92,11 @@ export default {
       pupils: [],
       permission: true,
     };
+  },
+  computed: {
+    hasTeacher() {
+      return this.room.teachers && this.room.teachers.length > 0;
+    },
   },
   methods: {
     async getRoomData() {
@@ -107,6 +118,22 @@ export default {
       } else {
         this.permission = false;
         setPageTitle("Forbidden");
+      }
+    },
+    async unassignTeacher(teacher) {
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/remove-teacher/${teacher.id}/`;
+      const method = "DELETE";
+      if (
+        confirm(
+          `Are you sure you want to remove teacher ${teacher.name} from ${this.room.name}?`
+        )
+      ) {
+        try {
+          await apiService(endpoint, method);
+          this.room.teachers.splice(this.room.teachers.indexOf(teacher), 1);
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
   },

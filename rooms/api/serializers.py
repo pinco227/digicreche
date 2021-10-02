@@ -4,7 +4,6 @@ from rooms.models import Room
 
 class RoomSerializer(serializers.ModelSerializer):
     school_slug = serializers.SerializerMethodField()
-    has_teacher = serializers.SerializerMethodField()
     teachers = serializers.SerializerMethodField()
     pupils_count = serializers.SerializerMethodField()
 
@@ -14,9 +13,6 @@ class RoomSerializer(serializers.ModelSerializer):
 
     def get_school_slug(self, instance):
         return instance.school.slug
-
-    def get_has_teacher(self, instance):
-        return bool(instance.teachers)
 
     def get_teachers(self, instance):
         return [

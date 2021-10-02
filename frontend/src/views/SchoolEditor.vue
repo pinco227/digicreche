@@ -272,11 +272,13 @@ export default {
     async deleteSchool() {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const method = "DELETE";
-      try {
-        await apiService(endpoint, method);
-        this.$router.push({ name: "manager-schools" });
-      } catch (err) {
-        this.error = err;
+      if (confirm(`Are you sure you want to delete ${this.name} ?`)) {
+        try {
+          await apiService(endpoint, method);
+          this.$router.push({ name: "manager-schools" });
+        } catch (err) {
+          this.error = err;
+        }
       }
     },
   },
