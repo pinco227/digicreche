@@ -5,6 +5,7 @@ import SchoolRooms from "@/views/SchoolRooms.vue";
 import SchoolEditor from "@/views/SchoolEditor.vue";
 import RoomPupils from "@/views/RoomPupils.vue";
 import RoomEditor from "@/views/RoomEditor.vue";
+import PupilEditor from "@/views/PupilEditor.vue";
 
 const routes = [
   {
@@ -45,19 +46,45 @@ const routes = [
     },
   },
   {
-    path: "/schools/:schoolSlug/add",
+    path: "/schools/:schoolSlug/add-room",
     name: "room-add",
     component: RoomEditor,
     props: true,
   },
   {
-    path: "/schools/:schoolSlug/:id/edit",
+    path: "/schools/:schoolSlug/:id/edit-room",
     name: "room-edit",
     component: RoomEditor,
     props: (route) => {
       const schoolSlug = route.params.schoolSlug;
       const id = parseInt(route.params.id);
       return { schoolSlug, id };
+    },
+  },
+  {
+    path: "/schools/:schoolSlug/:id/add-pupil",
+    name: "pupil-add-to-room",
+    component: PupilEditor,
+    props: (route) => {
+      const schoolSlug = route.params.schoolSlug;
+      const id = parseInt(route.params.id);
+      return { schoolSlug, id };
+    },
+  },
+  {
+    path: "/schools/:schoolSlug/add-pupil",
+    name: "pupil-add",
+    component: PupilEditor,
+    props: true,
+  },
+  {
+    path: "/schools/:schoolSlug/edit-pupil/:pupilId",
+    name: "pupil-edit",
+    component: PupilEditor,
+    props: (route) => {
+      const schoolSlug = route.params.schoolSlug;
+      const pupilId = parseInt(route.params.pupilId);
+      return { schoolSlug, pupilId };
     },
   },
   {

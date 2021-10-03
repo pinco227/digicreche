@@ -96,6 +96,11 @@ export default {
       permission: true,
     };
   },
+  computed: {
+    isManager() {
+      return window.localStorage.getItem("user_type") == "1";
+    },
+  },
   methods: {
     async getRoomData() {
       if (this.id) {
@@ -159,10 +164,15 @@ export default {
     },
   },
   created() {
-    if (this.id) {
-      this.getRoomData();
+    if (!this.isManager) {
+      this.permission = false;
+      setPageTitle("Forbidden");
     } else {
-      setPageTitle("Add Room");
+      if (this.id) {
+        this.getRoomData();
+      } else {
+        setPageTitle("Add Room");
+      }
     }
   },
 };

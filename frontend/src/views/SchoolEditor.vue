@@ -203,6 +203,11 @@ export default {
       permission: true,
     };
   },
+  computed: {
+    isManager() {
+      return window.localStorage.getItem("user_type") == "1";
+    },
+  },
   methods: {
     async getSchoolData() {
       if (this.schoolSlug) {
@@ -283,12 +288,17 @@ export default {
     },
   },
   created() {
-    if (this.schoolSlug) {
-      this.getSchoolData();
+    if (!this.isManager) {
+      this.permission = false;
+      setPageTitle("Forbidden");
     } else {
-      setPageTitle("Add School");
+      if (this.schoolSlug) {
+        this.getSchoolData();
+      } else {
+        setPageTitle("Add School");
+      }
+      this.getCountries();
     }
-    this.getCountries();
   },
 };
 </script>
