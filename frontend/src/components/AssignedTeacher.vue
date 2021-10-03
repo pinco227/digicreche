@@ -25,6 +25,11 @@ export default {
       required: true,
     },
   },
+  computed: {
+    isManager() {
+      return window.localStorage.getItem("user_type") == "1";
+    },
+  },
   methods: {
     triggerUnassignTeacher() {
       this.$emit("unassign-teacher", this.teacher);

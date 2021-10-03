@@ -55,8 +55,10 @@ class AssignTeacher(APIView):
         try:
             teacher = get_object_or_404(get_user_model(), id=teacher_id)
             room = get_object_or_404(Room, id=room_id)
-
-            teacher.assign_to_room(room)
-            return Response(status=status.HTTP_200_OK)
+            if int(teacher.user_type) == 2:
+                teacher.assign_to_room(room)
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -34,4 +34,16 @@ class SchoolTeachersList(generics.ListAPIView):
     def get_queryset(self):
         kwarg_slug = self.kwargs.get('slug')
         return get_user_model().objects.filter(
-            school__slug=kwarg_slug).order_by('first_name')
+            school__slug=kwarg_slug, user_type="2").order_by('first_name')
+
+
+class SchoolUnassignedTeachersList(generics.ListAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsSchoolManager]
+
+    def get_queryset(self):
+        kwarg_slug = self.kwargs.get('slug')
+        return get_user_model().objects.filter(
+            school__slug=kwarg_slug,
+            user_type="2",
+            room__isnull=True).order_by('first_name')
