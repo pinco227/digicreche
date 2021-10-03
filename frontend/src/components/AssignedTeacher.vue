@@ -7,6 +7,7 @@
       {{ teacher.name }}
     </button>
     <button
+      v-if="isManager"
       type="button"
       class="btn btn-outline-danger"
       @click="triggerUnassignTeacher"

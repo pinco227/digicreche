@@ -9,7 +9,7 @@
           Back
         </router-link>
       </div>
-      <div class="col-6 text-end">
+      <div v-if="isManager" class="col-6 text-end">
         <router-link
           :to="{
             name: 'room-edit',
@@ -34,13 +34,18 @@
             @unassign-teacher="unassignTeacher"
           />
         </span>
-        <button
+        <a
+          role="button"
           v-if="isManager"
           class="btn btn-sm btn-outline-success"
+          :class="{
+            'd-none': !unassignedTeachers.length,
+          }"
           id="assignNewTeacher"
+          tabindex="0"
         >
           <i class="fas fa-plus"></i>
-        </button>
+        </a>
         <p>
           Pupils: {{ room.pupils_count }} <br />
           {{ room.description }}
@@ -49,6 +54,11 @@
     </div>
     <div class="row justify-content-center">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
+      <div v-if="isManager" class="col-xs-4 col-md-3 col-lg-2 text-center">
+        <button class="btn btn-lg btn-outline-success">
+          <i class="fas fa-plus"></i> Assign pupil
+        </button>
+      </div>
     </div>
     <div class="d-none">
       <div class="list-group" id="unassignedTeachersList">
@@ -60,7 +70,6 @@
           @click="assignTeacher(teacher)"
         >
           {{ teacher.name }}
-          {{ teacher.first_name }} {{ teacher.last_name }}
           <i class="fas fa-plus text-success float-end mx-2 mt-1"></i>
         </button>
       </div>
@@ -144,13 +153,15 @@ export default {
     async getUnassignedTeachers() {
       const endpoint = `/api/schools/${this.schoolSlug}/teachers/unassigned/`;
       const data = await apiService(endpoint);
-      this.unassignedTeachers = data.map((teacher) => {
-        const mapped_teacher = {
-          id: teacher.id,
-          name: teacher.first_name + " " + teacher.last_name,
-        };
-        return mapped_teacher;
-      });
+      if (data !== 403) {
+        this.unassignedTeachers = data.map((teacher) => {
+          const mapped_teacher = {
+            id: teacher.id,
+            name: teacher.first_name + " " + teacher.last_name,
+          };
+          return mapped_teacher;
+        });
+      }
     },
     async assignTeacher(teacher) {
       console.log(teacher.id);
@@ -169,19 +180,21 @@ export default {
       }
     },
     async unassignTeacher(teacher) {
-      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/remove-teacher/${teacher.id}/`;
-      const method = "DELETE";
-      if (
-        confirm(
-          `Are you sure you want to remove teacher ${teacher.name} from ${this.room.name}?`
-        )
-      ) {
-        try {
-          await apiService(endpoint, method);
-          this.room.teachers.splice(this.room.teachers.indexOf(teacher), 1);
-          this.unassignedTeachers.push(teacher);
-        } catch (err) {
-          console.log(err);
+      if (this.isManager) {
+        const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/remove-teacher/${teacher.id}/`;
+        const method = "DELETE";
+        if (
+          confirm(
+            `Are you sure you want to remove teacher ${teacher.name} from ${this.room.name}?`
+          )
+        ) {
+          try {
+            await apiService(endpoint, method);
+            this.room.teachers.splice(this.room.teachers.indexOf(teacher), 1);
+            this.unassignedTeachers.push(teacher);
+          } catch (err) {
+            console.log(err);
+          }
         }
       }
     },
@@ -192,14 +205,17 @@ export default {
     this.getUnassignedTeachers();
   },
   mounted() {
-    const popoverTrigger = document.getElementById("assignNewTeacher");
-    new Popover(popoverTrigger, {
-      container: "body",
-      placement: "bottom",
-      content: document.getElementById("unassignedTeachersList"),
-      html: true,
-      title: "Un-assigned Teachers",
-    });
+    if (this.isManager) {
+      const popoverTrigger = document.getElementById("assignNewTeacher");
+      new Popover(popoverTrigger, {
+        container: "body",
+        placement: "bottom",
+        trigger: "focus",
+        content: document.getElementById("unassignedTeachersList"),
+        html: true,
+        title: "Un-assigned Teachers",
+      });
+    }
   },
 };
 </script>

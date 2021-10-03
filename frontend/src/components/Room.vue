@@ -18,9 +18,7 @@
         Teacher: {{ teacher.name }}
       </span>
     </span>
-    <button class="btn btn-sm btn-outline-success" v-else>
-      Assign a teacher
-    </button>
+    <span v-else> No teacher assigned </span>
     <p>Pupils: {{ room.pupils_count }}</p>
   </div>
 </template>

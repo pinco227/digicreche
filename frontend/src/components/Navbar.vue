@@ -53,7 +53,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .dc-navbar {
   background-color: #fffdfd;
   border-bottom: 2px solid #00da0b;
