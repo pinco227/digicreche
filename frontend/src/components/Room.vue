@@ -4,7 +4,7 @@
       <router-link
         :to="{
           name: 'room-pupils',
-          params: { schoolSlug: room.school_slug, id: room.id },
+          params: { schoolSlug: room.school_slug, roomId: room.id },
         }"
       >
         {{ room.name }}

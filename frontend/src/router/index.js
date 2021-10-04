@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Schools from "@/views/Schools.vue";
 import SchoolRooms from "@/views/SchoolRooms.vue";
+import SchoolPupils from "@/views/SchoolPupils.vue";
 import SchoolEditor from "@/views/SchoolEditor.vue";
 import RoomPupils from "@/views/RoomPupils.vue";
 import RoomEditor from "@/views/RoomEditor.vue";
@@ -36,13 +37,13 @@ const routes = [
     props: true,
   },
   {
-    path: "/schools/:schoolSlug/:id",
+    path: "/schools/:schoolSlug/:roomId(\\d+)",
     name: "room-pupils",
     component: RoomPupils,
     props: (route) => {
       const schoolSlug = route.params.schoolSlug;
-      const id = parseInt(route.params.id);
-      return { schoolSlug, id };
+      const roomId = parseInt(route.params.roomId);
+      return { schoolSlug, roomId };
     },
   },
   {
@@ -52,14 +53,20 @@ const routes = [
     props: true,
   },
   {
-    path: "/schools/:schoolSlug/:id/edit-room",
+    path: "/schools/:schoolSlug/:roomId(\\d+)/edit-room",
     name: "room-edit",
     component: RoomEditor,
     props: (route) => {
       const schoolSlug = route.params.schoolSlug;
-      const id = parseInt(route.params.id);
-      return { schoolSlug, id };
+      const roomId = parseInt(route.params.roomId);
+      return { schoolSlug, roomId };
     },
+  },
+  {
+    path: "/schools/:schoolSlug/pupils",
+    name: "school-pupils",
+    component: SchoolPupils,
+    props: true,
   },
   {
     path: "/schools/:schoolSlug/add-pupil/:roomId?",
@@ -68,7 +75,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/schools/:schoolSlug/edit-pupil/:pupilId",
+    path: "/schools/:schoolSlug/edit-pupil/:pupilId(\\d+)",
     name: "pupil-edit",
     component: PupilEditor,
     props: (route) => {

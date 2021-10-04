@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col-12">
         <router-link
-          v-if="id"
+          v-if="roomId"
           :to="{
             name: 'room-pupils',
-            params: { schoolSlug: schoolSlug, id: id },
+            params: { schoolSlug: schoolSlug, roomId: roomId },
           }"
           class="btn btn-light"
         >
@@ -23,7 +23,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-xs-12 col-md-10 col-lg-8">
-        <h1 class="mb-3" v-if="id">Edit {{ name }}</h1>
+        <h1 class="mb-3" v-if="roomId">Edit {{ name }}</h1>
         <h1 class="mb-3" v-else>Add a room</h1>
         <form @submit.prevent="onSubmit">
           <div class="mb-3">
@@ -48,7 +48,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
-          <a v-if="id" @click="deleteRoom" class="btn btn-danger float-end">
+          <a v-if="roomId" @click="deleteRoom" class="btn btn-danger float-end">
             Delete Room
           </a>
         </form>
@@ -79,7 +79,7 @@ export default {
   props: {
     // Optional Room's id prop
     // if prop is sent, form edits a room, else add new room
-    id: {
+    roomId: {
       type: Number,
       required: false,
     },
@@ -103,8 +103,8 @@ export default {
   },
   methods: {
     async getRoomData() {
-      if (this.id) {
-        const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
+      if (this.roomId) {
+        const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
         const data = await apiService(endpoint);
         if (data !== 403) {
           this.name = data.name;
@@ -124,8 +124,8 @@ export default {
         let endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
         let method = "POST";
 
-        if (this.id) {
-          endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
+        if (this.roomId) {
+          endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
           method = "PUT";
         }
 
@@ -139,7 +139,7 @@ export default {
             name: "room-pupils",
             params: {
               schoolSlug: this.schoolSlug,
-              id: room_data.id,
+              roomId: room_data.id,
             },
           });
         } else {
@@ -148,7 +148,7 @@ export default {
       }
     },
     async deleteRoom() {
-      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
       const method = "DELETE";
       if (confirm(`Are you sure you want to delete ${this.name} ?`)) {
         try {
@@ -168,7 +168,7 @@ export default {
       this.permission = false;
       setPageTitle("Forbidden");
     } else {
-      if (this.id) {
+      if (this.roomId) {
         this.getRoomData();
       } else {
         setPageTitle("Add Room");

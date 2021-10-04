@@ -13,7 +13,7 @@
         <router-link
           :to="{
             name: 'room-edit',
-            params: { schoolSlug: schoolSlug, id: id },
+            params: { schoolSlug: schoolSlug, roomId: roomId },
           }"
           class="btn btn-light mx-2"
         >
@@ -22,7 +22,7 @@
         <router-link
           :to="{
             name: 'add-pupil',
-            params: { schoolSlug: schoolSlug, roomId: id },
+            params: { schoolSlug: schoolSlug, roomId: roomId },
           }"
           class="btn btn-success"
         >
@@ -111,7 +111,7 @@ export default {
       type: String,
       required: true,
     },
-    id: {
+    roomId: {
       type: Number,
       required: true,
     },
@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     async getRoomData() {
-      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/`;
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
       const data = await apiService(endpoint);
       if (data !== 403) {
         this.room = data;
@@ -149,7 +149,7 @@ export default {
       }
     },
     async getRoomPupils() {
-      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/pupils/`;
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/pupils/`;
       const data = await apiService(endpoint);
       if (data !== 403) {
         this.pupils = data;
@@ -173,7 +173,7 @@ export default {
     },
     async assignTeacher(teacher) {
       console.log(teacher.id);
-      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/assign-teacher/`;
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/assign-teacher/`;
       const method = "POST";
       const payload = { id: teacher.id };
       try {
@@ -189,7 +189,7 @@ export default {
     },
     async unassignTeacher(teacher) {
       if (this.isManager) {
-        const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.id}/remove-teacher/${teacher.id}/`;
+        const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/remove-teacher/${teacher.id}/`;
         const method = "DELETE";
         if (
           confirm(

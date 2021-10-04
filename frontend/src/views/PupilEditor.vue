@@ -3,18 +3,7 @@
     <div class="row">
       <div class="col-12">
         <router-link
-          v-if="$route.params.roomId"
-          :to="{
-            name: 'room-pupils',
-            params: { schoolSlug: schoolSlug, id: $route.params.roomId },
-          }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
-        <router-link
-          v-else
-          :to="{ name: 'room-pupils', params: { schoolSlug: schoolSlug } }"
+          :to="{ name: 'school-pupils', params: { schoolSlug: schoolSlug } }"
           class="btn btn-light"
         >
           Back
@@ -219,20 +208,20 @@ export default {
         };
         const pupil_data = await apiService(endpoint, method, payload);
         if (pupil_data && pupil_data !== 403) {
-          if (this.room) {
-            this.$router.push({
-              name: "room-pupils",
-              params: {
-                schoolSlug: this.schoolSlug,
-                id: this.room,
-              },
-            });
-          } else {
-            // route to unassigned pupils
-            this.$router.push({
-              name: "home",
-            });
-          }
+          // if (this.room) {
+          //   this.$router.push({
+          //     name: "room-pupils",
+          //     params: {
+          //       schoolSlug: this.schoolSlug,
+          //       roomId: this.room,
+          //     },
+          //   });
+          // } else {
+          // route to unassigned pupils
+          this.$router.push({
+            name: "home",
+          });
+          // }
         } else {
           this.error = "There was an error! Please try again!";
         }
