@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from accounts.api.serializers import UserSerializer
+from accounts.api.serializers import ParentSerializer, TeacherSerializer
 from rest_framework import generics, viewsets
 from schools.api.permissions import (IsManager, IsManagerOrListOnly,
                                      IsSchoolManager)
@@ -28,7 +28,7 @@ class ManagerSchoolList(generics.ListAPIView):
 
 
 class SchoolTeachersList(generics.ListAPIView):
-    serializer_class = UserSerializer
+    serializer_class = TeacherSerializer
     permission_classes = [IsSchoolManager]
 
     def get_queryset(self):
@@ -38,7 +38,7 @@ class SchoolTeachersList(generics.ListAPIView):
 
 
 class SchoolUnassignedTeachersList(generics.ListAPIView):
-    serializer_class = UserSerializer
+    serializer_class = TeacherSerializer
     permission_classes = [IsSchoolManager]
 
     def get_queryset(self):
@@ -47,3 +47,13 @@ class SchoolUnassignedTeachersList(generics.ListAPIView):
             school__slug=kwarg_slug,
             user_type="2",
             room__isnull=True).order_by('first_name')
+
+
+class SchoolParentsList(generics.ListAPIView):
+    serializer_class = ParentSerializer
+    permission_classes = [IsSchoolManager]
+
+    def get_queryset(self):
+        kwarg_slug = self.kwargs.get('slug')
+        return get_user_model().objects.filter(
+            school__slug=kwarg_slug, user_type="3").order_by('first_name')

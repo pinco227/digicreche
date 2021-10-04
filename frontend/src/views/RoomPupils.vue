@@ -21,8 +21,8 @@
         </router-link>
         <router-link
           :to="{
-            name: 'pupil-add-to-room',
-            params: { schoolSlug: schoolSlug, id: id },
+            name: 'add-pupil',
+            params: { schoolSlug: schoolSlug, roomId: id },
           }"
           class="btn btn-success"
         >

@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col-12">
         <router-link
-          v-if="id"
+          v-if="$route.params.roomId"
           :to="{
             name: 'room-pupils',
-            params: { schoolSlug: schoolSlug, id: id },
+            params: { schoolSlug: schoolSlug, id: $route.params.roomId },
           }"
           class="btn btn-light"
         >
@@ -51,7 +51,7 @@
           <div class="mb-3">
             <label for="room" class="form-label">Room</label>
             <select v-model="room" class="form-select" id="room" name="room">
-              <option v-if="!id && !room" :value="null" selected>
+              <option v-if="!pupilId && !room" :value="null" selected>
                 - Unassigned -
               </option>
               <option v-else :value="null">- Unassigned -</option>
@@ -63,6 +63,9 @@
                 {{ room_item.name }}
               </option>
             </select>
+          </div>
+          <div class="mb-3">
+            <label for="parents" class="form-label">Parent(s)</label>
             <select
               multiple
               v-model="parents"
@@ -75,7 +78,7 @@
                 :key="index"
                 :value="parent.id"
               >
-                {{ parent.first_name }} {{ parent.last_name }}
+                {{ parent.name }}
               </option>
             </select>
           </div>
@@ -116,7 +119,6 @@ export default {
   props: {
     // Optional Pupil's id prop and Room's id prop
     // if pupil id prop is sent, form edits a pupil, else add new pupil
-    // if room id prop is sent, room is pre-selected
     schoolSlug: {
       type: String,
       required: true,
@@ -124,12 +126,6 @@ export default {
     pupilId: {
       type: Number,
       required: false,
-      default: null,
-    },
-    id: {
-      type: Number,
-      required: false,
-      default: null,
     },
   },
   data() {
@@ -175,6 +171,30 @@ export default {
           this.permission = false;
           setPageTitle("Forbidden");
         }
+      }
+    },
+    async getSchoolRooms() {
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
+      const data = await apiService(endpoint);
+      if (data !== 403) {
+        this.schoolRooms = data.map((room) => {
+          return { id: room.id, name: room.name };
+        });
+      } else {
+        this.permission = false;
+        setPageTitle("Forbidden");
+      }
+    },
+    async getSchoolParents() {
+      const endpoint = `/api/schools/${this.schoolSlug}/parents/`;
+      const data = await apiService(endpoint);
+      if (data !== 403) {
+        this.schoolParents = data.map((parent) => {
+          return { id: parent.id, name: parent.name };
+        });
+      } else {
+        this.permission = false;
+        setPageTitle("Forbidden");
       }
     },
     async onSubmit() {
@@ -228,20 +248,7 @@ export default {
       ) {
         try {
           await apiService(endpoint, method);
-          if (this.id) {
-            this.$router.push({
-              name: "room-pupils",
-              params: {
-                schoolSlug: this.schoolSlug,
-                id: this.id,
-              },
-            });
-          } else {
-            // route to unassigned pupils
-            this.$router.push({
-              name: "home",
-            });
-          }
+          this.$router.back();
         } catch (err) {
           this.error = err;
         }
@@ -254,12 +261,14 @@ export default {
       setPageTitle("Forbidden");
     } else {
       this.getSchoolId();
+      this.getSchoolRooms();
+      this.getSchoolParents();
       if (this.pupilId) {
         this.getPupilData();
       } else {
         setPageTitle("Add Pupil");
       }
-      if (this.id) this.room = this.id;
+      if (this.$route.params.roomId) this.room = this.$route.params.roomId;
     }
   },
 };

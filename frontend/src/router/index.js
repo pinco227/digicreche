@@ -62,18 +62,8 @@ const routes = [
     },
   },
   {
-    path: "/schools/:schoolSlug/:id/add-pupil",
-    name: "pupil-add-to-room",
-    component: PupilEditor,
-    props: (route) => {
-      const schoolSlug = route.params.schoolSlug;
-      const id = parseInt(route.params.id);
-      return { schoolSlug, id };
-    },
-  },
-  {
-    path: "/schools/:schoolSlug/add-pupil",
-    name: "pupil-add",
+    path: "/schools/:schoolSlug/add-pupil/:roomId?",
+    name: "add-pupil",
     component: PupilEditor,
     props: true,
   },
