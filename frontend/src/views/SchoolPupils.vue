@@ -1,5 +1,5 @@
 <template>
-  <div id="school-pupils" v-if="permission" class="mt-2">
+  <div id="school-pupils" class="mt-2">
     <div class="row">
       <div class="col-6">
         <router-link
@@ -39,18 +39,6 @@
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
     </div>
   </div>
-  <div v-else class="mt-2 row justify-content-center">
-    <div class="col-12">
-      <router-link :to="{ name: 'home' }" class="btn btn-light">
-        Back
-      </router-link>
-    </div>
-    <div class="col-xs-12 col-md-10 col-lg-8">
-      <div class="alert alert-warning">
-        You do not have permission to see this page!
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -74,7 +62,6 @@ export default {
       school: {},
       pupils: [],
       unassignedPupils: [],
-      permission: true,
     };
   },
   computed: {
@@ -90,8 +77,7 @@ export default {
         this.school = data;
         setPageTitle(data.name + " Pupils");
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
     async getSchoolPupils() {
@@ -103,8 +89,7 @@ export default {
           else this.unassignedPupils.push(pupil);
         });
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
   },

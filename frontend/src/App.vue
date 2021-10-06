@@ -2,24 +2,39 @@
   <main>
     <DefaultNavbarComponent />
     <div class="container-xxl">
-      <router-view />
+      <div v-if="permission">
+        <router-view @setPermission="updatePermission"></router-view>
+      </div>
+      <NoPermissionComponnent v-else />
     </div>
   </main>
 </template>
 
 <script>
 import DefaultNavbarComponent from "@/components/Navbar.vue";
+import NoPermissionComponnent from "@/components/NoPermission.vue";
 import { apiService } from "@/common/api.service.js";
+import { setPageTitle } from "@/common/functions.js";
 
 export default {
   name: "App",
   components: {
     DefaultNavbarComponent,
+    NoPermissionComponnent,
+  },
+  data() {
+    return {
+      permission: true,
+    };
   },
   methods: {
     async setUserInfo() {
       const data = await apiService("/api/rest-auth/user/");
       window.localStorage.setItem("user_type", data["user_type"]);
+    },
+    updatePermission(value) {
+      this.permission = value;
+      if (!value) setPageTitle("Forbidden");
     },
   },
   created() {

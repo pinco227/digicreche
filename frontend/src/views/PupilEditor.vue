@@ -1,5 +1,5 @@
 <template>
-  <div v-if="permission" class="pupil-editor mt-2">
+  <div class="pupil-editor mt-2">
     <div class="row">
       <div class="col-12">
         <button type="button" @click="goBack" class="btn btn-light">
@@ -82,18 +82,6 @@
       </div>
     </div>
   </div>
-  <div v-else class="mt-2 row justify-content-center">
-    <div class="col-12">
-      <router-link :to="{ name: 'home' }" class="btn btn-light">
-        Back
-      </router-link>
-    </div>
-    <div class="col-xs-12 col-md-10 col-lg-8">
-      <div class="alert alert-warning">
-        You do not have permission to see this page!
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -124,7 +112,6 @@ export default {
       schoolRooms: [],
       schoolParents: [],
       error: null,
-      permission: true,
     };
   },
   computed: {
@@ -142,8 +129,7 @@ export default {
       if (data !== 403) {
         this.school = data.id;
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
     async getPupilData() {
@@ -157,7 +143,7 @@ export default {
           this.parents = data.parents;
           setPageTitle("Edit " + data.first_name + " " + data.last_name);
         } else {
-          this.permission = false;
+          this.$emit("setPermission", false);
           setPageTitle("Forbidden");
         }
       }
@@ -170,8 +156,7 @@ export default {
           return { id: room.id, name: room.name };
         });
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
     async getSchoolParents() {
@@ -182,8 +167,7 @@ export default {
           return { id: parent.id, name: parent.name };
         });
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
     async onSubmit() {
@@ -263,7 +247,7 @@ export default {
   },
   created() {
     if (!this.isManager) {
-      this.permission = false;
+      this.$emit("setPermission", false);
       setPageTitle("Forbidden");
     } else {
       this.getSchoolId();

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="permission" class="schools mt-2">
+  <div class="schools mt-2">
     <div class="row">
       <div class="col-12 text-end">
         <router-link :to="{ name: 'school-add' }" class="btn btn-success">
@@ -23,18 +23,6 @@
       </div>
     </div>
   </div>
-  <div v-else class="mt-2 row justify-content-center">
-    <div class="col-12">
-      <router-link :to="{ name: 'home' }" class="btn btn-light">
-        Back
-      </router-link>
-    </div>
-    <div class="col-xs-12 col-md-10 col-lg-8">
-      <div class="alert alert-warning">
-        You do not have permission to see this page!
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -46,7 +34,6 @@ export default {
   data() {
     return {
       schools: [],
-      permission: true,
     };
   },
   methods: {
@@ -56,18 +43,17 @@ export default {
       if (data !== 403) {
         this.schools = data;
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
   },
   created() {
     if (window.localStorage.getItem("user_type") == "1") {
       this.getSchools();
+      this.$emit("setPermission", true);
       setPageTitle("Schools List");
     } else {
-      this.permission = false;
-      setPageTitle("Forbidden");
+      this.$emit("setPermission", false);
     }
   },
 };

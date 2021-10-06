@@ -1,5 +1,5 @@
 <template>
-  <div id="activities" v-if="permission" class="mt-2">
+  <div id="activities" class="mt-2">
     <div class="row">
       <div class="col-6">
         <button type="button" @click="goBack" class="btn btn-light">
@@ -42,16 +42,6 @@
       />
     </div>
   </div>
-  <div v-else class="mt-2 row justify-content-center">
-    <div class="col-12">
-      <button type="button" @click="goBack" class="btn btn-light">Back</button>
-    </div>
-    <div class="col-xs-12 col-md-10 col-lg-8">
-      <div class="alert alert-warning">
-        You do not have permission to see this page!
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -78,7 +68,6 @@ export default {
     return {
       pupil: {},
       activities: [],
-      permission: true,
     };
   },
   computed: {
@@ -100,8 +89,7 @@ export default {
         this.pupil = data;
         setPageTitle(data.name);
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
     async getPupilActivities() {
@@ -110,8 +98,7 @@ export default {
       if (data !== 403) {
         this.activities = data;
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
   },

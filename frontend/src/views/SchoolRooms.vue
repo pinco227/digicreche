@@ -1,5 +1,5 @@
 <template>
-  <div v-if="permission" class="school mt-2">
+  <div class="school mt-2">
     <div class="row">
       <div class="col-6">
         <router-link :to="{ name: 'manager-schools' }" class="btn btn-light">
@@ -36,18 +36,6 @@
       <RoomComponent v-for="room in rooms" :room="room" :key="room.id" />
     </div>
   </div>
-  <div v-else class="mt-2 row justify-content-center">
-    <div class="col-12">
-      <router-link :to="{ name: 'home' }" class="btn btn-light">
-        Back
-      </router-link>
-    </div>
-    <div class="col-xs-12 col-md-10 col-lg-8">
-      <div class="alert alert-warning">
-        You do not have permission to see this page!
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -70,7 +58,6 @@ export default {
     return {
       school: {},
       rooms: [],
-      permission: true,
     };
   },
   methods: {
@@ -81,8 +68,7 @@ export default {
         this.school = data;
         setPageTitle(data.name);
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
     async getSchoolRooms() {
@@ -91,8 +77,7 @@ export default {
       if (data !== 403) {
         this.rooms = data;
       } else {
-        this.permission = false;
-        setPageTitle("Forbidden");
+        this.$emit("setPermission", false);
       }
     },
   },

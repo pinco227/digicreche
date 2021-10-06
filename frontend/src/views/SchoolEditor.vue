@@ -1,5 +1,5 @@
 <template>
-  <div v-if="permission" class="school-editor mt-2">
+  <div class="school-editor mt-2">
     <div class="row">
       <div class="col-12">
         <router-link
@@ -157,18 +157,6 @@
       </div>
     </div>
   </div>
-  <div v-else class="mt-2 row justify-content-center">
-    <div class="col-12">
-      <router-link :to="{ name: 'home' }" class="btn btn-light">
-        Back
-      </router-link>
-    </div>
-    <div class="col-xs-12 col-md-10 col-lg-8">
-      <div class="alert alert-warning">
-        You do not have permission to see this page!
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -200,7 +188,6 @@ export default {
       country: null,
       country_list: [],
       error: null,
-      permission: true,
     };
   },
   computed: {
@@ -227,7 +214,7 @@ export default {
           this.country = data.country;
           setPageTitle("Edit " + data.name);
         } else {
-          this.permission = false;
+          this.$emit("setPermission", false);
           setPageTitle("Forbidden");
         }
       }
@@ -289,7 +276,7 @@ export default {
   },
   created() {
     if (!this.isManager) {
-      this.permission = false;
+      this.$emit("setPermission", false);
       setPageTitle("Forbidden");
     } else {
       if (this.schoolSlug) {
