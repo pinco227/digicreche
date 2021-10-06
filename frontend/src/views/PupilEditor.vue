@@ -2,12 +2,9 @@
   <div v-if="permission" class="pupil-editor mt-2">
     <div class="row">
       <div class="col-12">
-        <router-link
-          :to="{ name: 'school-pupils', params: { schoolSlug: schoolSlug } }"
-          class="btn btn-light"
-        >
+        <button type="button" @click="goBack" class="btn btn-light">
           Back
-        </router-link>
+        </button>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -136,6 +133,9 @@ export default {
     },
   },
   methods: {
+    goBack() {
+      this.$router.back();
+    },
     async getSchoolId() {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
@@ -208,20 +208,22 @@ export default {
         };
         const pupil_data = await apiService(endpoint, method, payload);
         if (pupil_data && pupil_data !== 403) {
-          // if (this.room) {
-          //   this.$router.push({
-          //     name: "room-pupils",
-          //     params: {
-          //       schoolSlug: this.schoolSlug,
-          //       roomId: this.room,
-          //     },
-          //   });
-          // } else {
-          // route to unassigned pupils
-          this.$router.push({
-            name: "home",
-          });
-          // }
+          if (this.room) {
+            this.$router.push({
+              name: "room-pupils",
+              params: {
+                schoolSlug: this.schoolSlug,
+                roomId: this.room,
+              },
+            });
+          } else {
+            this.$router.push({
+              name: "school-pupils",
+              params: {
+                schoolSlug: this.schoolSlug,
+              },
+            });
+          }
         } else {
           this.error = "There was an error! Please try again!";
         }
@@ -237,7 +239,22 @@ export default {
       ) {
         try {
           await apiService(endpoint, method);
-          this.$router.back();
+          if (this.room) {
+            this.$router.push({
+              name: "room-pupils",
+              params: {
+                schoolSlug: this.schoolSlug,
+                roomId: this.room,
+              },
+            });
+          } else {
+            this.$router.push({
+              name: "school-pupils",
+              params: {
+                schoolSlug: this.schoolSlug,
+              },
+            });
+          }
         } catch (err) {
           this.error = err;
         }

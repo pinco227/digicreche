@@ -16,125 +16,95 @@
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/index.html",
       "publicPath": "http://0.0.0.0:8080/index.html"
     },
-    "app.7daebd5ad92b60eab0c8.hot-update.js": {
-      "name": "app.7daebd5ad92b60eab0c8.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.7daebd5ad92b60eab0c8.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.7daebd5ad92b60eab0c8.hot-update.js"
+    "app.4ac0ee3bb88f34e17706.hot-update.js": {
+      "name": "app.4ac0ee3bb88f34e17706.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.4ac0ee3bb88f34e17706.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.4ac0ee3bb88f34e17706.hot-update.js"
     },
-    "7daebd5ad92b60eab0c8.hot-update.json": {
-      "name": "7daebd5ad92b60eab0c8.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/7daebd5ad92b60eab0c8.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/7daebd5ad92b60eab0c8.hot-update.json"
+    "4ac0ee3bb88f34e17706.hot-update.json": {
+      "name": "4ac0ee3bb88f34e17706.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/4ac0ee3bb88f34e17706.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/4ac0ee3bb88f34e17706.hot-update.json"
     },
-    "app.52ee5dd29c43faa264d3.hot-update.js": {
-      "name": "app.52ee5dd29c43faa264d3.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.52ee5dd29c43faa264d3.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.52ee5dd29c43faa264d3.hot-update.js"
+    "app.5dee054a7e3d881486cc.hot-update.js": {
+      "name": "app.5dee054a7e3d881486cc.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.5dee054a7e3d881486cc.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.5dee054a7e3d881486cc.hot-update.js"
     },
-    "52ee5dd29c43faa264d3.hot-update.json": {
-      "name": "52ee5dd29c43faa264d3.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/52ee5dd29c43faa264d3.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/52ee5dd29c43faa264d3.hot-update.json"
+    "5dee054a7e3d881486cc.hot-update.json": {
+      "name": "5dee054a7e3d881486cc.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/5dee054a7e3d881486cc.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/5dee054a7e3d881486cc.hot-update.json"
     },
-    "app.9f8cae8bfaaa6d153635.hot-update.js": {
-      "name": "app.9f8cae8bfaaa6d153635.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.9f8cae8bfaaa6d153635.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.9f8cae8bfaaa6d153635.hot-update.js"
+    "app.8aba77877b37c46bd23d.hot-update.js": {
+      "name": "app.8aba77877b37c46bd23d.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.8aba77877b37c46bd23d.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.8aba77877b37c46bd23d.hot-update.js"
     },
-    "9f8cae8bfaaa6d153635.hot-update.json": {
-      "name": "9f8cae8bfaaa6d153635.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/9f8cae8bfaaa6d153635.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/9f8cae8bfaaa6d153635.hot-update.json"
+    "8aba77877b37c46bd23d.hot-update.json": {
+      "name": "8aba77877b37c46bd23d.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/8aba77877b37c46bd23d.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/8aba77877b37c46bd23d.hot-update.json"
     },
-    "app.308db6c211340e45e171.hot-update.js": {
-      "name": "app.308db6c211340e45e171.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.308db6c211340e45e171.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.308db6c211340e45e171.hot-update.js"
+    "app.c06652f05101275612fc.hot-update.js": {
+      "name": "app.c06652f05101275612fc.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.c06652f05101275612fc.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.c06652f05101275612fc.hot-update.js"
     },
-    "308db6c211340e45e171.hot-update.json": {
-      "name": "308db6c211340e45e171.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/308db6c211340e45e171.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/308db6c211340e45e171.hot-update.json"
+    "c06652f05101275612fc.hot-update.json": {
+      "name": "c06652f05101275612fc.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/c06652f05101275612fc.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/c06652f05101275612fc.hot-update.json"
     },
-    "app.63b9d987ce0efd759db5.hot-update.js": {
-      "name": "app.63b9d987ce0efd759db5.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.63b9d987ce0efd759db5.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.63b9d987ce0efd759db5.hot-update.js"
+    "app.a4af19d8e5e9871f4e03.hot-update.js": {
+      "name": "app.a4af19d8e5e9871f4e03.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.a4af19d8e5e9871f4e03.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.a4af19d8e5e9871f4e03.hot-update.js"
     },
-    "63b9d987ce0efd759db5.hot-update.json": {
-      "name": "63b9d987ce0efd759db5.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/63b9d987ce0efd759db5.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/63b9d987ce0efd759db5.hot-update.json"
+    "a4af19d8e5e9871f4e03.hot-update.json": {
+      "name": "a4af19d8e5e9871f4e03.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/a4af19d8e5e9871f4e03.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/a4af19d8e5e9871f4e03.hot-update.json"
     },
-    "app.2d2a14c9b14afd55aaae.hot-update.js": {
-      "name": "app.2d2a14c9b14afd55aaae.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.2d2a14c9b14afd55aaae.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.2d2a14c9b14afd55aaae.hot-update.js"
+    "app.ea4f0c7dd37f111ce562.hot-update.js": {
+      "name": "app.ea4f0c7dd37f111ce562.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.ea4f0c7dd37f111ce562.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.ea4f0c7dd37f111ce562.hot-update.js"
     },
-    "2d2a14c9b14afd55aaae.hot-update.json": {
-      "name": "2d2a14c9b14afd55aaae.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/2d2a14c9b14afd55aaae.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/2d2a14c9b14afd55aaae.hot-update.json"
+    "ea4f0c7dd37f111ce562.hot-update.json": {
+      "name": "ea4f0c7dd37f111ce562.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/ea4f0c7dd37f111ce562.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/ea4f0c7dd37f111ce562.hot-update.json"
     },
-    "app.ad86cbdecf243b4085cc.hot-update.js": {
-      "name": "app.ad86cbdecf243b4085cc.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.ad86cbdecf243b4085cc.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.ad86cbdecf243b4085cc.hot-update.js"
+    "app.b2ca007518cfeaceabd3.hot-update.js": {
+      "name": "app.b2ca007518cfeaceabd3.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.b2ca007518cfeaceabd3.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.b2ca007518cfeaceabd3.hot-update.js"
     },
-    "ad86cbdecf243b4085cc.hot-update.json": {
-      "name": "ad86cbdecf243b4085cc.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/ad86cbdecf243b4085cc.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/ad86cbdecf243b4085cc.hot-update.json"
+    "b2ca007518cfeaceabd3.hot-update.json": {
+      "name": "b2ca007518cfeaceabd3.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/b2ca007518cfeaceabd3.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/b2ca007518cfeaceabd3.hot-update.json"
     },
-    "app.c9fd4717f3a69857d0e0.hot-update.js": {
-      "name": "app.c9fd4717f3a69857d0e0.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.c9fd4717f3a69857d0e0.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.c9fd4717f3a69857d0e0.hot-update.js"
+    "app.f09bd95aabe1d2658af1.hot-update.js": {
+      "name": "app.f09bd95aabe1d2658af1.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.f09bd95aabe1d2658af1.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.f09bd95aabe1d2658af1.hot-update.js"
     },
-    "c9fd4717f3a69857d0e0.hot-update.json": {
-      "name": "c9fd4717f3a69857d0e0.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/c9fd4717f3a69857d0e0.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/c9fd4717f3a69857d0e0.hot-update.json"
-    },
-    "app.8f9d0c227c8852fc6909.hot-update.js": {
-      "name": "app.8f9d0c227c8852fc6909.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.8f9d0c227c8852fc6909.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.8f9d0c227c8852fc6909.hot-update.js"
-    },
-    "8f9d0c227c8852fc6909.hot-update.json": {
-      "name": "8f9d0c227c8852fc6909.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/8f9d0c227c8852fc6909.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/8f9d0c227c8852fc6909.hot-update.json"
-    },
-    "app.d705870b4273205e4ef0.hot-update.js": {
-      "name": "app.d705870b4273205e4ef0.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.d705870b4273205e4ef0.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.d705870b4273205e4ef0.hot-update.js"
-    },
-    "d705870b4273205e4ef0.hot-update.json": {
-      "name": "d705870b4273205e4ef0.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/d705870b4273205e4ef0.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/d705870b4273205e4ef0.hot-update.json"
-    },
-    "app.833335ba6ea1000a8581.hot-update.js": {
-      "name": "app.833335ba6ea1000a8581.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.833335ba6ea1000a8581.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.833335ba6ea1000a8581.hot-update.js"
-    },
-    "833335ba6ea1000a8581.hot-update.json": {
-      "name": "833335ba6ea1000a8581.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/833335ba6ea1000a8581.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/833335ba6ea1000a8581.hot-update.json"
+    "f09bd95aabe1d2658af1.hot-update.json": {
+      "name": "f09bd95aabe1d2658af1.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/f09bd95aabe1d2658af1.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/f09bd95aabe1d2658af1.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "bundle.css",
       "bundle.js",
-      "app.833335ba6ea1000a8581.hot-update.js"
+      "app.f09bd95aabe1d2658af1.hot-update.js"
     ]
   },
   "publicPath": "http://0.0.0.0:8080/",
   "error": "ModuleError",
-  "message": "Module Error (from ./node_modules/eslint-loader/index.js):\n\n/home/pinco/Desktop/MS4/digicreche/frontend/src/views/PupilEditor.vue\n  5:29  error  Parsing error: Line 1: Unexpected token\n\n> 1 | 0({ -1 })\n    |     ^  vue/no-parsing-error\n\n✖ 1 problem (1 error, 0 warnings)\n"
+  "message": "Module Error (from ./node_modules/eslint-loader/index.js):\n\n/home/pinco/Desktop/MS4/digicreche/frontend/src/components/Activity.vue\n  32:26  error  'apiService' is not defined  no-undef\n\n✖ 1 problem (1 error, 0 warnings)\n"
 }

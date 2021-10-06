@@ -7,6 +7,7 @@ import SchoolEditor from "@/views/SchoolEditor.vue";
 import RoomPupils from "@/views/RoomPupils.vue";
 import RoomEditor from "@/views/RoomEditor.vue";
 import PupilEditor from "@/views/PupilEditor.vue";
+import PupilActivities from "@/views/PupilActivities.vue";
 
 const routes = [
   {
@@ -78,6 +79,16 @@ const routes = [
     path: "/schools/:schoolSlug/edit-pupil/:pupilId(\\d+)",
     name: "pupil-edit",
     component: PupilEditor,
+    props: (route) => {
+      const schoolSlug = route.params.schoolSlug;
+      const pupilId = parseInt(route.params.pupilId);
+      return { schoolSlug, pupilId };
+    },
+  },
+  {
+    path: "/schools/:schoolSlug/activities/:pupilId(\\d+)",
+    name: "pupils-activities",
+    component: PupilActivities,
     props: (route) => {
       const schoolSlug = route.params.schoolSlug;
       const pupilId = parseInt(route.params.pupilId);

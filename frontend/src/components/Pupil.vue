@@ -3,8 +3,8 @@
     <h2>
       <router-link
         :to="{
-          name: 'manager-schools',
-          params: { schoolSlug: pupil.school_slug },
+          name: 'pupils-activities',
+          params: { schoolSlug: pupil.school_slug, pupilId: pupil.id },
         }"
       >
         {{ pupil.first_name }} {{ pupil.last_name }}

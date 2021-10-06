@@ -25,6 +25,7 @@ class PupilSerializer(serializers.ModelSerializer):
     room = RoomRelatedField(allow_null=True)
     parents = ParentRelatedField(many=True)
     school_slug = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = Pupil
@@ -33,3 +34,6 @@ class PupilSerializer(serializers.ModelSerializer):
 
     def get_school_slug(self, instance):
         return instance.school.slug
+
+    def get_name(self, instance):
+        return instance.first_name + ' ' + instance.last_name
