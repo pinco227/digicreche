@@ -82,4 +82,4 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
                             'date_joined')
 
     def get_school_slug(self, instance):
-        return instance.school.slug
+        return instance.school.slug if instance.school else None

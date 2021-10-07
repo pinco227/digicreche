@@ -1,6 +1,5 @@
 import Schools from "@/views/Schools.vue";
 import SchoolRooms from "@/views/SchoolRooms.vue";
-import SchoolPupils from "@/views/SchoolPupils.vue";
 import SchoolEditor from "@/views/SchoolEditor.vue";
 
 const SchoolRoutes = [
@@ -24,12 +23,6 @@ const SchoolRoutes = [
     path: "/schools/:schoolSlug",
     name: "school-rooms",
     component: SchoolRooms,
-    props: true,
-  },
-  {
-    path: "/schools/:schoolSlug/pupils",
-    name: "school-pupils",
-    component: SchoolPupils,
     props: true,
   },
 ];

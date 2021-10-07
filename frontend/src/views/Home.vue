@@ -21,7 +21,7 @@ export default {
         break;
 
       default:
-        this.$router.push("/schools");
+        this.$router.push({ name: "parent-children" });
         break;
     }
   },

@@ -1,7 +1,20 @@
 import PupilEditor from "@/views/PupilEditor.vue";
 import PupilActivities from "@/views/PupilActivities.vue";
+import SchoolPupils from "@/views/SchoolPupils.vue";
+import ParentChildren from "@/views/ParentChildren.vue";
 
 const PupilRoutes = [
+  {
+    path: "/schools/:schoolSlug/pupils",
+    name: "school-pupils",
+    component: SchoolPupils,
+    props: true,
+  },
+  {
+    path: "/children",
+    name: "parent-children",
+    component: ParentChildren,
+  },
   {
     path: "/schools/:schoolSlug/add-pupil/:roomId?",
     name: "add-pupil",
