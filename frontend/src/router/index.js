@@ -1,99 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
-import Schools from "@/views/Schools.vue";
-import SchoolRooms from "@/views/SchoolRooms.vue";
-import SchoolPupils from "@/views/SchoolPupils.vue";
-import SchoolEditor from "@/views/SchoolEditor.vue";
-import RoomPupils from "@/views/RoomPupils.vue";
-import RoomEditor from "@/views/RoomEditor.vue";
-import PupilEditor from "@/views/PupilEditor.vue";
-import PupilActivities from "@/views/PupilActivities.vue";
+import SchoolRoutes from "./schools"
+import RoomRoutes from "./rooms"
+import PupilRoutes from "./pupils"
 
-const routes = [
+const BaseRoutes = [
   {
     path: "/",
     name: "home",
     component: Home,
-  },
-  {
-    path: "/schools",
-    name: "manager-schools",
-    component: Schools,
-  },
-  {
-    path: "/schools/add",
-    name: "school-add",
-    component: SchoolEditor,
-  },
-  {
-    path: "/schools/:schoolSlug/edit",
-    name: "school-edit",
-    component: SchoolEditor,
-    props: true,
-  },
-  {
-    path: "/schools/:schoolSlug",
-    name: "school-rooms",
-    component: SchoolRooms,
-    props: true,
-  },
-  {
-    path: "/schools/:schoolSlug/:roomId(\\d+)",
-    name: "room-pupils",
-    component: RoomPupils,
-    props: (route) => {
-      const schoolSlug = route.params.schoolSlug;
-      const roomId = parseInt(route.params.roomId);
-      return { schoolSlug, roomId };
-    },
-  },
-  {
-    path: "/schools/:schoolSlug/add-room",
-    name: "room-add",
-    component: RoomEditor,
-    props: true,
-  },
-  {
-    path: "/schools/:schoolSlug/:roomId(\\d+)/edit-room",
-    name: "room-edit",
-    component: RoomEditor,
-    props: (route) => {
-      const schoolSlug = route.params.schoolSlug;
-      const roomId = parseInt(route.params.roomId);
-      return { schoolSlug, roomId };
-    },
-  },
-  {
-    path: "/schools/:schoolSlug/pupils",
-    name: "school-pupils",
-    component: SchoolPupils,
-    props: true,
-  },
-  {
-    path: "/schools/:schoolSlug/add-pupil/:roomId?",
-    name: "add-pupil",
-    component: PupilEditor,
-    props: true,
-  },
-  {
-    path: "/schools/:schoolSlug/edit-pupil/:pupilId(\\d+)",
-    name: "pupil-edit",
-    component: PupilEditor,
-    props: (route) => {
-      const schoolSlug = route.params.schoolSlug;
-      const pupilId = parseInt(route.params.pupilId);
-      return { schoolSlug, pupilId };
-    },
-  },
-  {
-    path: "/schools/:schoolSlug/activities/:pupilId(\\d+)",
-    name: "pupils-activities",
-    component: PupilActivities,
-    props: (route) => {
-      const schoolSlug = route.params.schoolSlug;
-      const pupilId = parseInt(route.params.pupilId);
-      return { schoolSlug, pupilId };
-    },
   },
   {
     path: "/:pathMatch(.*)*",
@@ -101,6 +16,7 @@ const routes = [
   },
 ];
 
+const routes = BaseRoutes.concat(SchoolRoutes, RoomRoutes, PupilRoutes);
 const router = createRouter({
   history: createWebHistory(),
   routes,
