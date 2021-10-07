@@ -395,16 +395,106 @@
       "name": "24fc76e1136b94be42d3.hot-update.json",
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/24fc76e1136b94be42d3.hot-update.json",
       "publicPath": "http://0.0.0.0:8080/24fc76e1136b94be42d3.hot-update.json"
+    },
+    "app.ba805f328ef171ca7dbe.hot-update.js": {
+      "name": "app.ba805f328ef171ca7dbe.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.ba805f328ef171ca7dbe.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.ba805f328ef171ca7dbe.hot-update.js"
+    },
+    "ba805f328ef171ca7dbe.hot-update.json": {
+      "name": "ba805f328ef171ca7dbe.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/ba805f328ef171ca7dbe.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/ba805f328ef171ca7dbe.hot-update.json"
+    },
+    "app.2e495e0d706373a16836.hot-update.js": {
+      "name": "app.2e495e0d706373a16836.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.2e495e0d706373a16836.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.2e495e0d706373a16836.hot-update.js"
+    },
+    "2e495e0d706373a16836.hot-update.json": {
+      "name": "2e495e0d706373a16836.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/2e495e0d706373a16836.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/2e495e0d706373a16836.hot-update.json"
+    },
+    "app.b30d27c7677ebdc82274.hot-update.js": {
+      "name": "app.b30d27c7677ebdc82274.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.b30d27c7677ebdc82274.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.b30d27c7677ebdc82274.hot-update.js"
+    },
+    "b30d27c7677ebdc82274.hot-update.json": {
+      "name": "b30d27c7677ebdc82274.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/b30d27c7677ebdc82274.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/b30d27c7677ebdc82274.hot-update.json"
+    },
+    "app.5c9c334bbe0075ada62a.hot-update.js": {
+      "name": "app.5c9c334bbe0075ada62a.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.5c9c334bbe0075ada62a.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.5c9c334bbe0075ada62a.hot-update.js"
+    },
+    "5c9c334bbe0075ada62a.hot-update.json": {
+      "name": "5c9c334bbe0075ada62a.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/5c9c334bbe0075ada62a.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/5c9c334bbe0075ada62a.hot-update.json"
+    },
+    "app.7bb7b42c2c27cba606a2.hot-update.js": {
+      "name": "app.7bb7b42c2c27cba606a2.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.7bb7b42c2c27cba606a2.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.7bb7b42c2c27cba606a2.hot-update.js"
+    },
+    "7bb7b42c2c27cba606a2.hot-update.json": {
+      "name": "7bb7b42c2c27cba606a2.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/7bb7b42c2c27cba606a2.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/7bb7b42c2c27cba606a2.hot-update.json"
+    },
+    "app.1143d26b62e4e32b451b.hot-update.js": {
+      "name": "app.1143d26b62e4e32b451b.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.1143d26b62e4e32b451b.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.1143d26b62e4e32b451b.hot-update.js"
+    },
+    "1143d26b62e4e32b451b.hot-update.json": {
+      "name": "1143d26b62e4e32b451b.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/1143d26b62e4e32b451b.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/1143d26b62e4e32b451b.hot-update.json"
+    },
+    "app.117867b7d8aecccdbda0.hot-update.js": {
+      "name": "app.117867b7d8aecccdbda0.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.117867b7d8aecccdbda0.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.117867b7d8aecccdbda0.hot-update.js"
+    },
+    "117867b7d8aecccdbda0.hot-update.json": {
+      "name": "117867b7d8aecccdbda0.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/117867b7d8aecccdbda0.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/117867b7d8aecccdbda0.hot-update.json"
+    },
+    "app.4b8002f3ace91866305f.hot-update.js": {
+      "name": "app.4b8002f3ace91866305f.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.4b8002f3ace91866305f.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.4b8002f3ace91866305f.hot-update.js"
+    },
+    "4b8002f3ace91866305f.hot-update.json": {
+      "name": "4b8002f3ace91866305f.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/4b8002f3ace91866305f.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/4b8002f3ace91866305f.hot-update.json"
+    },
+    "app.9e03ece203bf9be8fd04.hot-update.js": {
+      "name": "app.9e03ece203bf9be8fd04.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.9e03ece203bf9be8fd04.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.9e03ece203bf9be8fd04.hot-update.js"
+    },
+    "9e03ece203bf9be8fd04.hot-update.json": {
+      "name": "9e03ece203bf9be8fd04.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/9e03ece203bf9be8fd04.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/9e03ece203bf9be8fd04.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "bundle.css",
       "bundle.js",
-      "app.24fc76e1136b94be42d3.hot-update.js"
+      "app.9e03ece203bf9be8fd04.hot-update.js"
     ]
   },
   "publicPath": "http://0.0.0.0:8080/",
-  "error": "ModuleNotFoundError",
-  "message": "Module not found: Error: Can't resolve 'rooms.js' in '/home/pinco/Desktop/MS4/digicreche/frontend/src/router'"
+  "error": "ModuleError",
+  "message": "Module Error (from ./node_modules/eslint-loader/index.js):\n\n/home/pinco/Desktop/MS4/digicreche/frontend/src/views/RoomPupils.vue\n  165:18  error  'bool' is not defined  no-undef\n\n✖ 1 problem (1 error, 0 warnings)\n"
 }

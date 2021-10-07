@@ -62,13 +62,25 @@
     </div>
     <div class="row justify-content-center">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
-      <div v-if="isManager" class="col-xs-4 col-md-3 col-lg-2 text-center">
-        <button class="btn btn-lg btn-outline-success">
+      <div
+        v-if="isManager"
+        class="col-xs-4 col-md-3 col-lg-2 text-center"
+        :class="{
+          'd-none': !unassignedPupils.length,
+        }"
+      >
+        <button
+          role="button"
+          class="btn btn-lg btn-outline-success"
+          id="assignNewPupil"
+          tabindex="1"
+        >
           <i class="fas fa-plus"></i> Assign pupil
         </button>
       </div>
     </div>
     <div class="d-none">
+      <!-- List of unassigned teachers to be displayed when clicking on assign teacher button -->
       <div class="list-group" id="unassignedTeachersList">
         <button
           type="button"
@@ -78,6 +90,21 @@
           @click="assignTeacher(teacher)"
         >
           {{ teacher.name }}
+          <i class="fas fa-plus text-success float-end mx-2 mt-1"></i>
+        </button>
+      </div>
+    </div>
+    <div class="d-none">
+      <!-- List of unassigned pupils to be displayed when clicking on assign pupil button -->
+      <div class="list-group" id="unassignedPupilsList">
+        <button
+          type="button"
+          v-for="pupil in unassignedPupils"
+          :key="pupil.id"
+          class="list-group-item list-group-item-action"
+          @click="assignPupil(pupil)"
+        >
+          {{ pupil.name }}
           <i class="fas fa-plus text-success float-end mx-2 mt-1"></i>
         </button>
       </div>
@@ -113,6 +140,7 @@ export default {
       room: {},
       pupils: [],
       unassignedTeachers: [],
+      unassignedPupils: [],
     };
   },
   computed: {
@@ -156,6 +184,15 @@ export default {
         });
       }
     },
+    async getUnassignedPupils() {
+      const endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
+      const data = await apiService(endpoint);
+      if (data !== 403) {
+        this.unassignedPupils = data.filter((pupil) => {
+          return !pupil.room;
+        });
+      }
+    },
     async assignTeacher(teacher) {
       console.log(teacher.id);
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/assign-teacher/`;
@@ -191,22 +228,45 @@ export default {
         }
       }
     },
+    async assignPupil(pupil) {
+      const endpoint = `/api/schools/${this.schoolSlug}/pupils/${pupil.id}/`;
+      const method = "PUT";
+      const payload = pupil;
+      payload.room = this.roomId;
+      try {
+        await apiService(endpoint, method, payload);
+        this.unassignedPupils.splice(this.unassignedPupils.indexOf(pupil), 1);
+        this.pupils.push(payload);
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   created() {
     this.getRoomData();
     this.getRoomPupils();
     this.getUnassignedTeachers();
+    this.getUnassignedPupils();
   },
   mounted() {
     if (this.isManager) {
-      const popoverTrigger = document.getElementById("assignNewTeacher");
-      new Popover(popoverTrigger, {
+      const teacherPopoverTrigger = document.getElementById("assignNewTeacher");
+      const pupilPopoverTrigger = document.getElementById("assignNewPupil");
+      new Popover(teacherPopoverTrigger, {
         container: "body",
         placement: "bottom",
         trigger: "focus",
         content: document.getElementById("unassignedTeachersList"),
         html: true,
         title: "Un-assigned Teachers",
+      });
+      new Popover(pupilPopoverTrigger, {
+        container: "body",
+        placement: "bottom",
+        trigger: "focus",
+        content: document.getElementById("unassignedPupilsList"),
+        html: true,
+        title: "Un-assigned Pupils",
       });
     }
   },
