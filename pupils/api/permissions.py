@@ -11,7 +11,7 @@ class IsSchoolManagerParentTeacherRUD(permissions.BasePermission):
             obj.school.manager == request.user or (
                 request.method in permissions.SAFE_METHODS and
                 obj.room is not None and
-                obj.room.teacher == request.user
+                request.user in obj.room.teachers.all()
             ) or (
                 request.user in obj.parents.all() and
                 request.method != 'DELETE'

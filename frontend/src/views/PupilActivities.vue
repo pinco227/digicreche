@@ -25,7 +25,10 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <AddActivityComponent @onSubmit="addActivity" />
+      <AddActivityComponent
+        v-if="isManager || isTeacher"
+        @onSubmit="addActivity"
+      />
       <ActivityComponent
         v-for="activity in activities"
         :activity="activity"

@@ -19,6 +19,7 @@
       ></textarea>
       <input type="file" name="images" multiple @change="updateImages" />
       <button type="submit" class="btn btn-primary">Submit</button>
+      <button @click="showForm = false">X</button>
     </form>
   </div>
 </template>
@@ -52,6 +53,7 @@ export default {
     onSubmit() {
       this.$emit("onSubmit", this.form);
       this.showForm = false;
+      this.form = { type: null, description: null };
     },
   },
   created() {

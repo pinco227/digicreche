@@ -1,19 +1,19 @@
 from activities.api.permissions import (IsSchoolManagerTeacherParentRUD,
-                                        IsSchoolManagerTeacherParentSafe)
+                                        IsSchoolManagerTeacherParentSafe,
+                                        IsAdminOrSafe)
 from activities.api.serializers import (ActivitySerializer,
                                         ActivityTypeSerializer)
 from activities.models import Activity, ActivityType
 from pupils.models import Pupil
 from rest_framework import generics, status, viewsets
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 
 class ActivityTypeViewSet(viewsets.ModelViewSet):
     queryset = ActivityType.objects.all()
     serializer_class = ActivityTypeSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrSafe]
 
 
 class ActivityListCreateAPIView(generics.ListCreateAPIView):

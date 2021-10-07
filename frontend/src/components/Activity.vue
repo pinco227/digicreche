@@ -1,7 +1,7 @@
 <template>
   <div class="single-activity col-xs-12 col-md-6 col-lg-6 text-center">
     {{ activity_type.icon }} {{ activity_type.name }} <br />
-    {{ activity.created_at }} <br />
+    {{ activity.created_at }}<br />
     {{ activity.description }} <br />
     <img
       v-for="(image, index) in activity.images"
@@ -15,6 +15,7 @@
 
 <script>
 import { apiService } from "@/common/api.service.js";
+
 export default {
   name: "ActivityComponent",
   props: {
