@@ -20,7 +20,7 @@ const PupilRoutes = [
   },
   {
     path: "/schools/:schoolSlug/activities/:pupilId(\\d+)",
-    name: "pupils-activities",
+    name: "pupil-activities",
     component: PupilActivities,
     props: (route) => {
       const schoolSlug = route.params.schoolSlug;
@@ -30,4 +30,4 @@ const PupilRoutes = [
   },
 ];
 
-export default PupilRoutes
+export default PupilRoutes;

@@ -34,4 +34,4 @@ const SchoolRoutes = [
   },
 ];
 
-export default SchoolRoutes
+export default SchoolRoutes;

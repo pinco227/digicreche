@@ -12,15 +12,25 @@ const handleResponse = (response) => {
   }
 };
 
-const apiService = (endpoint, method, data) => {
+const apiService = (endpoint, method, data, type = "application/json") => {
   const config = {
     method: method || "GET",
-    body: data !== undefined ? JSON.stringify(data) : null,
     headers: {
-      "content-type": "application/json",
       "X-CSRFTOKEN": CSRF_TOKEN,
     },
   };
+
+  if (type == "multipart/form-data") {
+    const formData = new FormData();
+    for (const name in data) {
+      formData.append(name, data[name]);
+    }
+    config["body"] = formData;
+  } else {
+    config["body"] = data !== undefined ? JSON.stringify(data) : null;
+    config.headers["content-type"] = type;
+  }
+
   return fetch(endpoint, config)
     .then(handleResponse)
     .catch((error) => console.log(error));

@@ -5,9 +5,10 @@
     {{ activity.description }} <br />
     <img
       v-for="(image, index) in activity.images"
-      :src="image"
+      :src="image.image"
       :alt="activity.description"
       :key="index"
+      width="100"
     />
   </div>
 </template>

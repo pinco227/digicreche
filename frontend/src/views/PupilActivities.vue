@@ -17,16 +17,6 @@
         >
           Edit Pupil
         </router-link>
-        <!-- <router-link
-          v-if="isManager || isTeacher"
-          :to="{
-            name: 'add-activity',
-            params: { schoolSlug: schoolSlug, pupilId: pupilId },
-          }"
-          class="btn btn-success"
-        >
-          Add Activity
-        </router-link> -->
       </div>
     </div>
     <div class="row">
@@ -35,6 +25,7 @@
       </div>
     </div>
     <div class="row justify-content-center">
+      <AddActivityComponent @onSubmit="addActivity" />
       <ActivityComponent
         v-for="activity in activities"
         :activity="activity"
@@ -48,6 +39,7 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import ActivityComponent from "@/components/Activity.vue";
+import AddActivityComponent from "@/components/AddActivity.vue";
 
 export default {
   name: "PupilActivities",
@@ -63,6 +55,7 @@ export default {
   },
   components: {
     ActivityComponent,
+    AddActivityComponent,
   },
   data() {
     return {
@@ -99,6 +92,22 @@ export default {
         this.activities = data;
       } else {
         this.$emit("setPermission", false);
+      }
+    },
+    async addActivity(formData) {
+      let endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
+      let method = "POST";
+
+      const activity_data = await apiService(
+        endpoint,
+        method,
+        formData,
+        "multipart/form-data"
+      );
+      if (activity_data && activity_data !== 403) {
+        this.activities.unshift(activity_data);
+      } else {
+        this.error = "There was an error! Please try again!";
       }
     },
   },

@@ -30,4 +30,4 @@ const RoomRoutes = [
   },
 ];
 
-export default RoomRoutes
+export default RoomRoutes;
