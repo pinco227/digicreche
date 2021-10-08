@@ -40,11 +40,12 @@ export default {
     async getChildren() {
       const endpoint = `/api/children/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.pupils = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.pupils = data.body;
         setPageTitle("Children");
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
   },

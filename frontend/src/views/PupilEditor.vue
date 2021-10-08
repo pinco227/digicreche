@@ -126,48 +126,53 @@ export default {
     async getSchoolId() {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.school = data.id;
+      if (data.status >= 200 && data.status < 300) {
+        this.school = data.body.id;
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getPupilData() {
       if (this.pupilId) {
         const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
         const data = await apiService(endpoint);
-        if (data !== 403) {
-          this.first_name = data.first_name;
-          this.last_name = data.last_name;
-          this.room = data.room;
-          this.parents = data.parents;
-          setPageTitle("Edit " + data.first_name + " " + data.last_name);
+        if (data.status >= 200 && data.status < 300) {
+          this.first_name = data.body.first_name;
+          this.last_name = data.body.last_name;
+          this.room = data.body.room;
+          this.parents = data.body.parents;
+          setPageTitle(
+            "Edit " + data.body.first_name + " " + data.body.last_name
+          );
         } else {
-          this.$emit("setPermission", false);
-          setPageTitle("Forbidden");
+          // TODO: error handling
+          if (data.status == 403) this.$emit("setPermission", false);
         }
       }
     },
     async getSchoolRooms() {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.schoolRooms = data.map((room) => {
+      if (data.status >= 200 && data.status < 300) {
+        this.schoolRooms = data.body.map((room) => {
           return { id: room.id, name: room.name };
         });
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getSchoolParents() {
       const endpoint = `/api/schools/${this.schoolSlug}/parents/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.schoolParents = data.map((parent) => {
+      if (data.status >= 200 && data.status < 300) {
+        this.schoolParents = data.body.map((parent) => {
           return { id: parent.id, name: parent.name };
         });
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async onSubmit() {
@@ -190,8 +195,8 @@ export default {
           parents: this.parents,
           school: this.school,
         };
-        const pupil_data = await apiService(endpoint, method, payload);
-        if (pupil_data && pupil_data !== 403) {
+        const data = await apiService(endpoint, method, payload);
+        if (data.status >= 200 && data.status < 300) {
           if (this.room) {
             this.$router.push({
               name: "room-pupils",
@@ -209,6 +214,7 @@ export default {
             });
           }
         } else {
+          // TODO: error handling
           this.error = "There was an error! Please try again!";
         }
       }
@@ -221,8 +227,8 @@ export default {
           `Are you sure you want to delete ${this.first_name} ${this.last_name} ?`
         )
       ) {
-        try {
-          await apiService(endpoint, method);
+        const data = await apiService(endpoint, method);
+        if (data.status >= 200 && data.status < 300) {
           if (this.room) {
             this.$router.push({
               name: "room-pupils",
@@ -239,8 +245,9 @@ export default {
               },
             });
           }
-        } catch (err) {
-          this.error = err;
+        } else {
+          // TODO: error handling
+          this.error = "Error!";
         }
       }
     },

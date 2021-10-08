@@ -42,7 +42,11 @@ export default {
     async getActivityTypes() {
       const endpoint = "/api/activity_types/";
       const data = await apiService(endpoint);
-      this.activity_types = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.activity_types = data;
+      } else {
+        // TODO: error handling
+      }
     },
     updateImages(event) {
       event.target.files.forEach((file, i) => {

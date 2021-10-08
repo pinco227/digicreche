@@ -200,29 +200,33 @@ export default {
       if (this.schoolSlug) {
         const endpoint = `/api/schools/${this.schoolSlug}/`;
         const data = await apiService(endpoint);
-        if (data !== 403) {
-          this.slug = data.slug;
-          this.name = data.name;
-          this.description = data.description;
-          this.email = data.email;
-          this.phone_number = data.phone_number;
-          this.street_address1 = data.street_address1;
-          this.street_address2 = data.street_address2;
-          this.town_or_city = data.town_or_city;
-          this.county = data.county;
-          this.postcode = data.postcode;
-          this.country = data.country;
-          setPageTitle("Edit " + data.name);
+        if (data.status >= 200 && data.status < 300) {
+          this.slug = data.body.slug;
+          this.name = data.body.name;
+          this.description = data.body.description;
+          this.email = data.body.email;
+          this.phone_number = data.body.phone_number;
+          this.street_address1 = data.body.street_address1;
+          this.street_address2 = data.body.street_address2;
+          this.town_or_city = data.body.town_or_city;
+          this.county = data.body.county;
+          this.postcode = data.body.postcode;
+          this.country = data.body.country;
+          setPageTitle("Edit " + data.body.name);
         } else {
-          this.$emit("setPermission", false);
-          setPageTitle("Forbidden");
+          // TODO: error handling
+          if (data.status == 403) this.$emit("setPermission", false);
         }
       }
     },
     async getCountries() {
       const endpoint = "/api/countries/";
       const data = await apiService(endpoint);
-      this.country_list = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.country_list = data.body;
+      } else {
+        // TODO: error handling
+      }
     },
     async onSubmit() {
       if (!this.name) this.error = "Name is required!";
@@ -250,13 +254,14 @@ export default {
           postcode: this.postcode,
           country: this.country,
         };
-        const school_data = await apiService(endpoint, method, payload);
-        if (school_data && school_data !== 403) {
+        const data = await apiService(endpoint, method, payload);
+        if (data.status >= 200 && data.status < 300) {
           this.$router.push({
             name: "school-rooms",
-            params: { schoolSlug: school_data.slug },
+            params: { schoolSlug: data.body.slug },
           });
         } else {
+          // TODO: error handling
           this.error = "There was an error! Please try again!";
         }
       }
@@ -265,11 +270,12 @@ export default {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const method = "DELETE";
       if (confirm(`Are you sure you want to delete ${this.name} ?`)) {
-        try {
-          await apiService(endpoint, method);
+        const data = await apiService(endpoint, method);
+        if (data.status >= 200 && data.status < 300) {
           this.$router.push({ name: "manager-schools" });
-        } catch (err) {
-          this.error = err;
+        } else {
+          // TODO: error handling
+          this.error = "Error!";
         }
       }
     },

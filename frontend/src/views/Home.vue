@@ -5,8 +5,15 @@ export default {
   async beforeCreate() {
     const endpoint = "/api/rest-auth/user/";
     const userData = await apiService(endpoint);
-    const schoolSlug = userData.school_slug;
-    const roomId = userData.room;
+    let schoolSlug;
+    let roomId;
+    if (userData.status >= 200 && userData.status < 300) {
+      schoolSlug = userData.body.school_slug;
+      roomId = userData.body.room;
+    } else {
+      // TODO: error handling
+      if (userData.status == 403) this.$emit("setPermission", false);
+    }
 
     switch (window.localStorage.getItem("user_type")) {
       case "1":

@@ -33,7 +33,11 @@ export default {
     async getActivityTypeData() {
       const endpoint = `/api/activity_types/${this.activity.type}/`;
       const data = await apiService(endpoint);
-      this.activity_type = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.activity_type = data.body;
+      } else {
+        // TODO: error handling
+      }
     },
   },
   created() {

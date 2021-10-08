@@ -64,20 +64,22 @@ export default {
     async getSchoolData() {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.school = data;
-        setPageTitle(data.name);
+      if (data.status >= 200 && data.status < 300) {
+        this.school = data.body;
+        setPageTitle(data.body.name);
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getSchoolRooms() {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.rooms = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.rooms = data.body;
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
   },

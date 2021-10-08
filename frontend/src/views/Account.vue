@@ -151,21 +151,24 @@ export default {
     async getUser() {
       const endpoint = "/api/rest-auth/user/";
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.user = data;
-        if (data.user_type != 1) this.getSchoolData();
-        if (data.user_type == 2) this.getRoomData();
+      if (data.status >= 200 && data.status < 300) {
+        this.user = data.body;
+        if (data.body.user_type != 1) this.getSchoolData();
+        if (data.body.user_type == 2) this.getRoomData();
         setPageTitle("User Account");
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getSchoolData() {
       if (this.user.school_slug) {
         const endpoint = `/api/schools/${this.user.school_slug}/`;
         const data = await apiService(endpoint);
-        if (data !== 403) {
-          this.school = data;
+        if (data.status >= 200 && data.status < 300) {
+          this.school = data.body;
+        } else {
+          // TODO: error handling
         }
       }
     },
@@ -173,15 +176,21 @@ export default {
       if (this.user.school_slug && this.user.room) {
         const endpoint = `/api/schools/${this.user.school_slug}/rooms/${this.user.room}/`;
         const data = await apiService(endpoint);
-        if (data !== 403) {
-          this.room = data;
+        if (data.status >= 200 && data.status < 300) {
+          this.room = data.body;
+        } else {
+          // TODO: error handling
         }
       }
     },
     async getCountries() {
       const endpoint = "/api/countries/";
       const data = await apiService(endpoint);
-      this.country_list = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.country_list = data.body;
+      } else {
+        // TODO: error handling
+      }
     },
     async onSubmit() {
       if (!this.user.first_name || !this.user.last_name)
@@ -195,10 +204,11 @@ export default {
         let endpoint = "/api/rest-auth/user/";
         let method = "PUT";
 
-        const user_data = await apiService(endpoint, method, this.user);
-        if (user_data && user_data !== 403) {
+        const data = await apiService(endpoint, method, this.user);
+        if (data.status >= 200 && data.status < 300) {
           console.log("saved");
         } else {
+          // TODO: error handling
           this.error = "There was an error! Please try again!";
         }
       }

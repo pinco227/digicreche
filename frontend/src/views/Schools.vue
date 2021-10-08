@@ -40,10 +40,11 @@ export default {
     async getSchools() {
       const endpoint = "/api/my-schools/";
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.schools = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.schools = data.body;
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
   },

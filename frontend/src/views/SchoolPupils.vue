@@ -73,23 +73,25 @@ export default {
     async getSchoolData() {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.school = data;
-        setPageTitle(data.name + " Pupils");
+      if (data.status >= 200 && data.status < 300) {
+        this.school = data.body;
+        setPageTitle(data.body.name + " Pupils");
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getSchoolPupils() {
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
       const data = await apiService(endpoint);
-      if (data !== 403 && Array.isArray(data)) {
-        data.forEach((pupil) => {
+      if (data.status >= 200 && data.status < 300) {
+        data.body.forEach((pupil) => {
           if (pupil.room) this.pupils.push(pupil);
           else this.unassignedPupils.push(pupil);
         });
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
   },

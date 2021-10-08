@@ -93,13 +93,13 @@ export default {
       if (this.roomId) {
         const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
         const data = await apiService(endpoint);
-        if (data !== 403) {
-          this.name = data.name;
-          this.description = data.description;
+        if (data.status >= 200 && data.status < 300) {
+          this.name = data.body.name;
+          this.description = data.body.description;
           setPageTitle("Edit " + data.name);
         } else {
-          this.$emit("setPermission", false);
-          setPageTitle("Forbidden");
+          // TODO: error handling
+          if (data.status == 403) this.$emit("setPermission", false);
         }
       }
     },
@@ -120,16 +120,17 @@ export default {
           name: this.name,
           description: this.description,
         };
-        const room_data = await apiService(endpoint, method, payload);
-        if (room_data && room_data !== 403) {
+        const data = await apiService(endpoint, method, payload);
+        if (data.status >= 200 && data.status < 300) {
           this.$router.push({
             name: "room-pupils",
             params: {
               schoolSlug: this.schoolSlug,
-              roomId: room_data.id,
+              roomId: data.body.id,
             },
           });
         } else {
+          // TODO: error handling
           this.error = "There was an error! Please try again!";
         }
       }
@@ -138,14 +139,15 @@ export default {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
       const method = "DELETE";
       if (confirm(`Are you sure you want to delete ${this.name} ?`)) {
-        try {
-          await apiService(endpoint, method);
+        const data = await apiService(endpoint, method);
+        if (data.status >= 200 && data.status < 300) {
           this.$router.push({
             name: "school-rooms",
             params: { schoolSlug: this.schoolSlug },
           });
-        } catch (err) {
-          this.error = err;
+        } else {
+          // TODO: error handling
+          this.error = "Error!";
         }
       }
     },

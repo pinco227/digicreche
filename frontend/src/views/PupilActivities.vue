@@ -81,35 +81,38 @@ export default {
     async getPupilData() {
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.pupil = data;
-        setPageTitle(data.name);
+      if (data.status >= 200 && data.status < 300) {
+        this.pupil = data.body;
+        setPageTitle(data.body.name);
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getPupilActivities() {
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.activities = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.activities = data.body;
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async addActivity(formData) {
       let endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
       let method = "POST";
 
-      const activity_data = await apiService(
+      const data = await apiService(
         endpoint,
         method,
         formData,
         "multipart/form-data"
       );
-      if (activity_data && activity_data !== 403) {
-        this.activities.unshift(activity_data);
+      if (data.status >= 200 && data.status < 300) {
+        this.activities.unshift(data.body);
       } else {
+        // TODO: error handling
         this.error = "There was an error! Please try again!";
       }
     },

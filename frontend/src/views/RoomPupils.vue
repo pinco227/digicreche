@@ -155,42 +155,48 @@ export default {
     async getRoomData() {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.room = data;
-        setPageTitle(data.name);
+      if (data.status >= 200 && data.status < 300) {
+        this.room = data.body;
+        setPageTitle(data.body.name);
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getRoomPupils() {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/pupils/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.pupils = data;
+      if (data.status >= 200 && data.status < 300) {
+        this.pupils = data.body;
       } else {
-        this.$emit("setPermission", false);
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getUnassignedTeachers() {
       const endpoint = `/api/schools/${this.schoolSlug}/teachers/unassigned/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.unassignedTeachers = data.map((teacher) => {
+      if (data.status >= 200 && data.status < 300) {
+        this.unassignedTeachers = data.body.map((teacher) => {
           const mapped_teacher = {
             id: teacher.id,
             name: teacher.first_name + " " + teacher.last_name,
           };
           return mapped_teacher;
         });
+      } else {
+        // TODO: error handling
       }
     },
     async getUnassignedPupils() {
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
       const data = await apiService(endpoint);
-      if (data !== 403) {
-        this.unassignedPupils = data.filter((pupil) => {
+      if (data.status >= 200 && data.status < 300) {
+        this.unassignedPupils = data.body.filter((pupil) => {
           return !pupil.room;
         });
+      } else {
+        // TODO: error handling
       }
     },
     async assignTeacher(teacher) {
@@ -198,15 +204,15 @@ export default {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/assign-teacher/`;
       const method = "POST";
       const payload = { id: teacher.id };
-      try {
-        await apiService(endpoint, method, payload);
+      const data = await apiService(endpoint, method, payload);
+      if (data.status >= 200 && data.status < 300) {
         this.unassignedTeachers.splice(
           this.unassignedTeachers.indexOf(teacher),
           1
         );
         this.room.teachers.push(teacher);
-      } catch (err) {
-        console.log(err);
+      } else {
+        // TODO: error handling
       }
     },
     async unassignTeacher(teacher) {
@@ -218,12 +224,12 @@ export default {
             `Are you sure you want to remove teacher ${teacher.name} from ${this.room.name}?`
           )
         ) {
-          try {
-            await apiService(endpoint, method);
+          const data = await apiService(endpoint, method);
+          if (data.status >= 200 && data.status < 300) {
             this.room.teachers.splice(this.room.teachers.indexOf(teacher), 1);
             this.unassignedTeachers.push(teacher);
-          } catch (err) {
-            console.log(err);
+          } else {
+            // TODO: error handling
           }
         }
       }
@@ -233,12 +239,12 @@ export default {
       const method = "PUT";
       const payload = pupil;
       payload.room = this.roomId;
-      try {
-        await apiService(endpoint, method, payload);
+      const data = await apiService(endpoint, method, payload);
+      if (data.status >= 200 && data.status < 300) {
         this.unassignedPupils.splice(this.unassignedPupils.indexOf(pupil), 1);
         this.pupils.push(payload);
-      } catch (err) {
-        console.log(err);
+      } else {
+        // TODO: error handling
       }
     },
   },
