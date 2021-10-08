@@ -11,7 +11,9 @@ class IsManagerOrListOnly(permissions.BasePermission):
             request.method in permissions.SAFE_METHODS)
 
     def has_object_permission(self, request, view, obj):
-        return obj.manager == request.user
+        return request.user.is_authenticated and (
+            obj.manager == request.user or
+            request.method in permissions.SAFE_METHODS)
 
 
 class IsManager(permissions.BasePermission):

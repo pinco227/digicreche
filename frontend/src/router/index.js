@@ -3,6 +3,7 @@ import Home from "@/views/Home.vue";
 import SchoolRoutes from "./schools";
 import RoomRoutes from "./rooms";
 import PupilRoutes from "./pupils";
+import AccountRoutes from "./accounts";
 
 const BaseRoutes = [
   {
@@ -16,7 +17,12 @@ const BaseRoutes = [
   },
 ];
 
-const routes = BaseRoutes.concat(SchoolRoutes, RoomRoutes, PupilRoutes);
+const routes = BaseRoutes.concat(
+  SchoolRoutes,
+  RoomRoutes,
+  PupilRoutes,
+  AccountRoutes
+);
 const router = createRouter({
   history: createWebHistory(),
   routes,
