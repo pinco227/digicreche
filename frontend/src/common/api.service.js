@@ -25,10 +25,20 @@ const apiService = async (
   }
 
   const response = await fetch(endpoint, config);
-
+  const contentType = response.headers.get("content-type");
+  let body;
+  if (
+    contentType &&
+    contentType.indexOf("application/json") !== -1 &&
+    response.status != 204
+  ) {
+    body = await response.json();
+  } else {
+    body = await response.text();
+  }
   return {
     status: response.status,
-    body: await response.json(),
+    body: body,
   };
 };
 

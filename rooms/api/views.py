@@ -40,10 +40,17 @@ class RemoveTeacher(APIView):
         try:
             kwarg_id = self.kwargs.get('id')
             teacher = get_object_or_404(get_user_model(), id=kwarg_id)
+            room = teacher.room
             teacher.remove_from_room()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(
+                {
+                    'detail': f'{teacher.first_name} {teacher.last_name} '
+                    f' was successfully removed from room {room}',
+                }, status=status.HTTP_200_OK)
         except Exception:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                'detail': 'Error! Bad request!',
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AssignTeacher(APIView):
@@ -57,8 +64,16 @@ class AssignTeacher(APIView):
             room = get_object_or_404(Room, id=room_id)
             if int(teacher.user_type) == 2:
                 teacher.assign_to_room(room)
-                return Response(status=status.HTTP_200_OK)
+                return Response(
+                    {
+                        'detail': f'{teacher.first_name} {teacher.last_name} '
+                        f' was successfully assigned to room {room.name}',
+                    }, status=status.HTTP_200_OK)
             else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response({
+                    'detail': 'Error! Bad request!',
+                }, status=status.HTTP_400_BAD_REQUEST)
         except Exception:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                'detail': 'Error! Bad request!',
+            }, status=status.HTTP_400_BAD_REQUEST)

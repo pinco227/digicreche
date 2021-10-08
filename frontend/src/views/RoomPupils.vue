@@ -200,10 +200,11 @@ export default {
       }
     },
     async assignTeacher(teacher) {
-      console.log(teacher.id);
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/assign-teacher/`;
       const method = "POST";
-      const payload = { id: teacher.id };
+      const payload = {
+        id: teacher.id,
+      };
       const data = await apiService(endpoint, method, payload);
       if (data.status >= 200 && data.status < 300) {
         this.unassignedTeachers.splice(
