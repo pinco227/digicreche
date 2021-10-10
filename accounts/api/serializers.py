@@ -3,15 +3,18 @@ from accounts.models import DigiCrecheUser
 
 
 class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = DigiCrecheUser
         exclude = ['password', 'is_superuser', 'is_staff',
                    'is_active', 'groups', 'user_permissions']
 
+    def get_name(self, instance):
+        return instance.first_name + ' ' + instance.last_name
 
-class TeacherSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
+
+class TeacherSerializer(UserSerializer):
 
     class Meta:
         model = DigiCrecheUser
@@ -19,12 +22,8 @@ class TeacherSerializer(serializers.ModelSerializer):
                    'is_active', 'groups', 'user_permissions', 'user_type',
                    'school']
 
-    def get_name(self, instance):
-        return instance.first_name + ' ' + instance.last_name
 
-
-class ParentSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
+class ParentSerializer(UserSerializer):
 
     class Meta:
         model = DigiCrecheUser
@@ -32,5 +31,10 @@ class ParentSerializer(serializers.ModelSerializer):
                    'is_active', 'groups', 'user_permissions', 'user_type',
                    'school', 'room']
 
-    def get_name(self, instance):
-        return instance.first_name + ' ' + instance.last_name
+
+class ChatUsertSerializer(UserSerializer):
+    unread = serializers.BooleanField()
+
+    class Meta:
+        model = DigiCrecheUser
+        fields = ['id', 'name',  'last_login', 'user_type', 'unread']
