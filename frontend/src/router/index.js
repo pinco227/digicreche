@@ -4,6 +4,7 @@ import SchoolRoutes from "./schools";
 import RoomRoutes from "./rooms";
 import PupilRoutes from "./pupils";
 import AccountRoutes from "./accounts";
+import ChatRoutes from "./chat";
 
 const BaseRoutes = [
   {
@@ -21,7 +22,8 @@ const routes = BaseRoutes.concat(
   SchoolRoutes,
   RoomRoutes,
   PupilRoutes,
-  AccountRoutes
+  AccountRoutes,
+  ChatRoutes
 );
 const router = createRouter({
   history: createWebHistory(),

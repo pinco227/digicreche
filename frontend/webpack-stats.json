@@ -15,13 +15,61 @@
       "name": "index.html",
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/index.html",
       "publicPath": "http://0.0.0.0:8080/index.html"
+    },
+    "app.8e00d459de18b3d21afa.hot-update.js": {
+      "name": "app.8e00d459de18b3d21afa.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.8e00d459de18b3d21afa.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.8e00d459de18b3d21afa.hot-update.js"
+    },
+    "8e00d459de18b3d21afa.hot-update.json": {
+      "name": "8e00d459de18b3d21afa.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/8e00d459de18b3d21afa.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/8e00d459de18b3d21afa.hot-update.json"
+    },
+    "app.3f0f32f9f4032c4babc2.hot-update.js": {
+      "name": "app.3f0f32f9f4032c4babc2.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.3f0f32f9f4032c4babc2.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.3f0f32f9f4032c4babc2.hot-update.js"
+    },
+    "3f0f32f9f4032c4babc2.hot-update.json": {
+      "name": "3f0f32f9f4032c4babc2.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/3f0f32f9f4032c4babc2.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/3f0f32f9f4032c4babc2.hot-update.json"
+    },
+    "a5de07014496afc76ce1.hot-update.json": {
+      "name": "a5de07014496afc76ce1.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/a5de07014496afc76ce1.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/a5de07014496afc76ce1.hot-update.json"
+    },
+    "app.de2ac953e269053c5bc9.hot-update.js": {
+      "name": "app.de2ac953e269053c5bc9.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.de2ac953e269053c5bc9.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.de2ac953e269053c5bc9.hot-update.js"
+    },
+    "de2ac953e269053c5bc9.hot-update.json": {
+      "name": "de2ac953e269053c5bc9.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/de2ac953e269053c5bc9.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/de2ac953e269053c5bc9.hot-update.json"
+    },
+    "app.60948a46b8644aad97d2.hot-update.js": {
+      "name": "app.60948a46b8644aad97d2.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.60948a46b8644aad97d2.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.60948a46b8644aad97d2.hot-update.js"
+    },
+    "60948a46b8644aad97d2.hot-update.json": {
+      "name": "60948a46b8644aad97d2.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/60948a46b8644aad97d2.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/60948a46b8644aad97d2.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "bundle.css",
-      "bundle.js"
+      "bundle.js",
+      "app.60948a46b8644aad97d2.hot-update.js"
     ]
   },
-  "publicPath": "http://0.0.0.0:8080/"
+  "publicPath": "http://0.0.0.0:8080/",
+  "error": "ModuleError",
+  "message": "Module Error (from ./node_modules/eslint-loader/index.js):\n\n/home/pinco/Desktop/MS4/digicreche/frontend/src/views/Chat.vue\n   7:11  error    Elements in iteration expect to have 'v-bind:key' directives  vue/require-v-for-key\n  44:10  warning  Insert `⏎`                                                    prettier/prettier\n\n✖ 2 problems (1 error, 1 warning)\n  0 errors and 1 warning potentially fixable with the `--fix` option.\n"
 }
