@@ -1,0 +1,67 @@
+<template>
+  <div
+    id="single-message"
+    class="row align-items-center"
+    :class="{ sent: sent }"
+  >
+    <div
+      class="col-9 message-card"
+      :class="{ 'order-1': !sent, 'order-2': sent }"
+    >
+      <span v-if="!sent" class="sender-name"
+        >{{ message.sender_name }} <br
+      /></span>
+      {{ message.message }}
+    </div>
+    <div class="col-3 timestamp" :class="{ 'order-1': sent, 'order-2': !sent }">
+      {{ message.timestamp }}
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "MessageComponent",
+  props: {
+    sent: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    username: {
+      type: String,
+      required: false,
+    },
+    message: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style scoped>
+#single-message {
+  margin-top: 0.5rem;
+}
+#single-message .message-card {
+  padding: 1rem;
+  background-color: rgba(0, 218, 11, 0.5);
+  border-radius: 2rem;
+  line-height: 1.5rem;
+}
+#single-message .timestamp {
+  font-size: 0.7rem;
+}
+#single-message .sender-name {
+  font-size: 0.7rem;
+  line-height: 0.5rem;
+}
+#single-message.sent .message-card {
+  text-align: right;
+  background-color: rgba(255, 161, 60, 0.5);
+}
+#single-message.sent .timestamp {
+  text-align: right;
+}
+</style>

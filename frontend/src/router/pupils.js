@@ -16,7 +16,7 @@ const PupilRoutes = [
     component: ParentChildren,
   },
   {
-    path: "/schools/:schoolSlug/add-pupil/:roomId?",
+    path: "/schools/:schoolSlug/add-pupil/:roomId(\\d+)?",
     name: "add-pupil",
     component: PupilEditor,
     props: true,

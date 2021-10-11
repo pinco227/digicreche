@@ -19,15 +19,15 @@ class ConversationListAPIView(APIView):
             chat = message.sender if message.sender != user \
                 else message.receiver
             new_chat = chat
-
             new_chat.unread = True if not message.is_read and \
                 message.receiver == user else False
 
-            if chat not in chats:
-                chats.append(new_chat)
+            if chat in chats:
+                if not message.is_read:
+                    chat_index = chats.index(chat)
+                    chats[chat_index] = new_chat
             else:
-                chat_index = chats.index(chat)
-                chats[chat_index] = new_chat
+                chats.append(new_chat)
 
         serializer = ChatUsertSerializer(
             chats, many=True, context={'request': request})

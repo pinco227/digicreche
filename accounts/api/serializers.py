@@ -33,7 +33,7 @@ class ParentSerializer(UserSerializer):
 
 
 class ChatUsertSerializer(UserSerializer):
-    unread = serializers.BooleanField()
+    unread = serializers.NullBooleanField()
 
     class Meta:
         model = DigiCrecheUser
