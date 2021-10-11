@@ -42,7 +42,7 @@ export default {
 
 <style scoped>
 #single-message {
-  margin-top: 0.5rem;
+  padding: calc(var(--bs-gutter-x) * 0.5);
 }
 #single-message .message-card {
   padding: 1rem;
