@@ -12,30 +12,26 @@
       >
         <h2>Chats</h2>
         <div class="list-group">
-          <router-link
+          <button
             class="list-group-item list-group-item-action"
             v-for="chat in conversations"
             :key="chat.id"
             :class="{ active: chatId && chatId == chat.id }"
-            :to="{
-              name: 'chat',
-              params: {
-                chatId: chat.id,
-              },
-            }"
-            @click="
-              getChatData(chat.id);
-              chatName = chat.name;
-            "
+            @click="openChat(chat.id)"
           >
             <span :class="{ 'fw-bolder': chat.unread }">{{ chat.name }}</span>
-          </router-link>
+          </button>
         </div>
       </div>
       <div
+        ref="chat"
         v-if="chatId"
         class="col-12 col-md-7 col-lg-6 chat-view position-relative"
       >
+        <button v-show="next" class="btn btn-link" @click="getChatData(chatId)">
+          Load previous...
+        </button>
+        <div v-show="!messages.length" class="new-chat">New Chat</div>
         <MessageComponent
           v-for="message in messages"
           :key="message.id"
@@ -84,9 +80,21 @@ export default {
       conversations: [],
       messages: [],
       newMessage: null,
+      next: null,
     };
   },
   methods: {
+    openChat(id) {
+      this.messages = [];
+      this.next = null;
+      this.$router.push({
+        name: "chat",
+        params: {
+          chatId: id,
+        },
+      });
+      this.getChatData(id, false);
+    },
     async getConversationsData() {
       const endpoint = "/api/chats/";
       const data = await apiService(endpoint);
@@ -98,11 +106,26 @@ export default {
         if (data.status == 403) this.$emit("setPermission", false);
       }
     },
-    async getChatData(id) {
-      const endpoint = `/api/chats/${id}/`;
+    async getChatData(id, next = true) {
+      let endpoint = `/api/chats/${id}/`;
+      if (this.next) {
+        endpoint = this.next;
+      }
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
-        this.messages = data.body;
+        if (this.next) {
+          this.messages = [...data.body.results.reverse(), ...this.messages];
+        } else {
+          this.messages = data.body.results.reverse();
+        }
+        if (data.body.next) {
+          this.next = data.body.next;
+        } else {
+          this.next = null;
+        }
+        if (!next) {
+          this.scrollToBottom();
+        }
       } else {
         // TODO: error handling
       }
@@ -123,23 +146,31 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.messages.push(data.body);
         this.newMessage = null;
+        this.scrollToBottom();
+        this.getConversationsData();
       } else {
         // TODO: error handling
       }
     },
+    scrollToBottom() {
+      // setInterval(() => {
+      const chatView = this.$refs.chat;
+      chatView.scrollTop = chatView.scrollHeight;
+      // }, 1000);
+    },
   },
   created() {
     this.getConversationsData();
-    if (this.chatId) this.getChatData(this.chatId);
+    if (this.chatId) this.getChatData(this.chatId, false);
   },
 };
 </script>
 
 <style scoped>
 .typebox {
-  position: absolute;
+  position: fixed;
   bottom: 0.5rem;
-  width: 100%;
+  width: inherit;
   display: flex;
   flex-direction: row;
   padding-right: calc(var(--bs-gutter-x) * 0.5);
@@ -159,5 +190,11 @@ export default {
   padding-bottom: 4.5rem;
   height: calc(100vh - 67px);
   background-color: #f6f6f6;
+}
+.new-chat {
+  position: absolute;
+  bottom: 5rem;
+  width: 100%;
+  text-align: center;
 }
 </style>

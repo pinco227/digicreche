@@ -1,6 +1,7 @@
 # Django Build in User Model
 from accounts.api.serializers import ChatUsertSerializer
 from chat.api.serializers import MessageSerializer
+from chat.api.pagination import PageNumPagination
 from chat.models import Message
 from django.db.models import Q
 from rest_framework import generics, status
@@ -36,6 +37,7 @@ class ConversationListAPIView(APIView):
 
 class MessageReadAPIView(generics.ListCreateAPIView):
     serializer_class = MessageSerializer
+    pagination_class = PageNumPagination
 
     def perform_create(self, serializer):
         sender = self.request.user
@@ -46,7 +48,7 @@ class MessageReadAPIView(generics.ListCreateAPIView):
         receiver = self.kwargs.get('pk')
         queryset = Message.objects.filter(
             Q(sender__pk=user, receiver__pk=receiver) |
-            Q(sender__pk=receiver, receiver__pk=user)).order_by('timestamp')
+            Q(sender__pk=receiver, receiver__pk=user)).order_by('-timestamp')
         for message in queryset:
             if message.receiver.id == user and message.is_read is False:
                 message.is_read = True
