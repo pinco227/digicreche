@@ -184,6 +184,15 @@ export default {
 .typebox .form-control {
   border: 0;
 }
+.typebox .form-control:focus {
+  box-shadow: none;
+}
+.typebox:focus-within {
+  box-shadow: 0px 0px 13px -6px var(--orange-accent);
+}
+.typebox button {
+  color: var(--green-accent);
+}
 .chat-view {
   overflow-x: hidden;
   overflow-y: scroll;

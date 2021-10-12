@@ -14,7 +14,7 @@
       {{ message.message }}
     </div>
     <div class="col-3 timestamp" :class="{ 'order-1': sent, 'order-2': !sent }">
-      {{ message.timestamp }}
+      <timeago :datetime="message.timestamp" />
     </div>
   </div>
 </template>
@@ -45,17 +45,20 @@ export default {
   padding: calc(var(--bs-gutter-x) * 0.5);
 }
 #single-message .message-card {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   background-color: rgba(0, 218, 11, 0.5);
   border-radius: 2rem;
-  line-height: 1.5rem;
+  line-height: 1.2rem;
 }
 #single-message .timestamp {
   font-size: 0.7rem;
+  color: #777;
 }
 #single-message .sender-name {
   font-size: 0.7rem;
   line-height: 0.5rem;
+  color: #515151;
+  letter-spacing: 0.3px;
 }
 #single-message.sent .message-card {
   text-align: right;
