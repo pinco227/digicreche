@@ -12,7 +12,7 @@
         v-for="chat in conversations"
         :key="chat.id"
         :class="{ active: activeChat == chat.id }"
-        @click="selectChat(chat.id)"
+        @click="setChat(chat.id)"
       >
         <span :class="{ 'fw-bolder': chat.unread }">{{ chat.name }}</span>
       </button>
@@ -25,10 +25,16 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "ConversationList",
+  computed: mapState(["conversations", "activeChat"]),
+  methods: {
+    ...mapActions(["loadConversations", "selectChat"]),
+    setChat(id) {
+      this.selectChat(id);
+      this.$router.push({ name: "chat", params: { chatId: id } });
+    },
+  },
   created() {
     this.loadConversations();
   },
-  computed: mapState(["conversations", "activeChat"]),
-  methods: mapActions(["loadConversations", "selectChat"]),
 };
 </script>

@@ -55,7 +55,7 @@ export default {
   computed: mapState(["messages", "activeChat"]),
   methods: {
     ...mapMutations({ send: "SEND_MESSAGE" }),
-    ...mapActions(["loadMore"]),
+    ...mapActions(["loadConversations", "loadMore"]),
     async sendMessage() {
       const endpoint = `/api/chats/${this.activeChat}/`;
       const method = "POST";
@@ -71,9 +71,9 @@ export default {
       const data = await apiService(endpoint, method, payload);
       if (data.status >= 200 && data.status < 300) {
         this.send(data.body);
+        this.loadConversations();
         this.newMessage = null;
         this.scrollToBottom();
-        // this.getConversationsData();
       } else {
         // TODO: error handling
       }

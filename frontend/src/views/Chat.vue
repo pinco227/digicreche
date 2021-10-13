@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import ConversationComponent from "@/components/Conversation.vue";
 import ConversationList from "@/components/ConversationList.vue";
 
@@ -32,6 +32,12 @@ export default {
     };
   },
   computed: mapState(["activeChat"]),
+  methods: mapActions(["selectChat"]),
+  created() {
+    if (this.chatId) {
+      this.selectChat(this.chatId);
+    }
+  },
 };
 </script>
 
