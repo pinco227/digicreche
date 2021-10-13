@@ -10,18 +10,7 @@
           'd-md-block': chatId,
         }"
       >
-        <h2>Chats</h2>
-        <div class="list-group">
-          <button
-            class="list-group-item list-group-item-action"
-            v-for="chat in conversations"
-            :key="chat.id"
-            :class="{ active: chatId && chatId == chat.id }"
-            @click="openChat(chat.id)"
-          >
-            <span :class="{ 'fw-bolder': chat.unread }">{{ chat.name }}</span>
-          </button>
-        </div>
+        <ConversationList />
       </div>
       <div
         ref="chat"
@@ -61,8 +50,9 @@
 
 <script>
 import { apiService } from "@/common/api.service.js";
-import { setPageTitle } from "@/common/functions.js";
+// import { setPageTitle } from "@/common/functions.js";
 import MessageComponent from "@/components/Message.vue";
+import ConversationList from "@/components/ConversationList.vue";
 
 export default {
   name: "Chat",
@@ -74,38 +64,38 @@ export default {
   },
   components: {
     MessageComponent,
+    ConversationList,
   },
   data() {
     return {
-      conversations: [],
       messages: [],
       newMessage: null,
       next: null,
     };
   },
   methods: {
-    openChat(id) {
-      this.messages = [];
-      this.next = null;
-      this.$router.push({
-        name: "chat",
-        params: {
-          chatId: id,
-        },
-      });
-      this.getChatData(id, false);
-    },
-    async getConversationsData() {
-      const endpoint = "/api/chats/";
-      const data = await apiService(endpoint);
-      if (data.status >= 200 && data.status < 300) {
-        this.conversations = data.body;
-        setPageTitle("Chat");
-      } else {
-        // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
-      }
-    },
+    // openChat(id) {
+    //   this.messages = [];
+    //   this.next = null;
+    //   this.$router.push({
+    //     name: "chat",
+    //     params: {
+    //       chatId: id,
+    //     },
+    //   });
+    //   this.getChatData(id, false);
+    // },
+    // async getConversationsData() {
+    //   const endpoint = "/api/chats/";
+    //   const data = await apiService(endpoint);
+    //   if (data.status >= 200 && data.status < 300) {
+    //     this.conversations = data.body;
+    //     setPageTitle("Chat");
+    //   } else {
+    //     // TODO: error handling
+    //     if (data.status == 403) this.$emit("setPermission", false);
+    //   }
+    // },
     async getChatData(id, next = true) {
       let endpoint = `/api/chats/${id}/`;
       if (this.next) {
@@ -147,7 +137,7 @@ export default {
         this.messages.push(data.body);
         this.newMessage = null;
         this.scrollToBottom();
-        this.getConversationsData();
+        // this.getConversationsData();
       } else {
         // TODO: error handling
       }
@@ -160,7 +150,7 @@ export default {
     },
   },
   created() {
-    this.getConversationsData();
+    // this.getConversationsData();
     if (this.chatId) this.getChatData(this.chatId, false);
   },
 };
