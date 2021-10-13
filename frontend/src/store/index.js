@@ -7,7 +7,6 @@ export const store = createStore({
       conversations: [],
       messages: {
         results: [],
-        count: 0,
         next: null,
       },
       activeChat: null,
@@ -30,6 +29,9 @@ export const store = createStore({
         ...state.messages.results,
       ];
       state.messages.next = messages.next;
+    },
+    SEND_MESSAGE(state, message) {
+      state.messages.results.push(message);
     },
   },
   actions: {

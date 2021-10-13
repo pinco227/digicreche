@@ -1,5 +1,10 @@
 <template>
-  <section id="conversation-list">
+  <div
+    class="col-12"
+    :class="{
+      'col-md-5 col-lg-6 d-none d-md-block': activeChat,
+    }"
+  >
     <h2>Chats</h2>
     <div class="list-group">
       <button
@@ -12,7 +17,7 @@
         <span :class="{ 'fw-bolder': chat.unread }">{{ chat.name }}</span>
       </button>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
