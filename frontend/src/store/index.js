@@ -10,6 +10,7 @@ export const store = createStore({
         next: null,
       },
       activeChat: null,
+      log: [],
     };
   },
   mutations: {
@@ -33,8 +34,26 @@ export const store = createStore({
     SEND_MESSAGE(state, message) {
       state.messages.results.push(message);
     },
+
+    // Websocket implementation
+    SOCKET_ONOPEN(state, event) {
+      console.info("Connected to websockets server.. ", event);
+      state.log.push(event);
+    },
+    SOCKET_ONCLOSE(state, event) {
+      console.log("Close");
+      state.log.push(event);
+    },
+    SOCKET_ONERROR(state, event) {
+      console.error("Error: ", event);
+      state.log.push(event);
+    },
     SOCKET_ONMESSAGE(state, message) {
-      if (state.activeChat === message.sender) {
+      console.log("Message: ", message);
+      if (
+        state.activeChat === message.sender ||
+        state.activeChat === message.receiver
+      ) {
         state.messages.results.push(message);
       } else {
         for (var i = 0; i < state.conversations.length; i++) {
@@ -43,6 +62,15 @@ export const store = createStore({
           }
         }
       }
+    },
+    // mutations for reconnect methods
+    SOCKET_RECONNECT(state, count) {
+      console.log("Reconnect: ", count);
+      state.log.push({ reconnect: count });
+    },
+    SOCKET_RECONNECT_ERROR(state, event) {
+      console.log("Reconnect Error");
+      state.log.push(event);
     },
   },
   actions: {

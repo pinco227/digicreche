@@ -9,13 +9,16 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 
 import os
 
-from channels.http import AsgiHandler
-from channels.routing import ProtocolTypeRouter
-# from django.core.asgi import get_asgi_application
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
+from chat.routing import websocket_urlpatterns as chat_ws_route
+from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'digicreche.settings')
 
 application = ProtocolTypeRouter({
-    # "http": get_asgi_application(),
-    "http": AsgiHandler(),
+    "http": get_asgi_application(),
+    "websocket": AuthMiddlewareStack(
+        URLRouter(chat_ws_route),
+    ),
 })

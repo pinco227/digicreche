@@ -99,10 +99,11 @@ WSGI_APPLICATION = 'digicreche.wsgi.application'
 ASGI_APPLICATION = 'digicreche.asgi.application'
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
+        # "BACKEND": "channels_redis.core.RedisChannelLayer",
+        # "CONFIG": {
+        #     "hosts": [("127.0.0.1", 6379)],
+        # },
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     },
 }
 
@@ -129,7 +130,8 @@ else:
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.\
+                UserAttributeSimilarityValidator',
     },
     {
         'NAME':
