@@ -33,6 +33,17 @@ export const store = createStore({
     SEND_MESSAGE(state, message) {
       state.messages.results.push(message);
     },
+    SOCKET_ONMESSAGE(state, message) {
+      if (state.activeChat === message.sender) {
+        state.messages.results.push(message);
+      } else {
+        for (var i = 0; i < state.conversations.length; i++) {
+          if (state.conversations[i].id === message.sender) {
+            state.conversations[i].unread = true;
+          }
+        }
+      }
+    },
   },
   actions: {
     async loadConversations(context) {
