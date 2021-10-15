@@ -1,10 +1,13 @@
-from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.db import database_sync_to_async
-from chat.api.serializers import MessageSerializer
-from chat.models import Message
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.contrib.auth import get_user_model
 
+from chat.api.serializers import MessageSerializer
+from chat.models import Message
 
+
+# CREDIT:
+# https://github.com/aogz/django-vue-websocket-chat
 class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     async def connect(self):

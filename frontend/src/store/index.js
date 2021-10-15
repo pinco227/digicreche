@@ -36,6 +36,7 @@ export const store = createStore({
     },
 
     // Websocket implementation
+    // CREDIT: https://github.com/aogz/django-vue-websocket-chat
     SOCKET_ONOPEN(state, event) {
       console.info("Connected to websockets server.. ");
       state.log.push(event);
