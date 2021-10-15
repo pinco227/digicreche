@@ -29,7 +29,7 @@ SECRET_KEY = env('SECRET_KEY', default='')
 DEVELOPMENT = env('DEVELOPMENT', default=False)
 DEBUG = DEVELOPMENT
 
-ALLOWED_HOSTS = [env('HOSTNAME', default='127.0.0.1')]
+ALLOWED_HOSTS = [env('HOSTNAME', default='127.0.0.1'), '0.0.0.0']
 
 
 # Application definition
@@ -96,22 +96,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'digicreche.wsgi.application'
-ASGI_APPLICATION = 'digicreche.asgi.application'
+ASGI_APPLICATION = 'digicreche.routing.application'
 
-if DEBUG:
-    CHANNEL_LAYERS = {
-        "default": {
-            "BACKEND": "channels.layers.InMemoryChannelLayer"
-        },
-    }
-else:
-    REDIS_URL = env('REDIS_URL', default=("localhost", 6379))
+REDIS_URL = env('REDIS_URL', default=False)
+if REDIS_URL:
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
                 "hosts": [REDIS_URL],
             },
+        },
+    }
+else:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer"
         },
     }
 
@@ -138,8 +138,7 @@ else:
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-            'django.contrib.auth.password_validation.\
-                UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME':

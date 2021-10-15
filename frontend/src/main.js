@@ -8,9 +8,10 @@ import timeago from "vue-timeago3";
 import VueNativeSock from "vue-native-websocket-vue3";
 
 const app = createApp(App);
+const ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 
 app.use(timeago);
-app.use(VueNativeSock, `ws://${location.host}/ws/chat/`, {
+app.use(VueNativeSock, `${ws_scheme}://${location.host}/ws/chat/`, {
   store: store,
   format: "json",
 });

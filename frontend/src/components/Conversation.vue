@@ -28,6 +28,7 @@
           autocomplete="off"
           class="form-control"
           required="required"
+          autofocus
         />
         <button type="submit" class="btn">
           <i class="fas fa-paper-plane"></i>
@@ -39,7 +40,6 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-// import { apiService } from "@/common/api.service.js";
 import MessageComponent from "@/components/Message.vue";
 
 export default {
@@ -57,26 +57,6 @@ export default {
     ...mapMutations({ send: "SEND_MESSAGE" }),
     ...mapActions(["loadConversations", "loadMore"]),
     async sendMessage() {
-      // const endpoint = `/api/chats/${this.activeChat}/`;
-      // const method = "POST";
-      // // sender id will be filled with the request user id automatically
-      // // but an integer needs to be sent for validation purposes
-      // // so the same id as receiver will be sent
-      // const payload = {
-      //   message: this.newMessage,
-      //   is_read: false,
-      //   sender: this.activeChat,
-      //   receiver: this.activeChat,
-      // };
-      // const data = await apiService(endpoint, method, payload);
-      // if (data.status >= 200 && data.status < 300) {
-      //   this.send(data.body);
-      //   this.loadConversations();
-      //   this.newMessage = null;
-      //   this.scrollToBottom();
-      // } else {
-      //   // TODO: error handling
-      // }
       let data = {
         message: this.newMessage,
         receiver: this.activeChat,
