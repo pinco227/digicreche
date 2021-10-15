@@ -37,7 +37,7 @@ export const store = createStore({
 
     // Websocket implementation
     SOCKET_ONOPEN(state, event) {
-      console.info("Connected to websockets server.. ", event);
+      console.info("Connected to websockets server.. ");
       state.log.push(event);
     },
     SOCKET_ONCLOSE(state, event) {
@@ -49,7 +49,6 @@ export const store = createStore({
       state.log.push(event);
     },
     SOCKET_ONMESSAGE(state, message) {
-      console.log("Message: ", message);
       if (
         state.activeChat === message.sender ||
         state.activeChat === message.receiver
@@ -69,7 +68,7 @@ export const store = createStore({
       state.log.push({ reconnect: count });
     },
     SOCKET_RECONNECT_ERROR(state, event) {
-      console.log("Reconnect Error");
+      console.error("Reconnecting error.");
       state.log.push(event);
     },
   },

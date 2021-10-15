@@ -97,15 +97,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'digicreche.wsgi.application'
 ASGI_APPLICATION = 'digicreche.asgi.application'
-CHANNEL_LAYERS = {
-    "default": {
-        # "BACKEND": "channels_redis.core.RedisChannelLayer",
-        # "CONFIG": {
-        #     "hosts": [("127.0.0.1", 6379)],
-        # },
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    },
-}
+
+if DEBUG:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer"
+        },
+    }
+else:
+    REDIS_URL = env('REDIS_URL', default=("localhost", 6379))
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [REDIS_URL],
+            },
+        },
+    }
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
