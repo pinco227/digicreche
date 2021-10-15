@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     isManager() {
-      return window.localStorage.getItem("user_type") == "1";
+      return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
     },
   },
   methods: {

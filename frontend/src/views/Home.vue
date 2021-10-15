@@ -1,30 +1,27 @@
 <script>
-import { apiService } from "@/common/api.service.js";
+// import { apiService } from "@/common/api.service.js";
 export default {
   name: "Home",
   async beforeCreate() {
-    const endpoint = "/api/rest-auth/user/";
-    const userData = await apiService(endpoint);
-    let schoolSlug;
-    let roomId;
-    if (userData.status >= 200 && userData.status < 300) {
-      schoolSlug = userData.body.school_slug;
-      roomId = userData.body.room;
-    } else {
-      // TODO: error handling
-      if (userData.status == 403) this.$emit("setPermission", false);
-    }
-
-    switch (window.localStorage.getItem("user_type")) {
-      case "1":
+    const user = JSON.parse(window.localStorage.getItem("user"));
+    const schoolSlug = user.school_slug;
+    const roomId = user.room;
+    console.log(user);
+    switch (user.user_type) {
+      case 1:
         this.$router.push({ name: "manager-schools" });
         break;
-      case "2":
-        this.$router.push(`/schools/${schoolSlug}/${roomId}`);
+      case 2:
+        if (schoolSlug && roomId)
+          this.$router.push(`/schools/${schoolSlug}/${roomId}`);
+        else this.$router.push({ name: "user_account" });
+        break;
+      case 3:
+        this.$router.push({ name: "parent-children" });
         break;
 
       default:
-        this.$router.push({ name: "parent-children" });
+        this.$router.push({ name: "user_account" });
         break;
     }
   },

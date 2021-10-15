@@ -49,7 +49,7 @@ export default {
     },
   },
   created() {
-    if (window.localStorage.getItem("user_type") == "1") {
+    if (JSON.parse(window.localStorage.getItem("user")).user_type == 1) {
       this.getSchools();
       this.$emit("setPermission", true);
       setPageTitle("Schools List");

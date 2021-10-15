@@ -31,7 +31,7 @@ export default {
     async setUserInfo() {
       const data = await apiService("/api/rest-auth/user/");
       if (data.status >= 200 && data.status < 300) {
-        window.localStorage.setItem("user_type", data.body["user_type"]);
+        window.localStorage.setItem("user", JSON.stringify(data.body));
       } else {
         // TODO: error handling
         if (data.status == 403) this.updatePermission(false);

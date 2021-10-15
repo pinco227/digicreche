@@ -5,24 +5,87 @@
         >Digi<strong>Creche</strong>
       </router-link>
       <ul class="nav me-5 pe-3">
-        <li class="nav-item">
-          <router-link :to="{ name: 'home' }" class="nav-link"
-            ><i class="far fa-star"></i>
+        <li class="nav-item" v-if="user.user_type == 1">
+          <router-link :to="{ name: 'manager-schools' }" class="nav-link">
+            <i class="fas fa-school"></i>
+          </router-link>
+        </li>
+        <li
+          class="nav-item"
+          v-if="user.user_type == 1 && $route.params.schoolSlug"
+        >
+          <router-link
+            :to="{
+              name: 'school-rooms',
+              params: {
+                schoolSlug: $route.params.schoolSlug,
+              },
+            }"
+            class="nav-link"
+          >
+            <i class="fas fa-book-open"></i>
+          </router-link>
+        </li>
+        <li
+          class="nav-item"
+          v-if="
+            (user.user_type == 1 &&
+              $route.params.schoolSlug &&
+              $route.params.roomId) ||
+            (user.user_type == 2 && user.school_slug && user.room)
+          "
+        >
+          <router-link
+            :to="{
+              name: 'room-pupils',
+              params: {
+                schoolSlug: user.school_slug || $route.params.schoolSlug,
+                roomId: user.room || $route.params.roomId,
+              },
+            }"
+            class="nav-link"
+          >
+            <i class="fas fa-users"></i>
+          </router-link>
+        </li>
+        <li class="nav-item" v-if="user.user_type == 3">
+          <router-link :to="{ name: 'parent-children' }" class="nav-link">
+            <i class="fas fa-users"></i>
+          </router-link>
+        </li>
+        <li
+          class="nav-item"
+          v-if="
+            (user.school_slug || $route.params.schoolSlug) &&
+            $route.params.pupilId
+          "
+        >
+          <router-link
+            :to="{
+              name: 'pupil-activities',
+              params: {
+                schoolSlug: user.school_slug || $route.params.schoolSlug,
+                pupilId: $route.params.pupilId,
+              },
+            }"
+            class="nav-link"
+          >
+            <i class="fas fa-basketball-ball"></i>
+          </router-link>
+        </li>
+        <li class="nav-item" v-if="user.user_type == 3">
+          <router-link :to="{ name: 'parent-children' }" class="nav-link">
+            <i class="fas fa-users"></i>
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'home' }" class="nav-link"
-            ><i class="far fa-futbol"></i>
+          <router-link :to="{ name: 'chat' }" class="nav-link">
+            <i class="fas fa-comments"></i>
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'home' }" class="nav-link"
-            ><i class="far fa-comments"></i>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'home' }" class="nav-link"
-            ><i class="far fa-user"></i>
+          <router-link :to="{ name: 'user_account' }" class="nav-link">
+            <i class="fas fa-user-circle"></i>
           </router-link>
         </li>
       </ul>
@@ -39,8 +102,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link" href="#">Account</a>
-          <a class="nav-link" href="#">Log Out</a>
+          <a href="/accounts/logout/" class="nav-link">
+            Log Out <i class="fas fa-sign-out-alt"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -50,6 +114,11 @@
 <script>
 export default {
   name: "DefaultNavbarComponent",
+  computed: {
+    user: () => {
+      return JSON.parse(window.localStorage.getItem("user"));
+    },
+  },
 };
 </script>
 
