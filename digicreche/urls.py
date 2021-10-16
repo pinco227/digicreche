@@ -5,7 +5,6 @@ from accounts.forms import DigiCrecheUserForm
 from django.conf import settings
 from django.conf.urls.static import static
 from core.views import IndexTemplateView
-from core.api.views import ListCountries
 
 redirect_regx = r'^.*$' if settings.USE_AWS else r'^(?!media).*$'
 
@@ -28,7 +27,7 @@ urlpatterns = [
     path('api/rest-auth/registration/',
          include('rest_auth.registration.urls')),
     # Core APIViews
-    path('api/countries/', ListCountries.as_view(), name='contry-list'),
+    path('api/', include('core.api.urls')),
     # APIViews
     path('api/', include('schools.api.urls')),
     path('api/', include('rooms.api.urls')),

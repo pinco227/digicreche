@@ -12,8 +12,7 @@
             v-model="selectedPrice"
             required
           />
-          {{ price.name }} <br />
-          {{ price.amount }}
+          {{ price.amount }} / {{ price.interval }}
         </label>
       </div>
       <div ref="card" class="form-control m-2">
@@ -33,6 +32,7 @@
 
 <script>
 // https://javascript.plainenglish.io/integrating-with-stripe-client-basics-c9f188329143
+import { apiService } from "@/common/api.service.js";
 import { createSubscription } from "@/common/stripe.js";
 export default {
   name: "StripeCard",
@@ -53,19 +53,14 @@ export default {
     },
   },
   methods: {
-    getPrices() {
-      this.prices = [
-        {
-          id: "price_1Jl9JDGMplJQRhFw5uwMkY1K",
-          name: "Monthly payment",
-          amount: "25",
-        },
-        {
-          id: "price_1Jl9JDGMplJQRhFwGt9kJ78U",
-          name: "Yearly payment",
-          amount: "275",
-        },
-      ];
+    async getPrices() {
+      const endpoint = "/api/prices/";
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.prices = data.body;
+      } else {
+        // TODO: error handling
+      }
     },
     createPaymentMethod() {
       const customerId = this.user.pk;

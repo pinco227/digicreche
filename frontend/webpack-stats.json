@@ -15,66 +15,13 @@
       "name": "index.html",
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/index.html",
       "publicPath": "http://0.0.0.0:8080/index.html"
-    },
-    "app.194eddf05e804335da88.hot-update.js": {
-      "name": "app.194eddf05e804335da88.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.194eddf05e804335da88.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.194eddf05e804335da88.hot-update.js"
-    },
-    "194eddf05e804335da88.hot-update.json": {
-      "name": "194eddf05e804335da88.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/194eddf05e804335da88.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/194eddf05e804335da88.hot-update.json"
-    },
-    "app.ad818d3e76d4001add6c.hot-update.js": {
-      "name": "app.ad818d3e76d4001add6c.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.ad818d3e76d4001add6c.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.ad818d3e76d4001add6c.hot-update.js"
-    },
-    "ad818d3e76d4001add6c.hot-update.json": {
-      "name": "ad818d3e76d4001add6c.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/ad818d3e76d4001add6c.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/ad818d3e76d4001add6c.hot-update.json"
-    },
-    "app.b03017d3c4c2ffc17c3f.hot-update.js": {
-      "name": "app.b03017d3c4c2ffc17c3f.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.b03017d3c4c2ffc17c3f.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.b03017d3c4c2ffc17c3f.hot-update.js"
-    },
-    "b03017d3c4c2ffc17c3f.hot-update.json": {
-      "name": "b03017d3c4c2ffc17c3f.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/b03017d3c4c2ffc17c3f.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/b03017d3c4c2ffc17c3f.hot-update.json"
-    },
-    "app.879e8dc27adad06ffd4b.hot-update.js": {
-      "name": "app.879e8dc27adad06ffd4b.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.879e8dc27adad06ffd4b.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.879e8dc27adad06ffd4b.hot-update.js"
-    },
-    "879e8dc27adad06ffd4b.hot-update.json": {
-      "name": "879e8dc27adad06ffd4b.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/879e8dc27adad06ffd4b.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/879e8dc27adad06ffd4b.hot-update.json"
-    },
-    "app.248ebfb92c730331d340.hot-update.js": {
-      "name": "app.248ebfb92c730331d340.hot-update.js",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.248ebfb92c730331d340.hot-update.js",
-      "publicPath": "http://0.0.0.0:8080/app.248ebfb92c730331d340.hot-update.js"
-    },
-    "248ebfb92c730331d340.hot-update.json": {
-      "name": "248ebfb92c730331d340.hot-update.json",
-      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/248ebfb92c730331d340.hot-update.json",
-      "publicPath": "http://0.0.0.0:8080/248ebfb92c730331d340.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "bundle.css",
-      "bundle.js",
-      "app.248ebfb92c730331d340.hot-update.js"
+      "bundle.js"
     ]
   },
-  "publicPath": "http://0.0.0.0:8080/",
-  "error": "ModuleError",
-  "message": "Module Error (from ./node_modules/eslint-loader/index.js):\n\n/home/pinco/Desktop/MS4/digicreche/frontend/src/main.js\n   4:30  warning  Replace `'@vue-stripe/vue-stripe'` with `\"@vue-stripe/vue-stripe\"`                                                                                                                                                                            prettier/prettier\n  16:7   warning  Replace `'pk_test_51HKtJ6GMplJQRhFwzqrpOl772uXNwEr47t60pXmqnTLWpj3AFWLDM35VEINnBsSqVBYgZkQHRGaIH1mv2cVRKSBc00XqO3fahv'` with `\"pk_test_51HKtJ6GMplJQRhFwzqrpOl772uXNwEr47t60pXmqnTLWpj3AFWLDM35VEINnBsSqVBYgZkQHRGaIH1mv2cVRKSBc00XqO3fahv\"`  prettier/prettier\n  19:1   error    'Vue' is not defined                                                                                                                                                                                                                          no-undef\n\n✖ 3 problems (1 error, 2 warnings)\n  0 errors and 2 warnings potentially fixable with the `--fix` option.\n"
+  "publicPath": "http://0.0.0.0:8080/"
 }
