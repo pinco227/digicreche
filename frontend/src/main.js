@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import "@stripe/stripe-js";
 import { createApp } from "vue";
 import { store } from "./store";
 import App from "./App.vue";
