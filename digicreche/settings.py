@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'channels',
     'storages',
     'webpack_loader',
+    'djstripe',
     # custom
     'accounts',
     'schools',
@@ -265,3 +266,15 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json'),
     }
 }
+
+# STRIPE
+STRIPE_TEST_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY', default='')
+STRIPE_TEST_SECRET_KEY = env('STRIPE_SECRET_KEY', default='')
+# if DEBUG:
+#     STRIPE_LIVE_MODE = False
+# else:
+#     STRIPE_LIVE_MODE = True
+DJSTRIPE_USE_NATIVE_JSONFIELD = True
+STRIPE_LIVE_MODE = not DEBUG
+DJSTRIPE_WEBHOOK_SECRET = "whsec_xxx"  # Not in use
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"

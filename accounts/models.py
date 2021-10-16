@@ -5,6 +5,7 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from schools.models import School
 from rooms.models import Room
+from djstripe.models import Customer
 
 from .managers import CustomUserManager
 
@@ -45,6 +46,10 @@ class DigiCrecheUser(AbstractUser):
     room = models.ForeignKey(
         Room, null=True, blank=True, on_delete=models.SET_NULL,
         related_name='teachers')
+    customer = models.ForeignKey(
+        Customer, null=True, blank=True, on_delete=models.SET_NULL,
+        help_text="The user's Stripe Customer object, if it exists"
+    )
 
     objects = CustomUserManager()
 

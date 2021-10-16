@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+from djstripe.models import Subscription
 
 
 class School(models.Model):
@@ -21,6 +22,10 @@ class School(models.Model):
     county = models.CharField(max_length=80, null=False, blank=False)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     country = CountryField(blank_label="Country ", null=False, blank=False)
+    subscription = models.ForeignKey(
+        Subscription, null=True, blank=True, on_delete=models.SET_NULL,
+        help_text="The school's Stripe Subscription object, if it exists"
+    )
 
     def __str__(self):
         return self.name

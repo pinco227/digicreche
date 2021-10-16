@@ -20,6 +20,7 @@ cryptography==3.4.7
 daphne==3.0.2
 defusedxml==0.7.1
 dj-database-url==0.5.0
+dj-stripe==2.5.1
 Django==3.2.6
 django-allauth==0.45.0
 django-countries==7.2.1
@@ -38,6 +39,7 @@ idna==3.2
 incremental==21.3.0
 isort==5.9.3
 jmespath==0.10.0
+jsonfield==3.1.0
 lazy-object-proxy==1.6.0
 mccabe==0.6.1
 msgpack==1.0.2
@@ -61,6 +63,7 @@ s3transfer==0.5.0
 service-identity==21.1.0
 six==1.16.0
 sqlparse==0.4.1
+stripe==2.61.0
 toml==0.10.2
 Twisted==21.7.0
 txaio==21.2.1
