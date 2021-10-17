@@ -245,7 +245,6 @@ export default {
     this.card.mount(this.$refs.card);
   },
   beforeUnmount() {
-    this.stripe.destroy();
     this.card.destroy();
   },
 };

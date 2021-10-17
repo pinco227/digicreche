@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rooms.api.permissions import (IsSchoolManager,
                                    IsSchoolManagerOrTeacherReadOnly)
+from core.api.permissions import SubscriptionPaidOrReadOnly
 from rooms.api.serializers import RoomSerializer
 from rooms.models import Room
 from schools.models import School
@@ -13,7 +14,7 @@ from schools.models import School
 class RoomListCreateAPIView(generics.ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsSchoolManager]
+    permission_classes = [IsSchoolManager, SubscriptionPaidOrReadOnly]
 
     def perform_create(self, serializer):
         kwarg_slug = self.kwargs.get('slug')
@@ -30,11 +31,12 @@ class RoomListCreateAPIView(generics.ListCreateAPIView):
 class RoomRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsSchoolManagerOrTeacherReadOnly]
+    permission_classes = [
+        IsSchoolManagerOrTeacherReadOnly, SubscriptionPaidOrReadOnly]
 
 
 class RemoveTeacher(APIView):
-    permission_classes = [IsSchoolManager]
+    permission_classes = [IsSchoolManager, SubscriptionPaidOrReadOnly]
 
     def delete(self, request, *args, **kwargs):
         try:
@@ -54,7 +56,7 @@ class RemoveTeacher(APIView):
 
 
 class AssignTeacher(APIView):
-    permission_classes = [IsSchoolManager]
+    permission_classes = [IsSchoolManager, SubscriptionPaidOrReadOnly]
 
     def post(self, request, *args, **kwargs):
         teacher_id = request.data.get('id')

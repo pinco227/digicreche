@@ -1,6 +1,7 @@
 from activities.api.permissions import (IsSchoolManagerTeacherParentRUD,
                                         IsSchoolManagerTeacherParentSafe,
                                         IsAdminOrSafe)
+from core.api.permissions import SubscriptionPaidOrReadOnly
 from activities.api.serializers import (ActivitySerializer,
                                         ActivityTypeSerializer)
 from activities.models import Activity, ActivityType
@@ -19,7 +20,8 @@ class ActivityTypeViewSet(viewsets.ModelViewSet):
 class ActivityListCreateAPIView(generics.ListCreateAPIView):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
-    permission_classes = [IsSchoolManagerTeacherParentSafe]
+    permission_classes = [
+        IsSchoolManagerTeacherParentSafe, SubscriptionPaidOrReadOnly]
 
     def create(self, request, *args, **kwargs):
         """ CREDIT https://www.py4u.net/discuss/192406"""
@@ -49,4 +51,5 @@ class ActivityListCreateAPIView(generics.ListCreateAPIView):
 class ActivityRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
-    permission_classes = [IsSchoolManagerTeacherParentRUD]
+    permission_classes = [
+        IsSchoolManagerTeacherParentRUD, SubscriptionPaidOrReadOnly]

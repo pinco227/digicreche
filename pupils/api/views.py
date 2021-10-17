@@ -6,6 +6,7 @@ from pupils.api.serializers import PupilSerializer
 from pupils.api.permissions import (IsSchoolManager,
                                     IsSchoolManagerTeacherSafe,
                                     IsSchoolManagerParentTeacherRUD)
+from core.api.permissions import SubscriptionPaidOrReadOnly
 
 
 class UnassignedListAPIView(generics.ListAPIView):
@@ -44,7 +45,8 @@ class ChildrenListAPIView(generics.ListAPIView):
 class PupilListCreateAPIView(generics.ListCreateAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer
-    permission_classes = [IsSchoolManagerTeacherSafe]
+    permission_classes = [
+        IsSchoolManagerTeacherSafe, SubscriptionPaidOrReadOnly]
 
     def perform_create(self, serializer):
         kwarg_slug = self.kwargs.get('slug')
@@ -61,7 +63,8 @@ class PupilListCreateAPIView(generics.ListCreateAPIView):
 class PupilRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer
-    permission_classes = [IsSchoolManagerParentTeacherRUD]
+    permission_classes = [
+        IsSchoolManagerParentTeacherRUD, SubscriptionPaidOrReadOnly]
 
     def perform_update(self, serializer):
         kwarg_slug = self.kwargs.get('slug')
