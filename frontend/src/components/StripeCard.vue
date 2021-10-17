@@ -3,6 +3,7 @@
     <form
       id="payment-form"
       class="w-75 px-5 d-flex flex-column align-items-center"
+      @submit.prevent="submitSubscribe"
     >
       <div v-for="price in prices" :key="price.id">
         <label>
@@ -12,19 +13,16 @@
             v-model="selectedPrice"
             required
           />
-          {{ price.amount }} / {{ price.interval }}
+          {{ price.amount }} / {{ price.recurring.interval }}
         </label>
       </div>
-      <div ref="card" class="form-control m-2">
-        <!-- A Stripe Element will be inserted here. -->
-      </div>
+      <div ref="card" class="form-control m-2"></div>
       <div v-if="error" class="errors">{{ error }}</div>
       <input
         :disabled="disableSubmit"
         class="btn btn-primary"
         type="submit"
         value="Subscribe"
-        @click.prevent="createPaymentMethod"
       />
     </form>
   </div>
@@ -33,9 +31,15 @@
 <script>
 // https://javascript.plainenglish.io/integrating-with-stripe-client-basics-c9f188329143
 import { apiService } from "@/common/api.service.js";
-import { createSubscription } from "@/common/stripe.js";
+// import { createSubscription } from "@/common/stripe.js";
 export default {
   name: "StripeCard",
+  props: {
+    school: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       pKey: "pk_test_51HKtJ6GMplJQRhFwzqrpOl772uXNwEr47t60pXmqnTLWpj3AFWLDM35VEINnBsSqVBYgZkQHRGaIH1mv2cVRKSBc00XqO3fahv",
@@ -62,9 +66,8 @@ export default {
         // TODO: error handling
       }
     },
-    createPaymentMethod() {
+    submitSubscribe() {
       const customerId = this.user.pk;
-      // Set up payment method for recurring usage
       let billingName = `${this.user.first_name} ${this.user.last_name}`;
       let priceId = this.selectedPrice;
 
@@ -76,16 +79,27 @@ export default {
             name: billingName,
           },
         })
-        .then((result) => {
+        .then(async (result) => {
           if (result.error) {
             this.error = result.error;
           } else {
-            createSubscription({
+            const endpoint = `/api/schools/${this.school.slug}/create-subscription/`;
+            const method = "POST";
+            const payload = {
               customerId: customerId,
               paymentMethodId: result.paymentMethod.id,
               priceId: priceId,
-            });
+            };
+            const data = await apiService(endpoint, method, payload);
+            if (data.status >= 200 && data.status < 300) {
+              // redirect
+            } else {
+              this.error = data.body.detail;
+            }
           }
+        })
+        .catch((error) => {
+          this.error = error;
         });
     },
   },
@@ -93,9 +107,13 @@ export default {
     this.getPrices();
   },
   mounted() {
-    this.stripe = Stripe(this.pKey);
+    this.stripe = window.Stripe(this.pKey);
     this.card = this.stripe.elements().create("card");
     this.card.mount(this.$refs.card);
+  },
+  beforeUnmount() {
+    this.stripe.destroy();
+    this.card.destroy();
   },
 };
 </script>

@@ -175,8 +175,8 @@ export default {
   },
   data() {
     return {
-      slug: null,
       name: null,
+      slug: null,
       description: null,
       email: null,
       phone_number: null,
@@ -201,8 +201,8 @@ export default {
         const endpoint = `/api/schools/${this.schoolSlug}/`;
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {
-          this.slug = data.body.slug;
           this.name = data.body.name;
+          this.slug = data.body.slug;
           this.description = data.body.description;
           this.email = data.body.email;
           this.phone_number = data.body.phone_number;
