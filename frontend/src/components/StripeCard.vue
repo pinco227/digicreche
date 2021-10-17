@@ -67,9 +67,10 @@ export default {
       }
     },
     submitSubscribe() {
-      const customerId = this.user.pk;
-      let billingName = `${this.user.first_name} ${this.user.last_name}`;
-      let priceId = this.selectedPrice;
+      this.disableSubmit = true;
+      // const customerId = this.user.pk;
+      const billingName = `${this.user.first_name} ${this.user.last_name}`;
+      const priceId = this.selectedPrice;
 
       this.stripe
         .createPaymentMethod({
@@ -81,25 +82,30 @@ export default {
         })
         .then(async (result) => {
           if (result.error) {
-            this.error = result.error;
+            this.error = result.error.message;
+            this.disableSubmit = false;
           } else {
-            const endpoint = `/api/schools/${this.school.slug}/create-subscription/`;
+            const endpoint = `/api/create-subscription/`;
             const method = "POST";
             const payload = {
-              customerId: customerId,
+              // customerId: customerId,
+              email: this.user.email,
+              schoolId: this.school.id,
               paymentMethodId: result.paymentMethod.id,
               priceId: priceId,
             };
             const data = await apiService(endpoint, method, payload);
             if (data.status >= 200 && data.status < 300) {
-              // redirect
+              console.log(data.body);
             } else {
               this.error = data.body.detail;
+              this.disableSubmit = false;
             }
           }
         })
         .catch((error) => {
           this.error = error;
+          this.disableSubmit = false;
         });
     },
   },
