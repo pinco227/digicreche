@@ -32,12 +32,12 @@ class CreateCustomerSubscription(APIView):
             # parse request, extract details, and verify assumptions
             user = request.user
             school = School.objects.get(
-                pk=request.data['schoolId'])
-            email = request.data['email']
+                pk=request.data.get('schoolId'))
+            email = request.data.get('email')
             assert user.email == email
             assert school.manager == user
-            payment_method = request.data['paymentMethodId']
-            priceId = request.data['priceId']
+            payment_method = request.data.get('paymentMethodId')
+            priceId = request.data.get('priceId')
             stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
             # first sync payment method to local DB to workaround
@@ -85,3 +85,12 @@ class CreateCustomerSubscription(APIView):
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RetrieveSubscription(APIView):
+    def get(self, request, *args, **kwargs):
+        sub_id = kwargs.get('id')
+        stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+        subscription = stripe.Subscription.retrieve(sub_id)
+
+        return Response(subscription, status=status.HTTP_200_OK)

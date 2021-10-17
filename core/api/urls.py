@@ -6,5 +6,7 @@ urlpatterns = [
     path('prices/', cv.PriceListAPIView.as_view(), name='price-list'),
     path('create-subscription/',
          cv.CreateCustomerSubscription.as_view(), name='create-subscription'),
+    path('retrieve-subscription/<id>/',
+         cv.RetrieveSubscription.as_view(), name='retrieve-subscription'),
 
 ]

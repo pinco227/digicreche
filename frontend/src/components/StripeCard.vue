@@ -31,7 +31,7 @@
 <script>
 // https://javascript.plainenglish.io/integrating-with-stripe-client-basics-c9f188329143
 import { apiService } from "@/common/api.service.js";
-// import { createSubscription } from "@/common/stripe.js";
+import { CSRF_TOKEN } from "@/common/csrf_token.js";
 export default {
   name: "StripeCard",
   props: {
@@ -66,9 +66,150 @@ export default {
         // TODO: error handling
       }
     },
+    onSubscriptionComplete(result) {
+      // Payment was successful.
+      if (result.subscription.status === "active") {
+        this.error = "Success.";
+      }
+    },
+    handlePaymentThatRequiresCustomerAction({
+      subscription,
+      invoice,
+      priceId,
+      paymentMethodId,
+      isRetry,
+    }) {
+      if (subscription && subscription.status === "active") {
+        // Subscription is active, no customer actions required.
+        return { subscription, priceId, paymentMethodId };
+      }
+
+      // If it's a first payment attempt, the payment intent is on the subscription latest invoice.
+      // If it's a retry, the payment intent will be on the invoice itself.
+      let paymentIntent = invoice
+        ? invoice.payment_intent
+        : subscription.latest_invoice.payment_intent;
+
+      if (
+        paymentIntent.status === "requires_action" ||
+        (isRetry === true && paymentIntent.status === "requires_payment_method")
+      ) {
+        return this.stripe
+          .confirmCardPayment(paymentIntent.client_secret, {
+            payment_method: paymentMethodId,
+          })
+          .then(async (result) => {
+            if (result.error) {
+              // Start code flow to handle updating the payment details.
+              // Display error message in your UI.
+              // The card was declined (i.e. insufficient funds, card has expired, etc).
+              throw result.error.message;
+            } else {
+              if (result.paymentIntent.status === "succeeded") {
+                // Show a success message to your customer.
+                const endpoint = `/api/retrieve-subscription/${subscription.id}/`;
+                const data = await apiService(endpoint);
+                if (data.status >= 200 && data.status < 300) {
+                  subscription = data.body;
+                }
+                // subscription = this.stripe.subscriptions.retrieve(
+                //   subscription.id
+                // );
+                console.log(subscription);
+                return {
+                  priceId: priceId,
+                  subscription: subscription,
+                  invoice: invoice,
+                  paymentMethodId: paymentMethodId,
+                };
+              }
+            }
+          })
+          .catch((error) => {
+            this.error = error;
+            this.disableSubmit = false;
+          });
+      } else {
+        // No customer action needed.
+        return { subscription, priceId, paymentMethodId };
+      }
+    },
+    handleRequiresPaymentMethod({ subscription, paymentMethodId, priceId }) {
+      if (subscription.status === "active") {
+        // subscription is active, no customer actions required.
+        return { subscription, priceId, paymentMethodId };
+      } else if (
+        subscription.latest_invoice.payment_intent.status ===
+        "requires_payment_method"
+      ) {
+        // Using localStorage to manage the state of the retry here,
+        // feel free to replace with what you prefer.
+        // Store the latest invoice ID and status.
+        localStorage.setItem("latestInvoiceId", subscription.latest_invoice.id);
+        localStorage.setItem(
+          "latestInvoicePaymentIntentStatus",
+          subscription.latest_invoice.payment_intent.status
+        );
+        throw "Your card was declined.";
+      } else {
+        return { subscription, priceId, paymentMethodId };
+      }
+    },
+    createSubscription({ email, schoolId, paymentMethodId, priceId }) {
+      return (
+        fetch("/api/create-subscription/", {
+          method: "POST",
+          headers: {
+            "X-CSRFTOKEN": CSRF_TOKEN,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            schoolId: schoolId,
+            paymentMethodId: paymentMethodId,
+            priceId: priceId,
+          }),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          // If the card is declined, display an error to the user.
+          .then((result) => {
+            if (result.error) {
+              // The card had an error when trying to attach it to a customer.
+              throw result.error.message;
+            }
+            return result;
+          })
+          // Normalize the result to contain the object returned by Stripe.
+          // Add the additional details we need.
+          .then((result) => {
+            return {
+              paymentMethodId: paymentMethodId,
+              priceId: priceId,
+              subscription: result.subscription,
+            };
+          })
+          // Some payment methods require a customer to be on session
+          // to complete the payment process. Check the status of the
+          // payment intent to handle these actions.
+          .then(this.handlePaymentThatRequiresCustomerAction)
+          // If attaching this card to a Customer object succeeds,
+          // but attempts to charge the customer fail, you
+          // get a requires_payment_method error.
+          .then(this.handleRequiresPaymentMethod)
+          // No more actions required. Provision your service for the user.
+          .then(this.onSubscriptionComplete)
+          .catch((error) => {
+            // An error has happened. Display the failure to the user here.
+            // We utilize the HTML element we created.
+            this.error = error;
+            this.disableSubmit = false;
+          })
+      );
+    },
     submitSubscribe() {
       this.disableSubmit = true;
-      // const customerId = this.user.pk;
       const billingName = `${this.user.first_name} ${this.user.last_name}`;
       const priceId = this.selectedPrice;
 
@@ -80,32 +221,18 @@ export default {
             name: billingName,
           },
         })
-        .then(async (result) => {
+        .then((result) => {
           if (result.error) {
             this.error = result.error.message;
             this.disableSubmit = false;
           } else {
-            const endpoint = `/api/create-subscription/`;
-            const method = "POST";
-            const payload = {
-              // customerId: customerId,
+            this.createSubscription({
               email: this.user.email,
               schoolId: this.school.id,
               paymentMethodId: result.paymentMethod.id,
               priceId: priceId,
-            };
-            const data = await apiService(endpoint, method, payload);
-            if (data.status >= 200 && data.status < 300) {
-              console.log(data.body);
-            } else {
-              this.error = data.body.detail;
-              this.disableSubmit = false;
-            }
+            });
           }
-        })
-        .catch((error) => {
-          this.error = error;
-          this.disableSubmit = false;
         });
     },
   },
