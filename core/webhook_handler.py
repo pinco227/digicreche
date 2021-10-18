@@ -1,4 +1,4 @@
-import djstripe.models as djsm
+import djstripe.models as sm
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
 
@@ -24,9 +24,9 @@ class StripeWH_Handler:
 
         # Checks if customer in djstripe db, syncs from stripe if is not
         try:
-            dj_customer = djsm.Customer.get(customer.id)
-        except djsm.Customer.DoesNotExist:
-            dj_customer = djsm.Customer.sync_from_stripe_data(
+            dj_customer = sm.Customer.get(customer.id)
+        except sm.Customer.DoesNotExist:
+            dj_customer = sm.Customer.sync_from_stripe_data(
                 customer)
 
         # Checks if customer is attached to user, attach if is not
@@ -49,28 +49,6 @@ class StripeWH_Handler:
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Customer\
                         syncronized and attached to user',
-            status=200
-        )
-
-    def handle_invoice_payment_succeeded(self, event):
-        """ Handle the invoice.payment_succeeded webhook event from Stripe """
-
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
-            status=200
-        )
-
-    def handle_invoice_payment_failed(self, event):
-        """ Handle the invoice.payment_failed webhook event from Stripe """
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
-            status=200
-        )
-
-    def handle_invoice_finalized(self, event):
-        """ Handle the invoice.finalized webhook event from Stripe """
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
             status=200
         )
 

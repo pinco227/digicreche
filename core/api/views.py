@@ -1,4 +1,4 @@
-import djstripe.models as djsm
+import djstripe.models as sm
 import stripe
 from core.api.serializers import PriceSerializer
 from django.conf import settings
@@ -21,7 +21,7 @@ class ListCountries(APIView):
 
 
 class PriceListAPIView(generics.ListAPIView):
-    queryset = djsm.Price.objects.all()
+    queryset = sm.Price.objects.all()
     serializer_class = PriceSerializer
 
 
@@ -43,7 +43,7 @@ class CreateCustomerSubscription(APIView):
             # first sync payment method to local DB to workaround
             # https://github.com/dj-stripe/dj-stripe/issues/1125
             payment_method_obj = stripe.PaymentMethod.retrieve(payment_method)
-            djsm.PaymentMethod.sync_from_stripe_data(payment_method_obj)
+            sm.PaymentMethod.sync_from_stripe_data(payment_method_obj)
 
             # create customer objects
             # This creates a new Customer in stripe and attaches the default
@@ -59,27 +59,38 @@ class CreateCustomerSubscription(APIView):
             else:
                 customer = stripe.Customer.retrieve(user.customer.id)
 
-            djstripe_customer = djsm.Customer.sync_from_stripe_data(
+            djstripe_customer = sm.Customer.sync_from_stripe_data(
                 customer)
 
-            # create subscription
-            subscription = stripe.Subscription.create(
-                customer=customer.id,
-                items=[
-                    {
-                        'price': priceId,
-                    },
-                ],
-                expand=['latest_invoice.payment_intent'],
-            )
-            djstripe_subscription = djsm.Subscription.sync_from_stripe_data(
-                subscription)
+            if school.subscription is None:
+                # create subscription
+                subscription = stripe.Subscription.create(
+                    customer=customer.id,
+                    items=[
+                        {
+                            'price': priceId,
+                        },
+                    ],
+                    expand=['latest_invoice.payment_intent'],
+                )
+                djstripe_subscription = sm.Subscription.sync_from_stripe_data(
+                    subscription)
 
-            # associate customer and subscription with the user
+                # associate subscription awith the school
+                school.subscription = djstripe_subscription
+                school.save()
+            else:
+                subscription = stripe.Subscription.modify(
+                    school.subscription.id,
+                    billing_cycle_anchor='now',
+                    proration_behavior='create_prorations',
+                    expand=['latest_invoice.payment_intent'],
+                )
+                sm.Subscription.sync_from_stripe_data(subscription)
+
+            # associate customer awith the user
             user.customer = djstripe_customer
-            school.subscription = djstripe_subscription
             user.save()
-            school.save()
 
             # return information back to the front end
             data = {
