@@ -10,9 +10,13 @@
         </router-link>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" v-if="school.is_active == true">
+      subscription details here<br />
+      cancel action button
+    </div>
+    <div class="row justify-content-center" v-else>
       <div class="col-xs-12 col-md-10 col-lg-8">
-        <StripeCard :school="school" />
+        <StripeCard v-if="school.is_active == false" :school="school" />
       </div>
     </div>
   </section>

@@ -4,6 +4,7 @@
       id="payment-form"
       class="w-75 px-5 d-flex flex-column align-items-center"
       @submit.prevent="submitSubscribe"
+      v-if="school.is_active == false"
     >
       <div v-for="price in prices" :key="price.id">
         <label>
@@ -25,6 +26,7 @@
         value="Subscribe"
       />
     </form>
+    <div v-else>You already have an active subscription for this school.</div>
   </div>
 </template>
 
@@ -238,6 +240,7 @@ export default {
   },
   created() {
     this.getPrices();
+    // this.disableSubmit = !this.school.is_active;
   },
   mounted() {
     this.stripe = window.Stripe(this.pKey);

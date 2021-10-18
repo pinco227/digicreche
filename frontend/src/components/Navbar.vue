@@ -93,6 +93,7 @@
         class="navbar-toggler position-absolute top-0 end-0 me-3 mt-1"
         type="button"
         data-bs-toggle="collapse"
+        data-toggle="collapse"
         data-bs-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup"
         aria-expanded="false"
@@ -102,6 +103,16 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
+          <router-link
+            :to="{
+              name: 'school-subscription',
+              params: { schoolSlug: $route.params.schoolSlug },
+            }"
+            class="nav-link"
+            v-if="user.user_type == 1 && $route.params.schoolSlug"
+          >
+            Subscription <i class="far fa-credit-card"></i>
+          </router-link>
           <a href="/accounts/logout/" class="nav-link">
             Log Out <i class="fas fa-sign-out-alt"></i>
           </a>

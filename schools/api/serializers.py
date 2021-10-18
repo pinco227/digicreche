@@ -8,6 +8,7 @@ class SchoolSerializer(serializers.ModelSerializer):
     pupils_count = serializers.SerializerMethodField()
     unassigned_pupils = serializers.SerializerMethodField()
     teachers_count = serializers.SerializerMethodField()
+    is_active = serializers.SerializerMethodField()
 
     class Meta:
         model = School
@@ -24,3 +25,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 
     def get_teachers_count(self, instance):
         return instance.institution.filter(user_type="2").count()
+
+    def get_is_active(self, instance):
+        return (instance.subscription is not None and
+                instance.subscription.is_valid())

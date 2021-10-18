@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <style>
         .login-form-container {
             width: 300px;
@@ -14,3 +15,7 @@
 {% block content %}
     {% block auth %}{% endblock auth %}
 {% endblock content %}
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+{% endblock scripts %}
