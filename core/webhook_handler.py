@@ -1,6 +1,7 @@
 import djstripe.models as sm
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
+from schools.models import School
 
 
 class StripeWH_Handler:
@@ -19,12 +20,14 @@ class StripeWH_Handler:
 
     def handle_customer_created(self, event):
         """ Handle the payment_method.attached webhook event from Stripe"""
+        print(f'Webhook received: {event["type"]}')
+
         customer = event.data.object
-        user = get_user_model().get(email=customer.email)
+        user = get_user_model().objects.get(email=customer.email)
 
         # Checks if customer in djstripe db, syncs from stripe if is not
         try:
-            dj_customer = sm.Customer.get(customer.id)
+            dj_customer = sm.Customer.objects.get(id=customer.id)
         except sm.Customer.DoesNotExist:
             dj_customer = sm.Customer.sync_from_stripe_data(
                 customer)
@@ -49,6 +52,44 @@ class StripeWH_Handler:
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Customer\
                         syncronized and attached to user',
+            status=200
+        )
+
+    def handle_subscription_created(self, event):
+        """ Handle customer.subscription.created webhook event from Stripe"""
+        print(f'Webhook received: {event["type"]}')
+
+        subscription = event.data.object
+        school = School.objects.get(pk=subscription.metadata["school"])
+
+        # Checks if subscription in djstripe db, syncs from stripe if is not
+        try:
+            dj_subscription = sm.Subscription.objects.get(id=subscription.id)
+        except sm.Subscription.DoesNotExist:
+            dj_subscription = sm.Subscription.sync_from_stripe_data(
+                subscription)
+
+        # Checks if subscription is attached to school, attach if is not
+        if school.subscription == dj_subscription:
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]} | SUCCESS: \
+                        Verified subscription already in database and attached\
+                        to school',
+                status=200
+            )
+        else:
+            try:
+                school.subscription = dj_subscription
+                school.save()
+            except Exception as e:
+                return HttpResponse(
+                    content=f'Webhook received: {event["type"]} | ERROR : {e}',
+                    status=500
+                )
+
+        return HttpResponse(
+            content=f'Webhook received: {event["type"]} | SUCCESS: Subscription\
+                        syncronized and attached to school',
             status=200
         )
 
