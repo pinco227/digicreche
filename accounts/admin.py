@@ -14,6 +14,8 @@ class DigiCrecheUserAdmin(UserAdmin):
             'fields': ('first_name', 'last_name', 'phone_number',
                        'street_address1', 'street_address2', 'town_or_city',
                        'county', 'postcode', 'country', 'school', 'room')}),
+        (_('Billing'), {
+            'fields': ('customer',)}),
         (_('Permissions'), {
             'fields': ('user_type', 'is_active', 'is_staff', 'is_superuser',
                        'groups', 'user_permissions')}),

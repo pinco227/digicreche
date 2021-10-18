@@ -5,6 +5,7 @@ from accounts.forms import DigiCrecheUserForm
 from django.conf import settings
 from django.conf.urls.static import static
 from core.views import IndexTemplateView
+from core.webhooks import stripe_webhook
 
 redirect_regx = r'^.*$' if settings.USE_AWS else r'^(?!media).*$'
 
@@ -34,6 +35,9 @@ urlpatterns = [
     path('api/', include('pupils.api.urls')),
     path('api/', include('activities.api.urls')),
     path('api/', include('chat.api.urls')),
+
+    # Webhooks
+    path('wh/', stripe_webhook, name='webhook'),
 
     # Redirect to index
     re_path(redirect_regx, IndexTemplateView.as_view(), name='entry-point'),

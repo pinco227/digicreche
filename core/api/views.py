@@ -48,13 +48,17 @@ class CreateCustomerSubscription(APIView):
             # create customer objects
             # This creates a new Customer in stripe and attaches the default
             # PaymentMethod in one API call.
-            customer = stripe.Customer.create(
-                payment_method=payment_method,
-                email=email,
-                invoice_settings={
-                    'default_payment_method': payment_method,
-                },
-            )
+            if user.customer is None:
+                customer = stripe.Customer.create(
+                    payment_method=payment_method,
+                    email=email,
+                    invoice_settings={
+                        'default_payment_method': payment_method,
+                    },
+                )
+            else:
+                customer = stripe.Customer.retrieve(user.customer.id)
+
             djstripe_customer = djsm.Customer.sync_from_stripe_data(
                 customer)
 
