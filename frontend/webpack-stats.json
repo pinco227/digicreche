@@ -1070,16 +1070,66 @@
       "name": "52af4d9c928229598658.hot-update.json",
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/52af4d9c928229598658.hot-update.json",
       "publicPath": "http://0.0.0.0:8080/52af4d9c928229598658.hot-update.json"
+    },
+    "app.4acca47e1fb4aedafed8.hot-update.js": {
+      "name": "app.4acca47e1fb4aedafed8.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.4acca47e1fb4aedafed8.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.4acca47e1fb4aedafed8.hot-update.js"
+    },
+    "4acca47e1fb4aedafed8.hot-update.json": {
+      "name": "4acca47e1fb4aedafed8.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/4acca47e1fb4aedafed8.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/4acca47e1fb4aedafed8.hot-update.json"
+    },
+    "app.3b1ff9911d72b96b513b.hot-update.js": {
+      "name": "app.3b1ff9911d72b96b513b.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.3b1ff9911d72b96b513b.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.3b1ff9911d72b96b513b.hot-update.js"
+    },
+    "3b1ff9911d72b96b513b.hot-update.json": {
+      "name": "3b1ff9911d72b96b513b.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/3b1ff9911d72b96b513b.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/3b1ff9911d72b96b513b.hot-update.json"
+    },
+    "app.4aa2fd3ed21659ae1d69.hot-update.js": {
+      "name": "app.4aa2fd3ed21659ae1d69.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.4aa2fd3ed21659ae1d69.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.4aa2fd3ed21659ae1d69.hot-update.js"
+    },
+    "4aa2fd3ed21659ae1d69.hot-update.json": {
+      "name": "4aa2fd3ed21659ae1d69.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/4aa2fd3ed21659ae1d69.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/4aa2fd3ed21659ae1d69.hot-update.json"
+    },
+    "app.e8e008a3167648b3b553.hot-update.js": {
+      "name": "app.e8e008a3167648b3b553.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.e8e008a3167648b3b553.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.e8e008a3167648b3b553.hot-update.js"
+    },
+    "e8e008a3167648b3b553.hot-update.json": {
+      "name": "e8e008a3167648b3b553.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/e8e008a3167648b3b553.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/e8e008a3167648b3b553.hot-update.json"
+    },
+    "app.f481721254c011371740.hot-update.js": {
+      "name": "app.f481721254c011371740.hot-update.js",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/app.f481721254c011371740.hot-update.js",
+      "publicPath": "http://0.0.0.0:8080/app.f481721254c011371740.hot-update.js"
+    },
+    "f481721254c011371740.hot-update.json": {
+      "name": "f481721254c011371740.hot-update.json",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/f481721254c011371740.hot-update.json",
+      "publicPath": "http://0.0.0.0:8080/f481721254c011371740.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "bundle.css",
       "bundle.js",
-      "app.52af4d9c928229598658.hot-update.js"
+      "app.f481721254c011371740.hot-update.js"
     ]
   },
   "publicPath": "http://0.0.0.0:8080/",
   "error": "ModuleError",
-  "message": "Module Error (from ./node_modules/eslint-loader/index.js):\n\n/home/pinco/Desktop/MS4/digicreche/frontend/src/components/Navbar.vue\n  104:7  error    Parsing error: x-invalid-end-tag                                                                                                                                                                                          vue/no-parsing-error\n  104:8  warning  Parsing error: Unexpected closing tag \"button\". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags  prettier/prettier\n\n✖ 2 problems (1 error, 1 warning)\n"
+  "message": "Module Error (from ./node_modules/eslint-loader/index.js):\n\n/home/pinco/Desktop/MS4/digicreche/frontend/src/components/StripeCard.vue\n  87:64  error  Parsing error: Unexpected token\n\n  53 |       isRetry,\n  54 |     }) {\n> 55 |       if (subscription && (subscription.status === \"active\" ||  ||\n     |                                                                 ^\n  56 |         subscription.status === \"trialing\")) {\n  57 |         // Subscription is active, no customer actions required.\n  58 |         return { subscription, priceId, paymentMethodId };\n\n✖ 1 problem (1 error, 0 warnings)\n"
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="stripe-card">
+  <div id="stripe-card" class="d-flex d-flex flex-column align-items-center">
     <form
       id="payment-form"
       class="w-75 px-5 d-flex flex-column align-items-center"
@@ -70,7 +70,10 @@ export default {
     },
     onSubscriptionComplete(result) {
       // Payment was successful.
-      if (result.subscription.status === "active") {
+      if (
+        result.subscription.status === "active" ||
+        result.subscription.status === "trialing"
+      ) {
         this.error = "Success.";
       }
     },
@@ -81,7 +84,10 @@ export default {
       paymentMethodId,
       isRetry,
     }) {
-      if (subscription && subscription.status === "active") {
+      if (
+        subscription &&
+        (subscription.status === "active" || subscription.status === "trialing")
+      ) {
         // Subscription is active, no customer actions required.
         return { subscription, priceId, paymentMethodId };
       }
@@ -137,7 +143,10 @@ export default {
       }
     },
     handleRequiresPaymentMethod({ subscription, paymentMethodId, priceId }) {
-      if (subscription.status === "active") {
+      if (
+        subscription.status === "active" ||
+        subscription.status === "trialing"
+      ) {
         // subscription is active, no customer actions required.
         return { subscription, priceId, paymentMethodId };
       } else if (

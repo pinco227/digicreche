@@ -74,7 +74,8 @@ class CreateCustomerSubscription(APIView):
                     expand=['latest_invoice.payment_intent'],
                     metadata={
                         'school': school.id,
-                    }
+                    },
+                    trial_period_days=14,
                 )
                 djstripe_subscription = sm.Subscription.sync_from_stripe_data(
                     subscription)
