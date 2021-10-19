@@ -11,11 +11,19 @@ class IsSchoolManagerParentTeacherRUD(permissions.BasePermission):
             obj.school.manager == request.user or (
                 request.method in permissions.SAFE_METHODS and
                 obj.room is not None and
-                request.user in obj.room.teachers.all()
-            ) or (
-                request.user in obj.parents.all() and
-                request.method != 'DELETE'
+                (request.user in obj.room.teachers.all() or
+                 (request.user in obj.parents.all()))
             )
+        )
+
+
+class IsSchoolManagerOrParentRUD(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+
+        return request.user.is_authenticated and (
+            obj.school.manager == request.user or
+            request.user in obj.parents.all()
         )
 
 

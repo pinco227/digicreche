@@ -7,6 +7,7 @@ from pupils.api.serializers import (PupilSerializer,
                                     PupilDetailsSerializer)
 from pupils.api.permissions import (IsSchoolManager,
                                     IsSchoolManagerTeacherSafe,
+                                    IsSchoolManagerOrParentRUD,
                                     IsSchoolManagerParentTeacherRUD)
 from core.api.permissions import SubscriptionPaidOrReadOnly
 
@@ -79,11 +80,11 @@ class PupilPhotoAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilPhotoSerializer
     permission_classes = [
-        IsSchoolManagerParentTeacherRUD, SubscriptionPaidOrReadOnly]
+        IsSchoolManagerOrParentRUD, SubscriptionPaidOrReadOnly]
 
 
 class PupilDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilDetailsSerializer
     permission_classes = [
-        IsSchoolManagerParentTeacherRUD, SubscriptionPaidOrReadOnly]
+        IsSchoolManagerOrParentRUD, SubscriptionPaidOrReadOnly]
