@@ -1,15 +1,33 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 from rooms.models import Room
+from schools.models import School
+
+
+class SchoolRelatedField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        queryset = School.objects.filter(
+            slug=self.context['request'].resolver_match.kwargs.get('slug'))
+        return queryset
 
 
 class RoomSerializer(serializers.ModelSerializer):
+    school = SchoolRelatedField(allow_null=True)
     school_slug = serializers.SerializerMethodField()
     teachers = serializers.SerializerMethodField()
     pupils_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Room
-        exclude = ['school']
+        fields = '__all__'
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Room.objects.all(),
+                fields=['name', 'school'],
+                message='There is already a room with this name in this school'
+            )
+        ]
 
     def get_school_slug(self, instance):
         return instance.school.slug
