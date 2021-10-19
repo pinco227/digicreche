@@ -16,13 +16,7 @@ class IsManagerOrListOnly(permissions.BasePermission):
             request.method in permissions.SAFE_METHODS)
 
 
-class IsManager(permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.user_type == 1
-
-
-class IsSchoolManager(permissions.BasePermission):
+class IsSchoolManagerOrTeacher(permissions.BasePermission):
 
     def has_permission(self, request, view):
         try:
@@ -31,6 +25,9 @@ class IsSchoolManager(permissions.BasePermission):
         except Exception:
             return False
 
-        return (request.user.is_authenticated and
+        return ((request.user.is_authenticated and
                 request.user.user_type == 1 and
-                school.manager == request.user)
+                school.manager == request.user) or
+                (request.user.is_authenticated and
+                 request.user.user_type == 2 and
+                 request.user.school == school))

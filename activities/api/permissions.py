@@ -10,7 +10,7 @@ class IsSchoolManagerTeacherParentRUD(permissions.BasePermission):
 
         return request.user.is_authenticated and (
             obj.pupil.school.manager == request.user or
-            obj.pupil.room.teacher == request.user or (
+            request.user in obj.pupil.room.teachers.all() or (
                 request.method in permissions.SAFE_METHODS and
                 request.user in obj.pupil.parents.all()
             )
@@ -34,7 +34,7 @@ class IsSchoolManagerTeacherParentSafe(permissions.BasePermission):
             school.manager == request.user or (
                 request.user.user_type == 2 and
                 request.user.school == school and
-                pupil.room.teacher == request.user
+                request.user in pupil.room.teachers.all()
             ) or (
                 request.method in permissions.SAFE_METHODS and
                 request.user.user_type == 3 and

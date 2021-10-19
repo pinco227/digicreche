@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from accounts.api.serializers import ParentSerializer, TeacherSerializer
 from rest_framework import generics, viewsets
-from schools.api.permissions import (IsManager, IsManagerOrListOnly,
-                                     IsSchoolManager)
+from core.api.permissions import IsManager
+from schools.api.permissions import (IsManagerOrListOnly,
+                                     IsSchoolManagerOrTeacher)
 from schools.api.serializers import SchoolSerializer
 from schools.models import School
 
@@ -29,7 +30,7 @@ class ManagerSchoolList(generics.ListAPIView):
 
 class SchoolTeachersList(generics.ListAPIView):
     serializer_class = TeacherSerializer
-    permission_classes = [IsSchoolManager]
+    permission_classes = [IsSchoolManagerOrTeacher]
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get('slug')
@@ -39,7 +40,7 @@ class SchoolTeachersList(generics.ListAPIView):
 
 class SchoolUnassignedTeachersList(generics.ListAPIView):
     serializer_class = TeacherSerializer
-    permission_classes = [IsSchoolManager]
+    permission_classes = [IsSchoolManagerOrTeacher]
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get('slug')
@@ -51,7 +52,7 @@ class SchoolUnassignedTeachersList(generics.ListAPIView):
 
 class SchoolParentsList(generics.ListAPIView):
     serializer_class = ParentSerializer
-    permission_classes = [IsSchoolManager]
+    permission_classes = [IsSchoolManagerOrTeacher]
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get('slug')

@@ -1,16 +1,18 @@
 import djstripe.models as sm
 import stripe
+from core.api.permissions import IsManager
 from core.api.serializers import PriceSerializer
 from django.conf import settings
 from django_countries import countries
-from rest_framework import generics, permissions, status
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from schools.models import School
 
 
 class ListCountries(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         """
@@ -23,10 +25,13 @@ class ListCountries(APIView):
 class PriceListAPIView(generics.ListAPIView):
     queryset = sm.Price.objects.all()
     serializer_class = PriceSerializer
+    permission_classes = [IsManager]
 
 
 # https://www.saaspegasus.com/guides/django-stripe-integrate/
 class CreateCustomerSubscription(APIView):
+    permission_classes = [IsManager]
+
     def post(self, request):
         try:
             # parse request, extract details, and verify assumptions
@@ -107,6 +112,8 @@ class CreateCustomerSubscription(APIView):
 
 
 class RetrieveSubscription(APIView):
+    permission_classes = [IsManager]
+
     def get(self, request, *args, **kwargs):
         sub_id = kwargs.get('id')
         stripe.api_key = settings.STRIPE_TEST_SECRET_KEY

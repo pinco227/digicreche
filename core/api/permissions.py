@@ -27,3 +27,9 @@ class SubscriptionPaidOrReadOnly(permissions.BasePermission):
         return ((subscription is not None and
                  subscription.is_valid()) or
                 request.method in permissions.SAFE_METHODS)
+
+
+class IsManager(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.user_type == 1

@@ -46,7 +46,7 @@ class PupilListCreateAPIView(generics.ListCreateAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilSerializer
     permission_classes = [
-        IsSchoolManagerTeacherSafe, SubscriptionPaidOrReadOnly]
+        IsSchoolManager, SubscriptionPaidOrReadOnly]
 
     def perform_create(self, serializer):
         kwarg_slug = self.kwargs.get('slug')

@@ -11,7 +11,7 @@ class IsSchoolManagerOrTeacherReadOnly(permissions.BasePermission):
 
         return ((obj.school.manager == request.user or (
             request.method in permissions.SAFE_METHODS and
-            obj.id == request.user.room.id)) and
+            obj == request.user.room)) and
             obj.school.slug == kwarg_slug)
 
 
