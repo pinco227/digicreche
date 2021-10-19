@@ -9,6 +9,7 @@ class Room(models.Model):
                                related_name='rooms')
     name = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField()
+    icon = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.name
