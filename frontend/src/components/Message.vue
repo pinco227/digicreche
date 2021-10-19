@@ -14,7 +14,7 @@
       {{ message.message }}
     </div>
     <div class="col-3 timestamp" :class="{ 'order-1': sent, 'order-2': !sent }">
-      <timeago :datetime="message.timestamp" />
+      <timeago :datetime="message.timestamp" :autoUpdate="true" />
     </div>
   </div>
 </template>

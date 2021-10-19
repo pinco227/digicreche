@@ -6,7 +6,13 @@ urlpatterns = [
     path('prices/', cv.PriceListAPIView.as_view(), name='price-list'),
     path('create-subscription/',
          cv.CreateCustomerSubscription.as_view(), name='create-subscription'),
-    path('retrieve-subscription/<id>/',
-         cv.RetrieveSubscription.as_view(), name='retrieve-subscription'),
+    path('retrieve-stripe-subscription/',
+         cv.RetrieveStripeSubscription.as_view(),
+         name='retrieve-stripe-subscription'),
+    path('retrieve-subscription/<int:pk>/',
+         cv.RetrieveDBSubscription.as_view(),
+         name='retrieve-subscription'),
+    path('retrieve-payment-method/',
+         cv.RetrievePaymentMethod.as_view(), name='retrieve-payment'),
 
 ]

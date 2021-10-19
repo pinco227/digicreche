@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from djstripe.models import Price
+from djstripe.models import Price, Subscription
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -12,3 +12,10 @@ class PriceSerializer(serializers.ModelSerializer):
 
     def get_amount(self, instance):
         return instance.unit_amount / 100
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Subscription
+        fields = '__all__'

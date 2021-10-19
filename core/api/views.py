@@ -1,7 +1,7 @@
 import djstripe.models as sm
 import stripe
 from core.api.permissions import IsManager
-from core.api.serializers import PriceSerializer
+from core.api.serializers import PriceSerializer, SubscriptionSerializer
 from django.conf import settings
 from django_countries import countries
 from rest_framework import generics, status
@@ -111,12 +111,32 @@ class CreateCustomerSubscription(APIView):
             return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class RetrieveSubscription(APIView):
+class RetrieveStripeSubscription(APIView):
     permission_classes = [IsManager]
 
-    def get(self, request, *args, **kwargs):
-        sub_id = kwargs.get('id')
+    def post(self, request):
+        sub_id = request.data.get('id')
         stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
         subscription = stripe.Subscription.retrieve(sub_id)
 
         return Response(subscription, status=status.HTTP_200_OK)
+
+
+class RetrieveDBSubscription(generics.RetrieveAPIView):
+    queryset = sm.Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
+    permission_classes = [IsManager]
+
+
+class RetrievePaymentMethod(APIView):
+    permission_classes = [IsManager]
+
+    def post(self, request):
+        try:
+            stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+            paymentMethod = stripe.PaymentMethod.retrieve(
+                request.data.get('paymentMethodId'),
+            )
+            return Response(paymentMethod, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'detail': e}, status=status.HTTP_403_FORBIDDEN)

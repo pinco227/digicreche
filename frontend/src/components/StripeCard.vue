@@ -75,6 +75,7 @@ export default {
         result.subscription.status === "trialing"
       ) {
         this.error = "Success.";
+        this.$emit("update");
       }
     },
     handlePaymentThatRequiresCustomerAction({
@@ -115,10 +116,15 @@ export default {
             } else {
               if (result.paymentIntent.status === "succeeded") {
                 // Show a success message to your customer.
-                const endpoint = `/api/retrieve-subscription/${subscription.id}/`;
-                const data = await apiService(endpoint);
+                const endpoint = "/api/retrieve-stripe-subscription/";
+                const method = "POST";
+                const payload = {
+                  id: subscription.id,
+                };
+                const data = await apiService(endpoint, method, payload);
                 if (data.status >= 200 && data.status < 300) {
                   subscription = data.body;
+                  console.log("OK", subscription);
                 }
                 // subscription = this.stripe.subscriptions.retrieve(
                 //   subscription.id
