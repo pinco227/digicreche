@@ -34,16 +34,6 @@
             />
           </div>
           <div class="mb-3">
-            <label for="slug" class="form-label">Slug (unique)</label>
-            <input
-              v-model="slug"
-              type="text"
-              class="form-control"
-              id="slug"
-              name="slug"
-            />
-          </div>
-          <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea
               v-model="description"
@@ -242,7 +232,7 @@ export default {
         }
 
         const payload = {
-          slug: this.slug,
+          manager: JSON.parse(window.localStorage.getItem("user")).pk,
           name: this.name,
           description: this.description,
           email: this.email,

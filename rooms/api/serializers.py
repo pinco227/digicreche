@@ -12,7 +12,7 @@ class SchoolRelatedField(serializers.PrimaryKeyRelatedField):
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    school = SchoolRelatedField(allow_null=True)
+    school = SchoolRelatedField()
     school_slug = serializers.SerializerMethodField()
     teachers = serializers.SerializerMethodField()
     pupils_count = serializers.SerializerMethodField()

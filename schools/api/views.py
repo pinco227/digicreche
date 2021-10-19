@@ -1,7 +1,8 @@
-from django.contrib.auth import get_user_model
 from accounts.api.serializers import ParentSerializer, TeacherSerializer
-from rest_framework import generics, viewsets
 from core.api.permissions import IsManager
+from django.contrib.auth import get_user_model
+from django.utils.text import slugify
+from rest_framework import generics, viewsets
 from schools.api.permissions import (IsManagerOrListOnly,
                                      IsSchoolManagerOrTeacher)
 from schools.api.serializers import SchoolSerializer
@@ -15,7 +16,12 @@ class SchoolViewSet(viewsets.ModelViewSet):
     permission_classes = [IsManagerOrListOnly]
 
     def perform_create(self, serializer):
-        serializer.save(manager=self.request.user)
+        slug = slugify(self.request.data['name'])
+        slugs = School.objects.filter(slug=slug)
+        if slugs:
+            slug = slug + '-' + str(self.request.user.id)
+        print(slug)
+        serializer.save(manager=self.request.user, slug=slug)
 
 
 class ManagerSchoolList(generics.ListAPIView):

@@ -11,6 +11,7 @@ class ManagerRelatedField(serializers.PrimaryKeyRelatedField):
 
 
 class SchoolSerializer(serializers.ModelSerializer):
+    slug = serializers.SlugField(read_only=True)
     manager = ManagerRelatedField()
     rooms_count = serializers.SerializerMethodField()
     pupils_count = serializers.SerializerMethodField()
@@ -43,12 +44,8 @@ class SchoolSerializer(serializers.ModelSerializer):
         """
         Check if email is userd by other managers
         """
-        print(" ")
-        print(data['manager'])
-        print(" ")
         schools = School.objects.filter(
             email=data['email']).exclude(manager=data['manager'])
-        print(schools)
 
         if schools:
             raise serializers.ValidationError(

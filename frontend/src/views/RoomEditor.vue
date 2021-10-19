@@ -119,6 +119,9 @@ export default {
         const payload = {
           name: this.name,
           description: this.description,
+          // the school field get updated with the selected school in the backend
+          // but as the field is required, we're passing an integer of 1
+          school: 1,
         };
         const data = await apiService(endpoint, method, payload);
         if (data.status >= 200 && data.status < 300) {
