@@ -29,7 +29,7 @@ class PupilSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pupil
-        # exclude = ['school']
+        # exclude = ['photo', 'personal_details', ]
         fields = '__all__'
 
     def get_school_slug(self, instance):
@@ -37,3 +37,19 @@ class PupilSerializer(serializers.ModelSerializer):
 
     def get_name(self, instance):
         return instance.first_name + ' ' + instance.last_name
+
+
+class PupilPhotoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Pupil
+        # exclude = ['school']
+        fields = ['photo', ]
+
+
+class PupilDetailsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Pupil
+        # exclude = ['school']
+        fields = ['personal_details', ]

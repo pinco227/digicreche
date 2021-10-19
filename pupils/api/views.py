@@ -2,7 +2,9 @@ from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from schools.models import School
 from pupils.models import Pupil
-from pupils.api.serializers import PupilSerializer
+from pupils.api.serializers import (PupilSerializer,
+                                    PupilPhotoSerializer,
+                                    PupilDetailsSerializer)
 from pupils.api.permissions import (IsSchoolManager,
                                     IsSchoolManagerTeacherSafe,
                                     IsSchoolManagerParentTeacherRUD)
@@ -71,3 +73,17 @@ class PupilRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
         school = get_object_or_404(School, slug=kwarg_slug)
 
         serializer.save(school=school)
+
+
+class PupilPhotoAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Pupil.objects.all()
+    serializer_class = PupilPhotoSerializer
+    permission_classes = [
+        IsSchoolManagerParentTeacherRUD, SubscriptionPaidOrReadOnly]
+
+
+class PupilDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Pupil.objects.all()
+    serializer_class = PupilDetailsSerializer
+    permission_classes = [
+        IsSchoolManagerParentTeacherRUD, SubscriptionPaidOrReadOnly]

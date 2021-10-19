@@ -1,9 +1,8 @@
+import os
+
 from django.db import models
 from django.utils.text import slugify
 from pupils.models import Pupil
-import os
-# import boto3
-# from django.conf import settings
 
 
 class ActivityType(models.Model):

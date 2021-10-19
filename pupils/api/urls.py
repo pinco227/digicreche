@@ -18,6 +18,14 @@ urlpatterns = [
          pv.PupilRUDAPIView.as_view(),
          name='pupil-detail'),
 
+    path('schools/<slug:slug>/pupils/<int:pk>/photo/',
+         pv.PupilPhotoAPIView.as_view(),
+         name='pupil-photo'),
+
+    path('schools/<slug:slug>/pupils/<int:pk>/details/',
+         pv.PupilDetailsAPIView.as_view(),
+         name='pupil-details'),
+
     path('children/',
          pv.ChildrenListAPIView.as_view(),
          name='children-list'),
