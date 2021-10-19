@@ -14,7 +14,7 @@ class School(models.Model):
     name = models.CharField(max_length=255, unique=True,
                             null=False, blank=False)
     description = models.TextField()
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255)
     phone_number = PhoneNumberField(null=True, blank=True)
     street_address1 = models.CharField(max_length=100, null=True, blank=True)
     street_address2 = models.CharField(max_length=100, null=True, blank=True)
