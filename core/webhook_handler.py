@@ -2,6 +2,7 @@ import djstripe.models as sm
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
 from schools.models import School
+from django.shortcuts import get_object_or_404
 
 
 class StripeWH_Handler:
@@ -23,7 +24,7 @@ class StripeWH_Handler:
         print(f'Webhook received: {event["type"]}')
 
         customer = event.data.object
-        user = get_user_model().objects.get(email=customer.email)
+        user = get_object_or_404(get_user_model(), email=customer.email)
 
         # Checks if customer in djstripe db, syncs from stripe if is not
         try:
@@ -60,7 +61,7 @@ class StripeWH_Handler:
         print(f'Webhook received: {event["type"]}')
 
         subscription = event.data.object
-        school = School.objects.get(pk=subscription.metadata["school"])
+        school = get_object_or_404(School, pk=subscription.metadata["school"])
 
         # Checks if subscription in djstripe db, syncs from stripe if is not
         try:
@@ -96,7 +97,15 @@ class StripeWH_Handler:
     def handle_subscription_deleted(self, event):
         """ Handle the customer.subscription.deleted webhook event
         from Stripe """
+
+        subscription = event.data.object
+
+        dj_subscription = get_object_or_404(
+            sm.Subscription, id=subscription.id)
+        dj_subscription.delete()
+
         return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
+            content=f'Webhook received: {event["type"]} | SUCCESS: Subscription\
+                        deleted',
             status=200
         )

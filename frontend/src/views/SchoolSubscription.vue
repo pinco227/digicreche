@@ -72,7 +72,36 @@
         </dl>
       </div>
     </div>
-    <div class="row justify-content-center" v-else>
+    <div class="row justify-content-center" v-if="subscription">
+      <div
+        class="col-xs-12 col-md-10 col-lg-8"
+        v-if="subscription.cancel_at_period_end == false"
+      >
+        <h3>Cancel Subscription</h3>
+        <button
+          type="button"
+          class="btn btn-danger"
+          @click.prevent="cancelSubscription"
+        >
+          Cancel
+        </button>
+      </div>
+      <div
+        class="col-xs-12 col-md-10 col-lg-8"
+        v-else-if="subscription.cancel_at_period_end == true"
+      >
+        <h3>Cancel Subscription</h3>
+        <dl>
+          <dt>Request sent on</dt>
+          <dd>{{ dateTime(subscription.canceled_at) }}</dd>
+          <dt>
+            Subscription will cancel automatically at the end of the current
+            period
+          </dt>
+        </dl>
+      </div>
+    </div>
+    <div class="row justify-content-center" v-if="school.is_active == false">
       <div class="col-xs-12 col-md-10 col-lg-8">
         <StripeCard
           v-if="school.is_active == false"
@@ -159,6 +188,31 @@ export default {
         } else {
           // TODO: error handling
           if (data.status == 403) this.$emit("setPermission", false);
+        }
+      }
+    },
+    async cancelSubscription() {
+      if (
+        this.subscription &&
+        this.subscription.cancel_at_period_end == false
+      ) {
+        const endpoint = `/api/cancel-subscription/`;
+        const method = "POST";
+        if (
+          confirm(
+            `Are you sure you want to cancel subscription for school ${this.school.name} ?`
+          )
+        ) {
+          const payload = {
+            slug: this.school.slug,
+          };
+          const data = await apiService(endpoint, method, payload);
+          if (data.status >= 200 && data.status < 300) {
+            this.subscription = data.body.subscription;
+          } else {
+            // TODO: error handling
+            if (data.status == 403) this.$emit("setPermission", false);
+          }
         }
       }
     },

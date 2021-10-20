@@ -113,6 +113,34 @@ class CreateCustomerSubscription(APIView):
             return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class CancelSubscription(APIView):
+    permission_classes = [IsManager]
+
+    def post(self, request):
+        try:
+            stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+            slug = request.data.get('slug')
+            school = generics.get_object_or_404(School, slug=slug)
+            sub_id = school.subscription.id
+            subscription = stripe.Subscription.modify(
+                sub_id,
+                cancel_at_period_end=True
+            )
+            djstripe_subscription = sm.Subscription.sync_from_stripe_data(
+                subscription)
+
+            # associate subscription awith the school
+            school.subscription = djstripe_subscription
+            school.save()
+
+            data = {
+                'subscription': subscription
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class RetrieveStripeSubscription(APIView):
     permission_classes = [IsManager]
 
