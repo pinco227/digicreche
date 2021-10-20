@@ -10,10 +10,7 @@
         </router-link>
       </div>
     </div>
-    <div
-      class="row justify-content-center"
-      v-if="school.is_active == true && subscription"
-    >
+    <div class="row justify-content-center" v-if="subscription">
       <div class="col-12 col-md-6">
         <h3>Subscription details</h3>
         <dl>
@@ -22,43 +19,35 @@
         </dl>
         <dl v-if="subscription.trial_start">
           <dt>Trial started</dt>
-          <dd>{{ dateTime(subscription.trial_start) }}</dd>
+          <dd>{{ moment(subscription.trial_start) }}</dd>
         </dl>
         <dl v-if="subscription.trial_end">
           <dt>Trial end</dt>
-          <dd>{{ dateTime(subscription.trial_end) }}</dd>
+          <dd>{{ moment(subscription.trial_end) }}</dd>
         </dl>
         <dl>
           <dt>Created</dt>
           <dd>
-            {{ dateTime(subscription.created) }}
+            {{ moment(subscription.created) }}
           </dd>
           <dt>Current period start</dt>
           <dd>
-            {{ dateTime(subscription.current_period_start) }}
+            {{ moment(subscription.current_period_start) }}
           </dd>
           <dt>Current period end</dt>
           <dd>
-            {{ dateTime(subscription.current_period_end) }}
+            {{ moment(subscription.current_period_end) }}
           </dd>
         </dl>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-6" v-if="paymentMethod">
         <h3>Billing</h3>
         <dl>
-          <dt>Method</dt>
-          <dd>{{ subscription.collection_method }}</dd>
-        </dl>
-        <dl v-if="paymentMethod">
           <dt>Name</dt>
           <dd>{{ paymentMethod.billing_details.name }}</dd>
         </dl>
         <h3>Payment</h3>
-        <dl
-          v-if="
-            paymentMethod && paymentMethod.type == 'card' && paymentMethod.card
-          "
-        >
+        <dl v-if="paymentMethod.type == 'card' && paymentMethod.card">
           <dt>Card</dt>
           <dd>
             {{ paymentMethod.card.brand }}
@@ -73,32 +62,50 @@
       </div>
     </div>
     <div class="row justify-content-center" v-if="subscription">
+      <div class="col-12 col-md-6" v-if="selectedPrice">
+        <h3>Plan</h3>
+        <dl>
+          <dt>Current Plan</dt>
+          <dd>
+            {{ selectedPrice.amount }} {{ selectedPrice.currency }} /
+            {{ selectedPrice.recurring.interval_count }}
+            {{ selectedPrice.recurring.interval }}
+          </dd>
+        </dl>
+      </div>
       <div
-        class="col-xs-12 col-md-10 col-lg-8"
+        class="col-12 col-md-6"
         v-if="subscription.cancel_at_period_end == false"
       >
         <h3>Cancel Subscription</h3>
         <button
           type="button"
           class="btn btn-danger"
-          @click.prevent="cancelSubscription"
+          @click.prevent="cancelOrReactivateSubscription"
         >
           Cancel
         </button>
       </div>
       <div
-        class="col-xs-12 col-md-10 col-lg-8"
+        class="col-12 col-md-6"
         v-else-if="subscription.cancel_at_period_end == true"
       >
         <h3>Cancel Subscription</h3>
         <dl>
           <dt>Request sent on</dt>
-          <dd>{{ dateTime(subscription.canceled_at) }}</dd>
+          <dd>{{ moment(subscription.canceled_at) }}</dd>
           <dt>
             Subscription will cancel automatically at the end of the current
             period
           </dt>
         </dl>
+        <button
+          type="button"
+          class="btn btn-success"
+          @click.prevent="cancelOrReactivateSubscription"
+        >
+          Reactivate
+        </button>
       </div>
     </div>
     <div class="row justify-content-center" v-if="school.is_active == false">
@@ -106,6 +113,7 @@
         <StripeCard
           v-if="school.is_active == false"
           :school="school"
+          :prices="prices"
           @update="getSchoolData"
         />
       </div>
@@ -136,11 +144,22 @@ export default {
       subscription: {},
       paymentMethod: {},
       error: null,
+      moment: moment,
+      prices: [],
     };
   },
   computed: {
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
+    selectedPrice() {
+      if (this.subscription && this.prices) {
+        const price = this.prices.find(
+          ({ pk }) => pk === this.subscription.plan
+        );
+        return price;
+      }
+      return null;
     },
   },
   methods: {
@@ -191,18 +210,28 @@ export default {
         }
       }
     },
-    async cancelSubscription() {
-      if (
-        this.subscription &&
-        this.subscription.cancel_at_period_end == false
-      ) {
-        const endpoint = `/api/cancel-subscription/`;
+    async getPrices() {
+      const endpoint = "/api/prices/";
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.prices = data.body;
+      } else {
+        // TODO: error handling
+      }
+    },
+    async cancelOrReactivateSubscription() {
+      if (this.subscription) {
+        let endpoint = "";
+        let confirmMessage = "";
+        if (this.subscription.cancel_at_period_end == false) {
+          endpoint = `/api/cancel-subscription/`;
+          confirmMessage = `Are you sure you want to cancel subscription for school ${this.school.name} ?`;
+        } else {
+          endpoint = `/api/reactivate-subscription/`;
+          confirmMessage = `Are you sure you want to reactivate subscription for school ${this.school.name} ?`;
+        }
         const method = "POST";
-        if (
-          confirm(
-            `Are you sure you want to cancel subscription for school ${this.school.name} ?`
-          )
-        ) {
+        if (confirm(confirmMessage)) {
           const payload = {
             slug: this.school.slug,
           };
@@ -224,6 +253,7 @@ export default {
       this.getSchoolData();
       setPageTitle("School Subscription");
     }
+    this.getPrices();
   },
 };
 </script>

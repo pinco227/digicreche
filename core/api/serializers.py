@@ -7,7 +7,7 @@ class PriceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Price
-        fields = ['id', 'metadata', 'active', 'currency',
+        fields = ['pk', 'id', 'metadata', 'active', 'currency',
                   'recurring', 'type', 'amount']
 
     def get_amount(self, instance):

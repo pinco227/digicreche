@@ -41,6 +41,10 @@ export default {
       type: Object,
       required: true,
     },
+    prices: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -50,7 +54,6 @@ export default {
       selectedPrice: null,
       disableSubmit: false,
       error: null,
-      prices: [],
     };
   },
   computed: {
@@ -59,15 +62,6 @@ export default {
     },
   },
   methods: {
-    async getPrices() {
-      const endpoint = "/api/prices/";
-      const data = await apiService(endpoint);
-      if (data.status >= 200 && data.status < 300) {
-        this.prices = data.body;
-      } else {
-        // TODO: error handling
-      }
-    },
     onSubscriptionComplete(result) {
       // Payment was successful.
       if (
@@ -252,10 +246,6 @@ export default {
           }
         });
     },
-  },
-  created() {
-    this.getPrices();
-    // this.disableSubmit = !this.school.is_active;
   },
   mounted() {
     this.stripe = window.Stripe(this.pKey);
