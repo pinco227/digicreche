@@ -8,6 +8,8 @@ urlpatterns = [
          cv.CreateCustomerSubscription.as_view(), name='create-subscription'),
     path('cancel-subscription/',
          cv.CancelSubscription.as_view(), name='cancel-subscription'),
+    path('update-subscription/',
+         cv.UpdateSubscription.as_view(), name='update-subscription'),
     path('reactivate-subscription/',
          cv.ReactivateSubscription.as_view(), name='reactivate-subscription'),
     path('retrieve-stripe-subscription/',

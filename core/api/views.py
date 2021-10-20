@@ -113,6 +113,43 @@ class CreateCustomerSubscription(APIView):
             return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UpdateSubscription(APIView):
+    permission_classes = [IsManager]
+
+    def post(self, request):
+        try:
+            stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+
+            slug = request.data.get('slug')
+            school = generics.get_object_or_404(School, slug=slug)
+            sub_id = school.subscription.id
+            price_id = request.data.get('price_id')
+
+            subscription = stripe.Subscription.retrieve(sub_id)
+
+            subscription = stripe.Subscription.modify(
+                sub_id,
+                cancel_at_period_end=False,
+                proration_behavior='create_prorations',
+                items=[{
+                    'id': subscription['items']['data'][0].id,
+                    'price': price_id,
+                }]
+            )
+            djstripe_subscription = sm.Subscription.sync_from_stripe_data(
+                subscription)
+
+            # associate subscription awith the school
+            school.subscription = djstripe_subscription
+            school.save()
+
+            serializer = SubscriptionSerializer(djstripe_subscription)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class CancelSubscription(APIView):
     permission_classes = [IsManager]
 
@@ -133,10 +170,9 @@ class CancelSubscription(APIView):
             school.subscription = djstripe_subscription
             school.save()
 
-            data = {
-                'subscription': subscription
-            }
-            return Response(data, status=status.HTTP_200_OK)
+            serializer = SubscriptionSerializer(djstripe_subscription)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -165,10 +201,9 @@ class ReactivateSubscription(APIView):
             school.subscription = djstripe_subscription
             school.save()
 
-            data = {
-                'subscription': subscription
-            }
-            return Response(data, status=status.HTTP_200_OK)
+            serializer = SubscriptionSerializer(djstripe_subscription)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -201,7 +236,6 @@ class RetrievePaymentMethod(APIView):
             paymentMethod = generics.get_object_or_404(sm.PaymentMethod,
                                                        id=pm_id)
             serializer = PaymentMethodSerializer(paymentMethod)
-            print(serializer.data)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:

@@ -64,14 +64,24 @@
     <div class="row justify-content-center" v-if="subscription">
       <div class="col-12 col-md-6" v-if="selectedPrice">
         <h3>Plan</h3>
-        <dl>
-          <dt>Current Plan</dt>
-          <dd>
-            {{ selectedPrice.amount }} {{ selectedPrice.currency }} /
-            {{ selectedPrice.recurring.interval_count }}
-            {{ selectedPrice.recurring.interval }}
-          </dd>
-        </dl>
+        <ul class="list-group" v-for="plan in prices" :key="plan.pk">
+          <li class="list-group-item">
+            {{ plan.amount }} {{ plan.currency }} /
+            {{ plan.recurring.interval_count }}
+            {{ plan.recurring.interval }}
+            <span class="badge bg-dark float-end" v-if="plan == selectedPrice"
+              >Current</span
+            >
+            <button
+              type="button"
+              class="btn btn-sm btn-light float-end"
+              @click.prevent="updateSubscription(plan.id)"
+              v-else
+            >
+              Change to this
+            </button>
+          </li>
+        </ul>
       </div>
       <div
         class="col-12 col-md-6"
@@ -237,7 +247,30 @@ export default {
           };
           const data = await apiService(endpoint, method, payload);
           if (data.status >= 200 && data.status < 300) {
-            this.subscription = data.body.subscription;
+            this.subscription = data.body;
+          } else {
+            // TODO: error handling
+            if (data.status == 403) this.$emit("setPermission", false);
+          }
+        }
+      }
+    },
+    async updateSubscription(price_id) {
+      if (this.subscription) {
+        const endpoint = `/api/update-subscription/`;
+        const method = "POST";
+        if (
+          confirm(
+            `Are you sure you want to update subscription for school ${this.school.name} ?`
+          )
+        ) {
+          const payload = {
+            slug: this.school.slug,
+            price_id: price_id,
+          };
+          const data = await apiService(endpoint, method, payload);
+          if (data.status >= 200 && data.status < 300) {
+            this.subscription = data.body;
           } else {
             // TODO: error handling
             if (data.status == 403) this.$emit("setPermission", false);
