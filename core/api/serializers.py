@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from djstripe.models import Price, Subscription
+from djstripe.models import Price, Subscription, PaymentMethod
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -18,4 +18,11 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subscription
+        fields = '__all__'
+
+
+class PaymentMethodSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PaymentMethod
         fields = '__all__'

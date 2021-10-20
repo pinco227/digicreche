@@ -1,7 +1,8 @@
 import djstripe.models as sm
 import stripe
 from core.api.permissions import IsManager
-from core.api.serializers import PriceSerializer, SubscriptionSerializer
+from core.api.serializers import (PaymentMethodSerializer, PriceSerializer,
+                                  SubscriptionSerializer)
 from django.conf import settings
 from django_countries import countries
 from rest_framework import generics, status
@@ -94,6 +95,7 @@ class CreateCustomerSubscription(APIView):
                     billing_cycle_anchor='now',
                     proration_behavior='create_prorations',
                     expand=['latest_invoice.payment_intent'],
+                    default_payment_method=payment_method,
                 )
                 sm.Subscription.sync_from_stripe_data(subscription)
 
@@ -133,10 +135,14 @@ class RetrievePaymentMethod(APIView):
 
     def post(self, request):
         try:
-            stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
-            paymentMethod = stripe.PaymentMethod.retrieve(
-                request.data.get('paymentMethodId'),
-            )
-            return Response(paymentMethod, status=status.HTTP_200_OK)
+            user = request.user
+            pm_id = (
+                user.customer.invoice_settings['default_payment_method'])
+            paymentMethod = generics.get_object_or_404(sm.PaymentMethod,
+                                                       id=pm_id)
+            serializer = PaymentMethodSerializer(paymentMethod)
+            print(serializer.data)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'detail': e}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)

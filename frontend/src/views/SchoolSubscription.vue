@@ -16,29 +16,60 @@
     >
       <div class="col-12 col-md-6">
         <h3>Subscription details</h3>
-        <p>Status: {{ subscription.status }}</p>
-        <p v-if="subscription.trial_start">
-          Trial started: {{ dateTime(subscription.trial_start) }}
-        </p>
-        <p v-if="subscription.trial_end">
-          Trial end: {{ dateTime(subscription.trial_end) }}
-        </p>
-        <p>
-          Created:
-          {{ dateTime(subscription.created) }}
-        </p>
-        <p>
-          Current period start:
-          {{ dateTime(subscription.current_period_start) }}
-        </p>
-        <p>
-          Current period end:
-          {{ dateTime(subscription.current_period_end) }}
-        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd>{{ subscription.status }}</dd>
+        </dl>
+        <dl v-if="subscription.trial_start">
+          <dt>Trial started</dt>
+          <dd>{{ dateTime(subscription.trial_start) }}</dd>
+        </dl>
+        <dl v-if="subscription.trial_end">
+          <dt>Trial end</dt>
+          <dd>{{ dateTime(subscription.trial_end) }}</dd>
+        </dl>
+        <dl>
+          <dt>Created</dt>
+          <dd>
+            {{ dateTime(subscription.created) }}
+          </dd>
+          <dt>Current period start</dt>
+          <dd>
+            {{ dateTime(subscription.current_period_start) }}
+          </dd>
+          <dt>Current period end</dt>
+          <dd>
+            {{ dateTime(subscription.current_period_end) }}
+          </dd>
+        </dl>
       </div>
       <div class="col-12 col-md-6">
+        <h3>Billing</h3>
+        <dl>
+          <dt>Method</dt>
+          <dd>{{ subscription.collection_method }}</dd>
+        </dl>
+        <dl v-if="paymentMethod">
+          <dt>Name</dt>
+          <dd>{{ paymentMethod.billing_details.name }}</dd>
+        </dl>
         <h3>Payment</h3>
-        <p>Method: {{ subscription.collection_method }}</p>
+        <dl
+          v-if="
+            paymentMethod && paymentMethod.type == 'card' && paymentMethod.card
+          "
+        >
+          <dt>Card</dt>
+          <dd>
+            {{ paymentMethod.card.brand }}
+            {{ paymentMethod.card.funding }} ending
+            {{ paymentMethod.card.last4 }} <br />
+            Expiry date:
+            {{ paymentMethod.card.exp_month }} /
+            {{ paymentMethod.card.exp_year }}
+          </dd>
+          <dt></dt>
+        </dl>
       </div>
     </div>
     <div class="row justify-content-center" v-else>
@@ -74,6 +105,7 @@ export default {
     return {
       school: {},
       subscription: {},
+      paymentMethod: {},
       error: null,
     };
   },
@@ -92,7 +124,10 @@ export default {
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {
           this.school = data.body;
-          if (this.school.is_active) this.getSubscriptionData();
+          if (this.school.is_active) {
+            this.getSubscriptionData();
+            this.getPaymentData();
+          }
         } else {
           // TODO: error handling
           if (data.status == 403) this.$emit("setPermission", false);
@@ -105,6 +140,22 @@ export default {
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {
           this.subscription = data.body;
+        } else {
+          // TODO: error handling
+          if (data.status == 403) this.$emit("setPermission", false);
+        }
+      }
+    },
+    async getPaymentData() {
+      if (this.school.is_active) {
+        const endpoint = `/api/retrieve-payment-method/`;
+        const method = "POST";
+        const payload = {
+          slug: this.school.slug,
+        };
+        const data = await apiService(endpoint, method, payload);
+        if (data.status >= 200 && data.status < 300) {
+          this.paymentMethod = data.body;
         } else {
           // TODO: error handling
           if (data.status == 403) this.$emit("setPermission", false);
