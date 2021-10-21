@@ -34,7 +34,18 @@ class ParentSerializer(UserSerializer):
 
 class ChatUsertSerializer(UserSerializer):
     unread = serializers.NullBooleanField()
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = DigiCrecheUser
         fields = ['id', 'name',  'last_login', 'user_type', 'unread']
+
+    def get_name(self, instance):
+        if instance.user_type == 1:
+            role = 'Manager'
+        elif instance.user_type == 2:
+            role = 'Teacher'
+        else:
+            role = 'Parent'
+
+        return f'{instance.first_name} {instance.last_name} ({role})'

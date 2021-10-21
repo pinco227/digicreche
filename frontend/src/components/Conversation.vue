@@ -52,17 +52,21 @@ export default {
       newMessage: "",
     };
   },
-  computed: mapState(["messages", "activeChat"]),
+  computed: mapState(["conversations", "messages", "activeChat"]),
   methods: {
     ...mapMutations({ send: "SEND_MESSAGE" }),
     ...mapActions(["loadConversations", "loadMore"]),
     async sendMessage() {
+      const conversation = this.conversations.find(
+        ({ id }) => id === this.activeChat
+      );
       let data = {
         message: this.newMessage,
         receiver: this.activeChat,
       };
       this.$socket.send(JSON.stringify(data));
       this.newMessage = null;
+      if (typeof conversation === "undefined") this.loadConversations();
     },
     scrollToBottom() {
       const chatView = this.$refs.chat;

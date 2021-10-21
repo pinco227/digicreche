@@ -107,6 +107,7 @@ export const store = createStore({
     selectChat(context, chat_id) {
       context.commit("SET_ACTIVE_CHAT", chat_id);
       context.dispatch("loadMessages", { chat_id: chat_id });
+      context.dispatch("loadConversations");
     },
   },
 });

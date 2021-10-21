@@ -7,4 +7,7 @@ urlpatterns = [
 
     path('chats/<int:pk>/',
          views.MessageReadAPIView.as_view(), name='chat-view'),
+
+    path('contacts/',
+         views.ContactListAPIView.as_view(), name='contact-list'),
 ]

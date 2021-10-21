@@ -252,8 +252,10 @@ export default {
   created() {
     this.getRoomData();
     this.getRoomPupils();
-    this.getUnassignedTeachers();
-    this.getUnassignedPupils();
+    if (this.isManager) {
+      this.getUnassignedTeachers();
+      this.getUnassignedPupils();
+    }
   },
   mounted() {
     if (this.isManager) {

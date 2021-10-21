@@ -6,6 +6,15 @@
     }"
   >
     <h2>Chats</h2>
+    <button
+      class="btn btn-sm btn-outline-success float-end"
+      id="startChat"
+      v-if="contacts.length"
+      data-bs-toggle="modal"
+      data-bs-target="#contactsModal"
+    >
+      <i class="fas fa-plus"></i>
+    </button>
     <div class="list-group">
       <button
         class="list-group-item list-group-item-action"
@@ -17,14 +26,56 @@
         <span :class="{ 'fw-bolder': chat.unread }">{{ chat.name }}</span>
       </button>
     </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="contactsModal"
+      tabindex="-1"
+      aria-labelledby="contactsModalLabel"
+      aria-hidden="true"
+      v-if="contacts.length"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="contactsModalLabel">Contact list</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group">
+              <button
+                class="list-group-item list-group-item-action"
+                v-for="contact in contacts"
+                :key="contact.id"
+                @click="setChat(contact.id)"
+                data-bs-dismiss="modal"
+              >
+                {{ contact.name }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { apiService } from "@/common/api.service.js";
 
 export default {
   name: "ConversationList",
+  data() {
+    return {
+      contacts: [],
+    };
+  },
   computed: mapState(["conversations", "activeChat"]),
   methods: {
     ...mapActions(["loadConversations", "selectChat"]),
@@ -32,9 +83,19 @@ export default {
       this.selectChat(id);
       this.$router.push({ name: "chat", params: { chatId: id } });
     },
+    async getContacts() {
+      const endpoint = `/api/contacts/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.contacts = data.body;
+      } else {
+        // TODO: error handling
+      }
+    },
   },
   created() {
     this.loadConversations();
+    this.getContacts();
   },
 };
 </script>

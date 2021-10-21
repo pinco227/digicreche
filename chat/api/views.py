@@ -1,12 +1,13 @@
-# Django Build in User Model
 from accounts.api.serializers import ChatUsertSerializer
-from chat.api.serializers import MessageSerializer
 from chat.api.pagination import PageNumPagination
+from chat.api.serializers import MessageSerializer
 from chat.models import Message
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from schools.models import School
 
 
 class ConversationListAPIView(APIView):
@@ -54,3 +55,35 @@ class MessageReadAPIView(generics.ListCreateAPIView):
                 message.is_read = True
                 message.save()
         return queryset
+
+
+class ContactListAPIView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        user_type = user.user_type
+
+        if user_type == 1:
+            schools = School.objects.filter(manager=user)
+            queryset = get_user_model().objects.filter(
+                school__in=schools).order_by('user_type')
+        elif user_type == 2:
+            if user.school:
+                queryset = get_user_model().objects.filter(
+                    Q(id=user.school.manager.id) |
+                    (Q(school=user.school) & ~Q(id=user.id))
+                ).order_by('user_type')
+            else:
+                queryset = None
+        else:
+            if user.school:
+                queryset = get_user_model().objects.filter(
+                    Q(id=user.school.manager.id) |
+                    (Q(school=user.school) & Q(user_type=2))
+                ).order_by('user_type')
+            else:
+                queryset = None
+
+        serializer = ChatUsertSerializer(
+            queryset, many=True, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
