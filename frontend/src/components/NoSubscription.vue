@@ -11,8 +11,8 @@
             This school has no active subscription. Functionality is limited!
           </span>
           <span v-if="isManager">
-            You need a subscription to add rooms, pupils, activities, assign
-            teachers and pupils to rooms.
+            You need a subscription to add, edit or delete rooms, pupils,
+            activities or assign teachers and pupils to rooms.
             <router-link
               :to="{
                 name: 'school-subscription',

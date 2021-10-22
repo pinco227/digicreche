@@ -7,76 +7,79 @@
         </button>
       </div>
     </div>
+    <NoSubscriptionComponent :school="school" v-if="noSubscription" />
     <div class="row justify-content-center">
       <div class="col-xs-12 col-md-10 col-lg-8">
-        <h1 class="mb-3" v-if="pupilId">
-          Edit {{ first_name }} {{ last_name }}
-        </h1>
-        <h1 class="mb-3" v-else>Add a pupil</h1>
         <form @submit.prevent="onSubmit">
-          <div class="mb-3">
-            <label for="first_name" class="form-label">First Name</label>
-            <input
-              v-model="first_name"
-              type="text"
-              class="form-control"
-              id="first_name"
-              name="first_name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="last_name" class="form-label">Last Name</label>
-            <input
-              v-model="last_name"
-              type="text"
-              class="form-control"
-              id="last_name"
-              name="last_name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="room" class="form-label">Room</label>
-            <select v-model="room" class="form-select" id="room" name="room">
-              <option v-if="!pupilId && !room" :value="null" selected>
-                - Unassigned -
-              </option>
-              <option v-else :value="null">- Unassigned -</option>
-              <option
-                v-for="(room_item, index) in schoolRooms"
-                :key="index"
-                :value="room_item.id"
+          <fieldset :disabled="noSubscription">
+            <legend class="mb-3" v-if="pupilId">
+              Edit {{ first_name }} {{ last_name }}
+            </legend>
+            <legend class="mb-3" v-else>Add a pupil</legend>
+            <div class="mb-3">
+              <label for="first_name" class="form-label">First Name</label>
+              <input
+                v-model="first_name"
+                type="text"
+                class="form-control"
+                id="first_name"
+                name="first_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="last_name" class="form-label">Last Name</label>
+              <input
+                v-model="last_name"
+                type="text"
+                class="form-control"
+                id="last_name"
+                name="last_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="room" class="form-label">Room</label>
+              <select v-model="room" class="form-select" id="room" name="room">
+                <option v-if="!pupilId && !room" :value="null" selected>
+                  - Unassigned -
+                </option>
+                <option v-else :value="null">- Unassigned -</option>
+                <option
+                  v-for="(room_item, index) in schoolRooms"
+                  :key="index"
+                  :value="room_item.id"
+                >
+                  {{ room_item.name }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="parents" class="form-label">Parent(s)</label>
+              <select
+                multiple
+                v-model="parents"
+                class="form-select"
+                id="parents"
+                name="parents"
               >
-                {{ room_item.name }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="parents" class="form-label">Parent(s)</label>
-            <select
-              multiple
-              v-model="parents"
-              class="form-select"
-              id="parents"
-              name="parents"
-            >
-              <option
-                v-for="(parent, index) in schoolParents"
-                :key="index"
-                :value="parent.id"
-              >
-                {{ parent.name }}
-              </option>
-            </select>
-          </div>
+                <option
+                  v-for="(parent, index) in schoolParents"
+                  :key="index"
+                  :value="parent.id"
+                >
+                  {{ parent.name }}
+                </option>
+              </select>
+            </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <a
-            v-if="pupilId"
-            @click="deletePupil"
-            class="btn btn-danger float-end"
-          >
-            Delete Pupil
-          </a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a
+              v-if="pupilId"
+              @click="deletePupil"
+              class="btn btn-danger float-end"
+            >
+              Delete Pupil
+            </a>
+          </fieldset>
         </form>
         <p v-if="error" class="muted mt-2">{{ error }}</p>
       </div>
@@ -87,6 +90,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
 export default {
   name: "PupilEditor",
@@ -102,13 +106,16 @@ export default {
       required: false,
     },
   },
+  components: {
+    NoSubscriptionComponent,
+  },
   data() {
     return {
       first_name: null,
       last_name: null,
       room: null,
       parents: [],
-      school: null,
+      school: {},
       schoolRooms: [],
       schoolParents: [],
       error: null,
@@ -118,16 +125,19 @@ export default {
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
     },
+    noSubscription() {
+      return Object.keys(this.school).length && !this.school.is_active;
+    },
   },
   methods: {
     goBack() {
       this.$router.back();
     },
-    async getSchoolId() {
+    async getSchoolData() {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
-        this.school = data.body.id;
+        this.school = data.body;
       } else {
         // TODO: error handling
         if (data.status == 403) this.$emit("setPermission", false);
@@ -193,7 +203,7 @@ export default {
           last_name: this.last_name,
           room: this.room,
           parents: this.parents,
-          school: this.school,
+          school: this.school.id,
         };
         const data = await apiService(endpoint, method, payload);
         if (data.status >= 200 && data.status < 300) {
@@ -257,7 +267,7 @@ export default {
       this.$emit("setPermission", false);
       setPageTitle("Forbidden");
     } else {
-      this.getSchoolId();
+      this.getSchoolData();
       this.getSchoolRooms();
       this.getSchoolParents();
       if (this.pupilId) {

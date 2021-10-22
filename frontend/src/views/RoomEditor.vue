@@ -21,36 +21,43 @@
         </router-link>
       </div>
     </div>
+    <NoSubscriptionComponent :school="school" v-if="noSubscription" />
     <div class="row justify-content-center">
       <div class="col-xs-12 col-md-10 col-lg-8">
-        <h1 class="mb-3" v-if="roomId">Edit {{ name }}</h1>
-        <h1 class="mb-3" v-else>Add a room</h1>
         <form @submit.prevent="onSubmit">
-          <div class="mb-3">
-            <label for="name" class="form-label">Room Name</label>
-            <input
-              v-model="name"
-              type="text"
-              class="form-control"
-              id="name"
-              name="name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea
-              v-model="description"
-              rows="3"
-              class="form-control"
-              id="description"
-              name="description"
-            ></textarea>
-          </div>
+          <fieldset :disabled="noSubscription">
+            <legend class="mb-3" v-if="roomId">Edit {{ name }}</legend>
+            <legend class="mb-3" v-else>Add a room</legend>
+            <div class="mb-3">
+              <label for="name" class="form-label">Room Name</label>
+              <input
+                v-model="name"
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                v-model="description"
+                rows="3"
+                class="form-control"
+                id="description"
+                name="description"
+              ></textarea>
+            </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <a v-if="roomId" @click="deleteRoom" class="btn btn-danger float-end">
-            Delete Room
-          </a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a
+              v-if="roomId"
+              @click="deleteRoom"
+              class="btn btn-danger float-end"
+            >
+              Delete Room
+            </a>
+          </fieldset>
         </form>
         <p v-if="error" class="muted mt-2">{{ error }}</p>
       </div>
@@ -61,6 +68,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
 export default {
   name: "RoomEditor",
@@ -76,16 +84,23 @@ export default {
       required: true,
     },
   },
+  components: {
+    NoSubscriptionComponent,
+  },
   data() {
     return {
       name: null,
       description: null,
       error: null,
+      school: {},
     };
   },
   computed: {
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
+    noSubscription() {
+      return Object.keys(this.school).length && !this.school.is_active;
     },
   },
   methods: {
@@ -101,6 +116,17 @@ export default {
           // TODO: error handling
           if (data.status == 403) this.$emit("setPermission", false);
         }
+      }
+    },
+    async getSchoolData() {
+      const endpoint = `/api/schools/${this.schoolSlug}/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.school = data.body;
+        setPageTitle(data.body.name);
+      } else {
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async onSubmit() {
@@ -165,6 +191,7 @@ export default {
       } else {
         setPageTitle("Add Room");
       }
+      this.getSchoolData();
     }
   },
 };
