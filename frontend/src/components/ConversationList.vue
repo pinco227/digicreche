@@ -5,16 +5,20 @@
       'col-md-5 col-lg-6 d-none d-md-block': activeChat,
     }"
   >
-    <h2>Chats</h2>
-    <button
-      class="btn btn-sm btn-outline-success float-end"
-      id="startChat"
-      v-if="contacts.length"
-      data-bs-toggle="modal"
-      data-bs-target="#contactsModal"
-    >
-      <i class="fas fa-plus"></i>
-    </button>
+    <div class="row my-2">
+      <div class="col-12 head-tile flex-row justify-content-between">
+        <h2>Chats</h2>
+        <button
+          class="btn btn-lg btn-outline-success"
+          id="startChat"
+          v-if="contacts.length"
+          data-bs-toggle="modal"
+          data-bs-target="#contactsModal"
+        >
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+    </div>
     <div class="list-group">
       <button
         class="list-group-item list-group-item-action"

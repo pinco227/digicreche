@@ -67,11 +67,55 @@ export default {
   --orange-accent-light: #ffa13c;
   --orange-accent: #e25a00;
   --orange-accent-dark: #a74809;
+  --body-text: #454545;
 }
 
 body {
-  background-color: #ebebeb;
+  background-color: var(--body-bg);
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
+  color: var(--body-text);
+}
+.head-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: linear-gradient(90deg, var(--light-bg) 0%, var(--body-bg) 100%);
+}
+.head-tile p {
+  margin: 0;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: linear-gradient(180deg, var(--light-bg) 0%, var(--body-bg) 100%);
+  color: var(--orange-accent-dark);
+  font-size: 1.5rem;
+  font-weight: bolder;
+  text-decoration: none;
+  height: 100%;
+}
+.tile:hover {
+  background: var(--light-bg);
+  color: var(--orange-accent);
+}
+.tile i {
+  font-size: 2rem;
+  color: var(--body-text);
+}
+.tile:hover i {
+  color: var(--orange-accent);
+}
+.tile .tile-caption {
+  font-size: 1rem;
+  color: var(--body-text);
+  margin: 0;
 }
 </style>

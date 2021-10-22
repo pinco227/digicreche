@@ -10,19 +10,19 @@
         </router-link>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center g-2 my-2">
       <div
         v-for="school in schools"
         :key="school.pk"
         class="col-xs-6 col-md-4 col-lg-3 text-center"
       >
-        <h2>
-          <router-link
-            :to="{ name: 'school-rooms', params: { schoolSlug: school.slug } }"
-          >
-            {{ school.name }}
-          </router-link>
-        </h2>
+        <router-link
+          :to="{ name: 'school-rooms', params: { schoolSlug: school.slug } }"
+          class="tile"
+        >
+          <i class="fas fa-school"></i>
+          {{ school.name }}
+        </router-link>
       </div>
     </div>
   </div>

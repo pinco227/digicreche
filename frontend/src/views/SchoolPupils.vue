@@ -25,12 +25,12 @@
       :school="school"
       v-if="isManager && Object.keys(school).length && !school.is_active"
     />
-    <div class="row">
-      <div class="col-12">
+    <div class="row my-2">
+      <div class="col-12 head-tile">
         <h2>{{ school.name }}</h2>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center g-2">
       <h3>Unassigned Pupils ({{ school.unassigned_pupils }})</h3>
       <PupilComponent
         v-for="pupil in unassignedPupils"
@@ -38,7 +38,7 @@
         :key="pupil.id"
       />
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center g-2">
       <h3>Pupils ({{ school.pupils_count }})</h3>
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
     </div>

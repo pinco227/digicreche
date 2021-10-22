@@ -39,47 +39,47 @@
       :school="school"
       v-if="isManager && Object.keys(school).length && !school.is_active"
     />
-    <div class="row">
-      <div class="col-12">
+    <div class="row my-2">
+      <div class="col-12 head-tile">
         <h2>{{ room.name }}</h2>
+        <p>{{ room.description }}</p>
+        <p>Pupils: {{ room.pupils_count }}</p>
         Teacher(s):
-        <span v-if="hasTeacher">
-          <AssignedTeacherComponent
-            v-for="teacher in room.teachers"
-            :key="teacher.id"
-            :teacher="teacher"
-            :noSubscription="noSubscription"
-            @unassign-teacher="unassignTeacher"
-          />
-        </span>
-        <span id="assignTeacherPop" class="d-inline-block" tabindex="2">
-          <a
-            role="button"
-            v-if="isManager"
-            class="btn btn-sm btn-outline-success"
-            :class="{
-              'd-none': !unassignedTeachers.length,
-              disabled: noSubscription,
-            }"
-            id="assignNewTeacher"
-            tabindex="3"
-          >
-            <i class="fas fa-plus"></i>
-          </a>
-        </span>
-        <p>
-          Pupils: {{ room.pupils_count }} <br />
-          {{ room.description }}
-        </p>
+        <div>
+          <span v-if="hasTeacher">
+            <AssignedTeacherComponent
+              v-for="teacher in room.teachers"
+              :key="teacher.id"
+              :teacher="teacher"
+              :noSubscription="noSubscription"
+              @unassign-teacher="unassignTeacher"
+            />
+          </span>
+          <span id="assignTeacherPop" class="d-inline-block" tabindex="2">
+            <a
+              role="button"
+              v-if="isManager"
+              class="btn btn-sm btn-outline-success"
+              :class="{
+                'd-none': !unassignedTeachers.length,
+                disabled: noSubscription,
+              }"
+              id="assignNewTeacher"
+              tabindex="3"
+            >
+              <i class="fas fa-plus"></i>
+            </a>
+          </span>
+        </div>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center my-2 g-2">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
       <div v-if="isManager" class="col-xs-4 col-md-3 col-lg-2 text-center">
         <span id="assignPupilPop" class="d-inline-block" tabindex="4">
           <button
             role="button"
-            class="btn btn-lg btn-outline-success"
+            class="btn btn-lg btn-outline-success tile"
             id="assignNewPupil"
             tabindex="5"
             :class="{
@@ -329,3 +329,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn.tile {
+  border: 1px solid var(--green-accent);
+  color: var(--green-accent);
+}
+.btn.tile:hover {
+  background: var(--light-bg);
+}
+.btn.tile i {
+  color: var(--green-accent);
+}
+</style>

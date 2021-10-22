@@ -25,8 +25,8 @@
       </div>
     </div>
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
-    <div class="row">
-      <div class="col-12">
+    <div class="row my-2 justify-content-center">
+      <div class="col-12 head-tile">
         <h2>{{ school.name }}</h2>
         <p>
           Rooms: {{ school.rooms_count }} <br />
@@ -36,7 +36,7 @@
         </p>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row my-2 justify-content-center g-2">
       <RoomComponent v-for="room in rooms" :room="room" :key="room.id" />
     </div>
   </div>

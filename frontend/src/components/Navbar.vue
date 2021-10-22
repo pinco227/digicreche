@@ -171,7 +171,7 @@ export default {
 
 <style scoped>
 .dc-navbar {
-  background-color: #fffdfd;
+  background: linear-gradient(0deg, var(--light-bg) 50%, var(--body-bg) 150%);
   border-bottom: 3px solid #00da0b;
   padding: 0;
 }

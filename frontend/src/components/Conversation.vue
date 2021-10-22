@@ -114,4 +114,11 @@ export default {
   width: 100%;
   text-align: center;
 }
+.chat-view {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-bottom: 4.5rem;
+  height: calc(100vh - 106px);
+  background-color: #f6f6f6;
+}
 </style>
