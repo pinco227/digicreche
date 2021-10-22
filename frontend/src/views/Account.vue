@@ -1,5 +1,5 @@
 <template>
-  <section id="account">
+  <section id="account" v-if="Object.keys(user).length">
     <div class="row justify-content-between my-2">
       <div class="col-6">
         <GoBackComponent />
@@ -12,12 +12,15 @@
         <span v-if="user.user_type == 1">Manager</span>
         <span v-else-if="user.user_type == 2">Teacher</span>
         <span v-else>Parent</span>
-        <div v-if="user.user_type != 1">
+        <br />
+        <div v-if="user.user_type != 1 && Object.keys(school).length">
           School: {{ school.name }}<br />
-          <div v-if="user.user_type == 2">Room: {{ room.name }}</div>
+          <div v-if="(user.user_type == 2) & Object.keys(room).length">
+            Room: {{ room.name }}
+          </div>
         </div>
         Email: {{ user.email }}<br />
-        Joined: {{ user.date_joined }}
+        Joined: {{ moment(user.date_joined) }}
       </div>
     </div>
     <div class="row justify-content-center">
@@ -131,6 +134,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import moment from "moment";
 import GoBackComponent from "@/components/GoBack.vue";
 export default {
   name: "Account",
@@ -144,6 +148,7 @@ export default {
       room: {},
       country_list: [],
       error: null,
+      moment: moment,
     };
   },
   methods: {
@@ -164,7 +169,7 @@ export default {
       }
     },
     async getSchoolData() {
-      if (this.user.school_slug) {
+      if (Object.keys(this.user).length && this.user.school_slug) {
         const endpoint = `/api/schools/${this.user.school_slug}/`;
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {
@@ -175,7 +180,11 @@ export default {
       }
     },
     async getRoomData() {
-      if (this.user.school_slug && this.user.room) {
+      if (
+        Object.keys(this.user).length &&
+        this.user.school_slug &&
+        this.user.room
+      ) {
         const endpoint = `/api/schools/${this.user.school_slug}/rooms/${this.user.room}/`;
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {

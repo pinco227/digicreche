@@ -14,6 +14,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { setPageTitle } from "@/common/functions.js";
 import ConversationComponent from "@/components/Conversation.vue";
 import ConversationList from "@/components/ConversationList.vue";
 import GoBackComponent from "@/components/GoBack.vue";
@@ -44,6 +45,7 @@ export default {
     if (this.chatId) {
       this.selectChat(this.chatId);
     }
+    setPageTitle("Chat");
   },
 };
 </script>

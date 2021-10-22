@@ -40,6 +40,7 @@ export default {
     updatePermission(value) {
       this.permission = value;
       if (!value) setPageTitle("Forbidden");
+      else setPageTitle("");
     },
   },
   created() {
