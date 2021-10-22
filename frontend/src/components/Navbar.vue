@@ -121,6 +121,17 @@
             <li>
               <router-link
                 :to="{
+                  name: 'subscription-list',
+                }"
+                class="dropdown-item"
+                v-if="user.user_type == 1"
+              >
+                Manage Subscriptions <i class="fas fa-wallet"></i>
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                :to="{
                   name: 'school-subscription',
                   params: { schoolSlug: $route.params.schoolSlug },
                 }"
@@ -237,6 +248,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 .dropdown-item:focus,
 .dropdown-item:hover {

@@ -36,6 +36,11 @@ export default {
       schools: [],
     };
   },
+  computed: {
+    isManager() {
+      return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
+  },
   methods: {
     async getSchools() {
       const endpoint = "/api/my-schools/";
@@ -49,7 +54,7 @@ export default {
     },
   },
   created() {
-    if (JSON.parse(window.localStorage.getItem("user")).user_type == 1) {
+    if (this.isManager) {
       this.getSchools();
       this.$emit("setPermission", true);
       setPageTitle("Schools List");
