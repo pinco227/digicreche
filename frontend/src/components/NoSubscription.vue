@@ -7,8 +7,8 @@
       >
         <i class="fas fa-exclamation-circle fs-1"></i>
         <div class="d-flex flex-column gap-1">
-          <span>
-            This school's subscriptions is not active. Functionality is limited!
+          <span class="fw-bolder">
+            This school has no active subscription. Functionality is limited!
           </span>
           <span v-if="isManager">
             You need a subscription to add rooms, pupils, activities, assign
@@ -18,13 +18,13 @@
                 name: 'school-subscription',
                 params: { schoolSlug: school.slug },
               }"
-              class="d-block btn btn-sm btn-danger mt-1"
+              class="d-block btn btn-sm btn-danger mt-2"
             >
-              Buy Subscription
+              Try for free (14 days)
             </router-link>
           </span>
           <span v-else>
-            <span v-if="isTeacher" class="mb-1">
+            <span v-if="isTeacher" class="mb-2">
               You cannot add activities to pupils.
             </span>
             <router-link

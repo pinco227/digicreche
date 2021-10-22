@@ -11,6 +11,9 @@
       type="button"
       class="btn btn-outline-danger"
       @click="triggerUnassignTeacher"
+      :class="{
+        disabled: noSubscription,
+      }"
     >
       <i class="fa fa-trash"></i>
     </button>
@@ -24,6 +27,11 @@ export default {
     teacher: {
       type: Object,
       required: true,
+    },
+    noSubscription: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   computed: {

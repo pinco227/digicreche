@@ -10,24 +10,34 @@
         </router-link>
       </div>
       <div v-if="isManager" class="col-6 text-end">
-        <router-link
-          :to="{
-            name: 'room-edit',
-            params: { schoolSlug: schoolSlug, roomId: roomId },
-          }"
-          class="btn btn-light mx-2"
-        >
-          Edit Room
-        </router-link>
-        <router-link
-          :to="{
-            name: 'add-pupil',
-            params: { schoolSlug: schoolSlug, roomId: roomId },
-          }"
-          class="btn btn-success"
-        >
-          Add Pupil
-        </router-link>
+        <span id="editRoom" class="d-inline-block" tabindex="0">
+          <router-link
+            :to="{
+              name: 'room-edit',
+              params: { schoolSlug: schoolSlug, roomId: roomId },
+            }"
+            class="btn btn-light mx-2"
+            :class="{
+              disabled: noSubscription,
+            }"
+          >
+            Edit Room
+          </router-link>
+        </span>
+        <span id="addPupil" class="d-inline-block" tabindex="1">
+          <router-link
+            :to="{
+              name: 'add-pupil',
+              params: { schoolSlug: schoolSlug, roomId: roomId },
+            }"
+            class="btn btn-success"
+            :class="{
+              disabled: noSubscription,
+            }"
+          >
+            Add Pupil
+          </router-link>
+        </span>
       </div>
     </div>
     <NoSubscriptionComponent
@@ -43,21 +53,25 @@
             v-for="teacher in room.teachers"
             :key="teacher.id"
             :teacher="teacher"
+            :noSubscription="noSubscription"
             @unassign-teacher="unassignTeacher"
           />
         </span>
-        <a
-          role="button"
-          v-if="isManager"
-          class="btn btn-sm btn-outline-success"
-          :class="{
-            'd-none': !unassignedTeachers.length,
-          }"
-          id="assignNewTeacher"
-          tabindex="0"
-        >
-          <i class="fas fa-plus"></i>
-        </a>
+        <span id="assignTeacherPop" class="d-inline-block" tabindex="2">
+          <a
+            role="button"
+            v-if="isManager"
+            class="btn btn-sm btn-outline-success"
+            :class="{
+              'd-none': !unassignedTeachers.length,
+              disabled: noSubscription,
+            }"
+            id="assignNewTeacher"
+            tabindex="3"
+          >
+            <i class="fas fa-plus"></i>
+          </a>
+        </span>
         <p>
           Pupils: {{ room.pupils_count }} <br />
           {{ room.description }}
@@ -66,21 +80,20 @@
     </div>
     <div class="row justify-content-center">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
-      <div
-        v-if="isManager"
-        class="col-xs-4 col-md-3 col-lg-2 text-center"
-        :class="{
-          'd-none': !unassignedPupils.length,
-        }"
-      >
-        <button
-          role="button"
-          class="btn btn-lg btn-outline-success"
-          id="assignNewPupil"
-          tabindex="1"
-        >
-          <i class="fas fa-plus"></i> Assign pupil
-        </button>
+      <div v-if="isManager" class="col-xs-4 col-md-3 col-lg-2 text-center">
+        <span id="assignPupilPop" class="d-inline-block" tabindex="4">
+          <button
+            role="button"
+            class="btn btn-lg btn-outline-success"
+            id="assignNewPupil"
+            tabindex="5"
+            :class="{
+              disabled: noSubscription || !unassignedPupils.length,
+            }"
+          >
+            <i class="fas fa-plus"></i> Assign pupil
+          </button>
+        </span>
       </div>
     </div>
     <div class="d-none">
@@ -119,7 +132,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
-import { Popover } from "bootstrap/dist/js/bootstrap.esm.min.js";
+import { Popover, Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import PupilComponent from "@/components/Pupil.vue";
 import AssignedTeacherComponent from "@/components/AssignedTeacher.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
@@ -156,6 +169,9 @@ export default {
     },
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
+    noSubscription() {
+      return Object.keys(this.school).length && !this.school.is_active;
     },
   },
   methods: {
@@ -293,6 +309,26 @@ export default {
         title: "Un-assigned Pupils",
       });
     }
+  },
+  watch: {
+    noSubscription: function () {
+      if (this.noSubscription) {
+        const options = {
+          boundary: document.body,
+          placement: "bottom",
+          title: "Requires active subscription",
+        };
+        const noSubPops = [
+          document.getElementById("addPupil"),
+          document.getElementById("editRoom"),
+          document.getElementById("assignTeacherPop"),
+          document.getElementById("assignPupilPop"),
+        ];
+        noSubPops.forEach((el) => {
+          new Tooltip(el, options);
+        });
+      }
+    },
   },
 };
 </script>

@@ -26,10 +26,11 @@ class Pupil(models.Model):
                                blank=False, on_delete=models.CASCADE,
                                related_name='students')
     room = models.ForeignKey(Room, null=True,
-                             blank=False, on_delete=models.SET_NULL,
+                             blank=True, on_delete=models.SET_NULL,
                              related_name='pupils')
-    parents = models.ManyToManyField(DigiCrecheUser, related_name='children')
-    photo = models.FileField(upload_to=get_upload_path, null=True)
+    parents = models.ManyToManyField(
+        DigiCrecheUser, related_name='children', blank=True)
+    photo = models.FileField(upload_to=get_upload_path, null=True, blank=True)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name

@@ -13,18 +13,20 @@
         >
           Edit School
         </router-link>
-        <router-link
-          :to="{ name: 'room-add', params: { schoolSlug: schoolSlug } }"
-          class="btn btn-success"
-        >
-          Add Room
-        </router-link>
+        <span id="addRoom" class="d-inline-block" tabindex="0">
+          <router-link
+            :to="{ name: 'room-add', params: { schoolSlug: schoolSlug } }"
+            class="btn btn-success"
+            :class="{
+              disabled: noSubscription,
+            }"
+          >
+            Add Room
+          </router-link>
+        </span>
       </div>
     </div>
-    <NoSubscriptionComponent
-      :school="school"
-      v-if="Object.keys(school).length && !school.is_active"
-    />
+    <NoSubscriptionComponent :school="school" v-if="noSubscription" />
     <div class="row">
       <div class="col-12">
         <h2>{{ school.name }}</h2>
@@ -45,6 +47,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import { Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import RoomComponent from "@/components/Room.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
@@ -69,6 +72,9 @@ export default {
   computed: {
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
+    noSubscription() {
+      return Object.keys(this.school).length && !this.school.is_active;
     },
   },
   methods: {
@@ -101,6 +107,18 @@ export default {
     } else {
       this.$emit("setPermission", false);
     }
+  },
+  watch: {
+    noSubscription: function () {
+      if (this.noSubscription) {
+        const noSubPop = document.getElementById("addRoom");
+        new Tooltip(noSubPop, {
+          boundary: document.body,
+          placement: "left",
+          title: "Requires active subscription",
+        });
+      }
+    },
   },
 };
 </script>

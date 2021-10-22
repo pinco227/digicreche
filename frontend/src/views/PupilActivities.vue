@@ -6,17 +6,21 @@
           Back
         </button>
       </div>
-      <div class="col-6 text-end">
-        <router-link
-          v-if="isManager"
-          :to="{
-            name: 'pupil-edit',
-            params: { schoolSlug: schoolSlug, pupilId: pupilId },
-          }"
-          class="btn btn-light mx-2"
-        >
-          Edit Pupil
-        </router-link>
+      <div v-if="isManager" class="col-6 text-end">
+        <span id="editPupil" class="d-inline-block" tabindex="0">
+          <router-link
+            :to="{
+              name: 'pupil-edit',
+              params: { schoolSlug: schoolSlug, pupilId: pupilId },
+            }"
+            class="btn btn-light mx-2"
+            :class="{
+              disabled: noSubscription,
+            }"
+          >
+            Edit Pupil
+          </router-link>
+        </span>
       </div>
     </div>
     <NoSubscriptionComponent
@@ -36,6 +40,7 @@
       <AddActivityComponent
         v-if="isManager || isTeacher"
         @onSubmit="addActivity"
+        :noSubscription="noSubscription"
       />
       <ActivityComponent
         v-for="activity in activities"
@@ -49,6 +54,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import { Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import ActivityComponent from "@/components/Activity.vue";
 import AddActivityComponent from "@/components/AddActivity.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
@@ -83,6 +89,9 @@ export default {
     },
     isTeacher() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 2;
+    },
+    noSubscription() {
+      return Object.keys(this.school).length && !this.school.is_active;
     },
   },
   methods: {
@@ -141,6 +150,24 @@ export default {
     if (this.isManager || this.isTeacher) {
       this.getSchoolData();
     }
+  },
+  watch: {
+    noSubscription: function () {
+      if (this.noSubscription) {
+        const options = {
+          boundary: document.body,
+          placement: "bottom",
+          title: "Requires active subscription",
+        };
+        const noSubPops = [
+          document.getElementById("editPupil"),
+          document.getElementById("addActivity"),
+        ];
+        noSubPops.forEach((el) => {
+          new Tooltip(el, options);
+        });
+      }
+    },
   },
 };
 </script>

@@ -1,6 +1,16 @@
 <template>
   <div class="add-activity col-xs-12 col-md-6 col-lg-6 text-center">
-    <button v-if="!showForm" @click="showForm = true">Add</button>
+    <span v-if="!showForm" id="addActivity" class="d-inline-block" tabindex="1">
+      <button
+        @click="showForm = true"
+        class="btn btn-lg btn-outline-success"
+        :class="{
+          disabled: noSubscription,
+        }"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    </span>
     <form v-else @submit.prevent="onSubmit">
       <select v-model="form.type" id="type">
         <option
@@ -28,6 +38,13 @@
 import { apiService } from "@/common/api.service.js";
 export default {
   name: "AddActivityComponent",
+  props: {
+    noSubscription: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
   data() {
     return {
       form: {

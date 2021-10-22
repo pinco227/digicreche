@@ -10,15 +10,20 @@
         </router-link>
       </div>
       <div v-if="isManager" class="col-6 text-end">
-        <router-link
-          :to="{
-            name: 'add-pupil',
-            params: { schoolSlug: schoolSlug },
-          }"
-          class="btn btn-success"
-        >
-          Add Pupil
-        </router-link>
+        <span id="addPupil" class="d-inline-block" tabindex="0">
+          <router-link
+            :to="{
+              name: 'add-pupil',
+              params: { schoolSlug: schoolSlug },
+            }"
+            class="btn btn-success"
+            :class="{
+              disabled: noSubscription,
+            }"
+          >
+            Add Pupil
+          </router-link>
+        </span>
       </div>
     </div>
     <NoSubscriptionComponent
@@ -48,6 +53,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import { Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import PupilComponent from "@/components/Pupil.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
@@ -73,6 +79,9 @@ export default {
   computed: {
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
+    noSubscription() {
+      return Object.keys(this.school).length && !this.school.is_active;
     },
   },
   methods: {
@@ -104,6 +113,18 @@ export default {
   created() {
     this.getSchoolData();
     this.getSchoolPupils();
+  },
+  watch: {
+    noSubscription: function () {
+      if (this.noSubscription) {
+        const noSubPop = document.getElementById("addPupil");
+        new Tooltip(noSubPop, {
+          boundary: document.body,
+          placement: "left",
+          title: "Requires active subscription",
+        });
+      }
+    },
   },
 };
 </script>
