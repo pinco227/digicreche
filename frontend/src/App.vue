@@ -45,6 +45,13 @@ export default {
   created() {
     this.setUserInfo();
   },
+  watch: {
+    $route() {
+      // Set default permission when route change
+      // to allow the router-view to update permission if needed
+      this.permission = true;
+    },
+  },
 };
 </script>
 

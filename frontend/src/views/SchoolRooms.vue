@@ -21,6 +21,10 @@
         </router-link>
       </div>
     </div>
+    <NoSubscriptionComponent
+      :school="school"
+      v-if="Object.keys(school).length && !school.is_active"
+    />
     <div class="row">
       <div class="col-12">
         <h2>{{ school.name }}</h2>
@@ -42,6 +46,7 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import RoomComponent from "@/components/Room.vue";
+import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
 export default {
   name: "SchoolRooms",
@@ -53,12 +58,18 @@ export default {
   },
   components: {
     RoomComponent,
+    NoSubscriptionComponent,
   },
   data() {
     return {
       school: {},
       rooms: [],
     };
+  },
+  computed: {
+    isManager() {
+      return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
   },
   methods: {
     async getSchoolData() {
@@ -85,7 +96,11 @@ export default {
   },
   created() {
     this.getSchoolData();
-    this.getSchoolRooms();
+    if (this.isManager) {
+      this.getSchoolRooms();
+    } else {
+      this.$emit("setPermission", false);
+    }
   },
 };
 </script>

@@ -10,7 +10,10 @@
         </router-link>
       </div>
     </div>
-    <div class="row justify-content-center" v-if="subscription">
+    <div
+      class="row justify-content-center"
+      v-if="Object.keys(subscription).length"
+    >
       <div class="col-12 col-md-6">
         <h3>Subscription details</h3>
         <dl>
@@ -40,7 +43,7 @@
           </dd>
         </dl>
       </div>
-      <div class="col-12 col-md-6" v-if="paymentMethod">
+      <div class="col-12 col-md-6" v-if="Object.keys(paymentMethod).length">
         <h3>Billing</h3>
         <dl>
           <dt>Name</dt>
@@ -61,7 +64,10 @@
         </dl>
       </div>
     </div>
-    <div class="row justify-content-center" v-if="subscription">
+    <div
+      class="row justify-content-center"
+      v-if="Object.keys(subscription).length"
+    >
       <div class="col-12 col-md-6" v-if="selectedPrice">
         <h3>Plan</h3>
         <ul class="list-group" v-for="plan in prices" :key="plan.pk">
@@ -118,7 +124,10 @@
         </button>
       </div>
     </div>
-    <div class="row justify-content-center" v-if="school.is_active == false">
+    <div
+      class="row justify-content-center"
+      v-if="Object.keys(school).length && school.is_active == false"
+    >
       <div class="col-xs-12 col-md-10 col-lg-8">
         <StripeCard
           v-if="school.is_active == false"
@@ -163,7 +172,10 @@ export default {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
     },
     selectedPrice() {
-      if (this.subscription && this.prices) {
+      if (
+        Object.keys(this.subscription).length &&
+        Object.keys(this.prices).length
+      ) {
         const price = this.prices.find(
           ({ pk }) => pk === this.subscription.plan
         );
@@ -177,23 +189,21 @@ export default {
       return moment(value).format("dddd, MMMM Do YYYY, h:mm:ss a");
     },
     async getSchoolData() {
-      if (this.schoolSlug) {
-        const endpoint = `/api/schools/${this.schoolSlug}/`;
-        const data = await apiService(endpoint);
-        if (data.status >= 200 && data.status < 300) {
-          this.school = data.body;
-          if (this.school.is_active) {
-            this.getSubscriptionData();
-            this.getPaymentData();
-          }
-        } else {
-          // TODO: error handling
-          if (data.status == 403) this.$emit("setPermission", false);
+      const endpoint = `/api/schools/${this.schoolSlug}/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.school = data.body;
+        if (this.school.is_active) {
+          this.getSubscriptionData();
+          this.getPaymentData();
         }
+      } else {
+        // TODO: error handling
+        if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getSubscriptionData() {
-      if (this.school.is_active) {
+      if (Object.keys(this.school).length && this.school.is_active) {
         const endpoint = `/api/retrieve-subscription/${this.school.subscription}/`;
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {
@@ -205,7 +215,7 @@ export default {
       }
     },
     async getPaymentData() {
-      if (this.school.is_active) {
+      if (Object.keys(this.school).length && this.school.is_active) {
         const endpoint = `/api/retrieve-payment-method/`;
         const method = "POST";
         const payload = {
@@ -230,7 +240,7 @@ export default {
       }
     },
     async cancelOrReactivateSubscription() {
-      if (this.subscription) {
+      if (Object.keys(this.subscription).length) {
         let endpoint = "";
         let confirmMessage = "";
         if (this.subscription.cancel_at_period_end == false) {
@@ -256,7 +266,7 @@ export default {
       }
     },
     async updateSubscription(price_id) {
-      if (this.subscription) {
+      if (Object.keys(this.subscription).length) {
         const endpoint = `/api/update-subscription/`;
         const method = "POST";
         if (

@@ -30,6 +30,10 @@
         </router-link>
       </div>
     </div>
+    <NoSubscriptionComponent
+      :school="school"
+      v-if="isManager && Object.keys(school).length && !school.is_active"
+    />
     <div class="row">
       <div class="col-12">
         <h2>{{ room.name }}</h2>
@@ -115,9 +119,10 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import { Popover } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import PupilComponent from "@/components/Pupil.vue";
 import AssignedTeacherComponent from "@/components/AssignedTeacher.vue";
-import { Popover } from "bootstrap/dist/js/bootstrap.esm.min.js";
+import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
 export default {
   name: "RoomPupils",
@@ -134,6 +139,7 @@ export default {
   components: {
     PupilComponent,
     AssignedTeacherComponent,
+    NoSubscriptionComponent,
   },
   data() {
     return {
@@ -141,6 +147,7 @@ export default {
       pupils: [],
       unassignedTeachers: [],
       unassignedPupils: [],
+      school: {},
     };
   },
   computed: {
@@ -199,6 +206,13 @@ export default {
         // TODO: error handling
       }
     },
+    async getSchoolData() {
+      const endpoint = `/api/schools/${this.schoolSlug}/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.school = data.body;
+      }
+    },
     async assignTeacher(teacher) {
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/assign-teacher/`;
       const method = "POST";
@@ -255,6 +269,7 @@ export default {
     if (this.isManager) {
       this.getUnassignedTeachers();
       this.getUnassignedPupils();
+      this.getSchoolData();
     }
   },
   mounted() {

@@ -19,6 +19,14 @@
         </router-link>
       </div>
     </div>
+    <NoSubscriptionComponent
+      :school="school"
+      v-if="
+        (isManager || isTeacher) &&
+        Object.keys(school).length &&
+        !school.is_active
+      "
+    />
     <div class="row">
       <div class="col-12">
         <h2>{{ pupil.name }}</h2>
@@ -43,6 +51,7 @@ import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import ActivityComponent from "@/components/Activity.vue";
 import AddActivityComponent from "@/components/AddActivity.vue";
+import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
 export default {
   name: "PupilActivities",
@@ -59,11 +68,13 @@ export default {
   components: {
     ActivityComponent,
     AddActivityComponent,
+    NoSubscriptionComponent,
   },
   data() {
     return {
       pupil: {},
       activities: [],
+      school: {},
     };
   },
   computed: {
@@ -99,6 +110,13 @@ export default {
         if (data.status == 403) this.$emit("setPermission", false);
       }
     },
+    async getSchoolData() {
+      const endpoint = `/api/schools/${this.schoolSlug}/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.school = data.body;
+      }
+    },
     async addActivity(formData) {
       let endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
       let method = "POST";
@@ -120,6 +138,9 @@ export default {
   created() {
     this.getPupilData();
     this.getPupilActivities();
+    if (this.isManager || this.isTeacher) {
+      this.getSchoolData();
+    }
   },
 };
 </script>

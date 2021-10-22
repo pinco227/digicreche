@@ -6,7 +6,7 @@ export default {
     const user = JSON.parse(window.localStorage.getItem("user"));
     const schoolSlug = user.school_slug;
     const roomId = user.room;
-    console.log(user);
+
     switch (user.user_type) {
       case 1:
         this.$router.push({ name: "manager-schools" });

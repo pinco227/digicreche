@@ -21,6 +21,10 @@
         </router-link>
       </div>
     </div>
+    <NoSubscriptionComponent
+      :school="school"
+      v-if="isManager && Object.keys(school).length && !school.is_active"
+    />
     <div class="row">
       <div class="col-12">
         <h2>{{ school.name }}</h2>
@@ -45,6 +49,7 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import PupilComponent from "@/components/Pupil.vue";
+import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 
 export default {
   name: "SchoolPupils",
@@ -56,6 +61,7 @@ export default {
   },
   components: {
     PupilComponent,
+    NoSubscriptionComponent,
   },
   data() {
     return {
