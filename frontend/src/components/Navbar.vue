@@ -1,13 +1,29 @@
 <template>
   <nav class="navbar dc-navbar navbar-light">
-    <div class="container-xxl position-relative">
+    <div class="container-xxl position-relative p-0 justify-content-center">
       <router-link :to="{ name: 'home' }" class="navbar-brand"
         >Digi<strong>Creche</strong>
       </router-link>
-      <ul class="nav me-5 pe-3">
+      <ul class="nav">
         <li class="nav-item" v-if="user.user_type == 1">
           <router-link :to="{ name: 'manager-schools' }" class="nav-link">
             <i class="fas fa-school"></i>
+          </router-link>
+        </li>
+        <li
+          class="nav-item"
+          v-if="user.user_type == 1 && $route.params.schoolSlug"
+        >
+          <router-link
+            :to="{
+              name: 'school-pupils',
+              params: {
+                schoolSlug: $route.params.schoolSlug,
+              },
+            }"
+            class="nav-link"
+          >
+            <i class="fas fa-users"></i>
           </router-link>
         </li>
         <li
@@ -45,12 +61,12 @@
             }"
             class="nav-link"
           >
-            <i class="fas fa-users"></i>
+            <i class="fas fa-user-friends"></i>
           </router-link>
         </li>
         <li class="nav-item" v-if="user.user_type == 3">
           <router-link :to="{ name: 'parent-children' }" class="nav-link">
-            <i class="fas fa-users"></i>
+            <i class="fas fa-user-friends"></i>
           </router-link>
         </li>
         <li
@@ -88,41 +104,47 @@
             <i class="fas fa-user-circle"></i>
           </router-link>
         </li>
-      </ul>
-      <button
-        class="navbar-toggler position-absolute top-0 end-0 me-3 mt-1"
-        type="button"
-        data-bs-toggle="collapse"
-        data-toggle="collapse"
-        data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <router-link
-            :to="{
-              name: 'school-subscription',
-              params: { schoolSlug: $route.params.schoolSlug },
-            }"
-            class="nav-link"
-            v-if="user.user_type == 1 && $route.params.schoolSlug"
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
-            Subscription <i class="far fa-credit-card"></i>
-          </router-link>
-          <a href="/accounts/logout/" class="nav-link">
-            Log Out <i class="fas fa-sign-out-alt"></i>
+            <i class="fas fa-ellipsis-v"></i>
           </a>
-        </div>
-      </div>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <router-link
+                :to="{
+                  name: 'school-subscription',
+                  params: { schoolSlug: $route.params.schoolSlug },
+                }"
+                class="dropdown-item"
+                v-if="user.user_type == 1 && $route.params.schoolSlug"
+              >
+                Subscription <i class="far fa-credit-card"></i>
+              </router-link>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a href="/accounts/logout/" class="dropdown-item">
+                Log Out <i class="fas fa-sign-out-alt"></i>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
 
 <script>
+import { Dropdown } from "bootstrap";
 export default {
   name: "DefaultNavbarComponent",
   computed: {
@@ -130,21 +152,25 @@ export default {
       return JSON.parse(window.localStorage.getItem("user"));
     },
   },
+  mounted() {
+    new Dropdown(document.querySelector(".dropdown-toggle"));
+  },
 };
 </script>
 
 <style scoped>
 .dc-navbar {
   background-color: #fffdfd;
-  border-bottom: 2px solid #00da0b;
+  border-bottom: 3px solid #00da0b;
+  padding: 0;
 }
 .navbar-brand {
   font-family: "Arima Madurai", cursive;
   background: linear-gradient(
     90deg,
     var(--orange-accent) 0%,
-    var(--orange-accent-light) 35%,
-    transparent 35%,
+    var(--orange-accent-light) 37%,
+    transparent 38%,
     transparent 36%,
     var(--green-accent) 36%,
     var(--green-accent-light) 100%
@@ -154,18 +180,18 @@ export default {
   color: transparent !important;
   font-weight: 400;
   font-size: 2rem;
-  padding: 0;
+  padding: 0 1rem;
+  margin: 0;
 }
 .navbar-brand strong {
   font-weight: 900;
 }
-.nav-link {
-  display: block;
-  padding: 0.5rem 1rem;
-  color: #0d6efd;
-  text-decoration: none;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out;
+.nav {
+  flex-grow: 1;
+  justify-content: space-evenly;
+}
+.nav-item {
+  flex-grow: 1;
 }
 .nav-link {
   background: linear-gradient(
@@ -179,12 +205,45 @@ export default {
   padding: 0.5rem 1rem;
   color: transparent;
   text-decoration: none;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out;
+  transition: none;
   font-size: 1.4rem;
+  text-align: center;
 }
 .nav-link:focus,
-.nav-link:hover {
+.nav-link:hover,
+.nav-link:active,
+.nav-link.router-link-active {
+  background: linear-gradient(
+    180deg,
+    var(--orange-accent) 0%,
+    var(--orange-accent-light) 100%
+  );
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  color: var(--light-bg);
+  margin-bottom: -5px;
+  border-bottom: 5px solid var(--orange-accent);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.dropdown-menu {
+  min-width: 13rem;
+  background-color: var(--light-bg);
+  color: var(--orange-accent-light);
+  border: 0;
+  border-radius: 0;
+}
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dropdown-item:focus,
+.dropdown-item:hover {
   color: var(--orange-accent);
+  background: none;
+}
+.dropdown-toggle::after {
+  display: none;
 }
 </style>

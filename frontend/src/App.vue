@@ -65,6 +65,7 @@ export default {
   --green-accent: #33670a;
   --orange-accent-light: #ffa13c;
   --orange-accent: #e25a00;
+  --orange-accent-dark: #a74809;
 }
 
 body {
