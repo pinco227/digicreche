@@ -1,7 +1,10 @@
 <template>
   <div class="schools mt-2">
-    <div class="row">
-      <div class="col-12 text-end">
+    <div class="row my-2">
+      <div class="col-6">
+        <GoBackComponent />
+      </div>
+      <div class="col-6 text-end">
         <router-link :to="{ name: 'school-add' }" class="btn btn-success">
           Add School
         </router-link>
@@ -28,9 +31,13 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "Schools",
+  components: {
+    GoBackComponent,
+  },
   data() {
     return {
       schools: [],

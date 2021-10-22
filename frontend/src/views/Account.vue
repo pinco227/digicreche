@@ -1,10 +1,8 @@
 <template>
   <section id="account">
-    <div class="row justify-content-between">
+    <div class="row justify-content-between my-2">
       <div class="col-6">
-        <button type="button" @click="goBack" class="btn btn-light">
-          Back
-        </button>
+        <GoBackComponent />
       </div>
     </div>
     <div class="row justify-content-center">
@@ -133,8 +131,12 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import GoBackComponent from "@/components/GoBack.vue";
 export default {
   name: "Account",
+  components: {
+    GoBackComponent,
+  },
   data() {
     return {
       user: {},

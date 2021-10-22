@@ -1,10 +1,8 @@
 <template>
-  <div class="school mt-2">
-    <div class="row">
+  <div class="school">
+    <div class="row my-2">
       <div class="col-6">
-        <router-link :to="{ name: 'manager-schools' }" class="btn btn-light">
-          Back
-        </router-link>
+        <GoBackComponent />
       </div>
       <div class="col-6 text-end">
         <router-link
@@ -50,6 +48,7 @@ import { setPageTitle } from "@/common/functions.js";
 import { Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import RoomComponent from "@/components/Room.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "SchoolRooms",
@@ -62,6 +61,7 @@ export default {
   components: {
     RoomComponent,
     NoSubscriptionComponent,
+    GoBackComponent,
   },
   data() {
     return {

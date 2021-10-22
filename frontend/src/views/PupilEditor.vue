@@ -1,10 +1,8 @@
 <template>
-  <div class="pupil-editor mt-2">
-    <div class="row">
+  <div class="pupil-editor">
+    <div class="row my-2">
       <div class="col-12">
-        <button type="button" @click="goBack" class="btn btn-light">
-          Back
-        </button>
+        <GoBackComponent />
       </div>
     </div>
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
@@ -91,6 +89,7 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "PupilEditor",
@@ -108,6 +107,7 @@ export default {
   },
   components: {
     NoSubscriptionComponent,
+    GoBackComponent,
   },
   data() {
     return {

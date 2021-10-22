@@ -1,5 +1,10 @@
 <template>
   <section id="chat">
+    <div class="row my-2">
+      <div class="col-12">
+        <GoBackComponent />
+      </div>
+    </div>
     <div class="row">
       <ConversationList />
       <ConversationComponent />
@@ -11,6 +16,7 @@
 import { mapActions, mapState } from "vuex";
 import ConversationComponent from "@/components/Conversation.vue";
 import ConversationList from "@/components/ConversationList.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "Chat",
@@ -23,6 +29,7 @@ export default {
   components: {
     ConversationList,
     ConversationComponent,
+    GoBackComponent,
   },
   data() {
     return {

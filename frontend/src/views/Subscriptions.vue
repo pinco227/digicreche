@@ -2,9 +2,7 @@
   <section id="subscriptions">
     <div class="row my-2">
       <div class="col-12">
-        <button type="button" @click="goBack" class="btn btn-light">
-          Back
-        </button>
+        <GoBackComponent />
       </div>
     </div>
     <div class="row">
@@ -50,8 +48,13 @@
 
 <script>
 import { apiService } from "@/common/api.service.js";
+import GoBackComponent from "@/components/GoBack.vue";
+
 export default {
   name: "Subscriptions",
+  components: {
+    GoBackComponent,
+  },
   data() {
     return {
       active_schools: [],

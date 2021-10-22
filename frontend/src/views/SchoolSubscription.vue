@@ -1,13 +1,8 @@
 <template>
-  <section class="mt-2" id="school-subscription">
-    <div class="row">
+  <section id="school-subscription">
+    <div class="row my-2">
       <div class="col-12">
-        <router-link
-          :to="{ name: 'school-rooms', params: { schoolSlug: schoolSlug } }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
+        <GoBackComponent />
       </div>
     </div>
     <div
@@ -144,6 +139,7 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import StripeCard from "@/components/StripeCard.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 import moment from "moment";
 
 export default {
@@ -156,6 +152,7 @@ export default {
   },
   components: {
     StripeCard,
+    GoBackComponent,
   },
   data() {
     return {

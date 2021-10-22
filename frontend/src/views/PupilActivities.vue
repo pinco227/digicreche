@@ -1,10 +1,8 @@
 <template>
-  <div id="activities" class="mt-2">
-    <div class="row">
+  <div id="activities">
+    <div class="row my-2">
       <div class="col-6">
-        <button type="button" @click="goBack" class="btn btn-light">
-          Back
-        </button>
+        <GoBackComponent />
       </div>
       <div v-if="isManager" class="col-6 text-end">
         <span id="editPupil" class="d-inline-block" tabindex="0">
@@ -58,6 +56,7 @@ import { Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import ActivityComponent from "@/components/Activity.vue";
 import AddActivityComponent from "@/components/AddActivity.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "PupilActivities",
@@ -75,6 +74,7 @@ export default {
     ActivityComponent,
     AddActivityComponent,
     NoSubscriptionComponent,
+    GoBackComponent,
   },
   data() {
     return {

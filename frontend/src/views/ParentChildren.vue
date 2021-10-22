@@ -1,10 +1,8 @@
 <template>
-  <div id="children" class="mt-2">
-    <div class="row">
+  <div id="children">
+    <div class="row my-2">
       <div class="col-6">
-        <button type="button" @click="goBack" class="btn btn-light">
-          Back
-        </button>
+        <GoBackComponent />
       </div>
     </div>
     <div class="row">
@@ -22,11 +20,13 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import PupilComponent from "@/components/Pupil.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "ParentChildren",
   components: {
     PupilComponent,
+    GoBackComponent,
   },
   data() {
     return {

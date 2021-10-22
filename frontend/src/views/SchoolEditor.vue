@@ -1,21 +1,8 @@
 <template>
-  <div class="school-editor mt-2">
-    <div class="row">
+  <div class="school-editor">
+    <div class="row my-2">
       <div class="col-12">
-        <router-link
-          v-if="schoolSlug"
-          :to="{ name: 'school-rooms', params: { schoolSlug: schoolSlug } }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
-        <router-link
-          v-else
-          :to="{ name: 'manager-schools' }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
+        <GoBackComponent />
       </div>
     </div>
     <div class="row justify-content-center">
@@ -152,6 +139,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "SchoolEditor",
@@ -162,6 +150,9 @@ export default {
       type: String,
       required: false,
     },
+  },
+  components: {
+    GoBackComponent,
   },
   data() {
     return {

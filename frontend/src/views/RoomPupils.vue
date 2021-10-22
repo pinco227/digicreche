@@ -1,13 +1,8 @@
 <template>
-  <div id="room" class="mt-2">
-    <div class="row">
+  <div id="room">
+    <div class="row my-2">
       <div class="col-6">
-        <router-link
-          :to="{ name: 'school-rooms', params: { schoolSlug: schoolSlug } }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
+        <GoBackComponent />
       </div>
       <div v-if="isManager" class="col-6 text-end">
         <span id="editRoom" class="d-inline-block" tabindex="0">
@@ -136,6 +131,7 @@ import { Popover, Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import PupilComponent from "@/components/Pupil.vue";
 import AssignedTeacherComponent from "@/components/AssignedTeacher.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "RoomPupils",
@@ -153,6 +149,7 @@ export default {
     PupilComponent,
     AssignedTeacherComponent,
     NoSubscriptionComponent,
+    GoBackComponent,
   },
   data() {
     return {

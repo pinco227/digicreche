@@ -2,23 +2,7 @@
   <div class="room-editor mt-2">
     <div class="row">
       <div class="col-12">
-        <router-link
-          v-if="roomId"
-          :to="{
-            name: 'room-pupils',
-            params: { schoolSlug: schoolSlug, roomId: roomId },
-          }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
-        <router-link
-          v-else
-          :to="{ name: 'school-rooms', params: { schoolSlug: schoolSlug } }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
+        <GoBackComponent />
       </div>
     </div>
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
@@ -69,6 +53,7 @@
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "RoomEditor",
@@ -86,6 +71,7 @@ export default {
   },
   components: {
     NoSubscriptionComponent,
+    GoBackComponent,
   },
   data() {
     return {

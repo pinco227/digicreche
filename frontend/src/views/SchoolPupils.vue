@@ -1,13 +1,8 @@
 <template>
-  <div id="school-pupils" class="mt-2">
-    <div class="row">
+  <div id="school-pupils">
+    <div class="row my-2">
       <div class="col-6">
-        <router-link
-          :to="{ name: 'school-rooms', params: { schoolSlug: schoolSlug } }"
-          class="btn btn-light"
-        >
-          Back
-        </router-link>
+        <GoBackComponent />
       </div>
       <div v-if="isManager" class="col-6 text-end">
         <span id="addPupil" class="d-inline-block" tabindex="0">
@@ -56,6 +51,7 @@ import { setPageTitle } from "@/common/functions.js";
 import { Tooltip } from "bootstrap/dist/js/bootstrap.esm.min.js";
 import PupilComponent from "@/components/Pupil.vue";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
+import GoBackComponent from "@/components/GoBack.vue";
 
 export default {
   name: "SchoolPupils",
@@ -68,6 +64,7 @@ export default {
   components: {
     PupilComponent,
     NoSubscriptionComponent,
+    GoBackComponent,
   },
   data() {
     return {
