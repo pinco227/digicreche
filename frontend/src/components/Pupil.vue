@@ -8,6 +8,7 @@
       }"
       class="tile"
     >
+      <RoundPhotoComponent :pupil="pupil" />
       {{ pupil.first_name }} {{ pupil.last_name }}
     </router-link>
     <router-link
@@ -18,12 +19,14 @@
       }"
       class="tile"
     >
+      <RoundPhotoComponent :pupil="pupil" />
       {{ pupil.first_name }} {{ pupil.last_name }}
     </router-link>
   </div>
 </template>
 
 <script>
+import RoundPhotoComponent from "../components/RoundPhoto.vue";
 export default {
   name: "PupilComponent",
   props: {
@@ -31,6 +34,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  components: {
+    RoundPhotoComponent,
   },
 };
 </script>

@@ -93,7 +93,7 @@ body {
   flex-direction: column;
   align-items: center;
   align-content: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.5rem;
   padding: 1rem;
   background: linear-gradient(180deg, var(--light-bg) 0%, var(--body-bg) 100%);
@@ -126,6 +126,7 @@ body {
   overflow: hidden;
   border-radius: 50%;
   box-shadow: 3px 5px 10px -10px var(--body-text);
+  background-color: var(--light-bg);
 }
 .round-photo-container:after {
   content: "";
@@ -136,6 +137,23 @@ body {
   position: absolute;
   min-width: 100%;
   min-height: 100%;
+  top: 0;
+  left: 0;
   object-fit: cover;
+  max-width: 120%;
+  height: auto;
+}
+.no-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: gray;
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 </style>

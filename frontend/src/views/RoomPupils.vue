@@ -78,10 +78,10 @@
     <div class="row justify-content-center my-2 g-2">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
       <div v-if="isManager" class="col-6 col-md-3 col-lg-2 text-center">
-        <span id="assignPupilPop" class="d-inline-block" tabindex="4">
+        <span id="assignPupilPop" tabindex="4">
           <button
             role="button"
-            class="btn btn-lg btn-outline-success tile"
+            class="w-100 btn btn-block btn-outline-success tile"
             id="assignNewPupil"
             tabindex="5"
             :class="{

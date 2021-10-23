@@ -9,14 +9,11 @@
     <div class="row justify-content-center g-2 my-2">
       <div class="col-12 col-md-5 col-lg-4" v-if="pupilId">
         <div class="head-tile align-items-center">
-          <div class="round-photo-container">
-            <img :src="photo" :alt="first_name" class="img-fluid" />
-          </div>
+          <RoundPhotoComponent
+            :pupil="{ photo: photo, first_name: first_name }"
+          />
           <h2>{{ first_name }} {{ last_name }}</h2>
-          <div
-            v-if="Object.keys(personal_details).length"
-            class="text-start w-100"
-          >
+          <div v-if="personal_details" class="text-start w-100">
             <h4>Personal Details</h4>
             <span
               v-for="(detail, index) in Object.entries(personal_details)"
@@ -24,6 +21,28 @@
             >
               <strong>{{ detail[0] }}:</strong> {{ detail[1] }} <br />
             </span>
+          </div>
+          <div
+            v-if="'teachers' in room && room.teachers.length"
+            class="text-start w-100"
+          >
+            <h4>Teacher(s)</h4>
+            <ul class="list-group">
+              <li
+                v-for="teacher in room.teachers"
+                :key="teacher.id"
+                class="list-group-item d-flex justify-content-between"
+              >
+                {{ teacher.name }}
+                <router-link
+                  :to="{ name: 'chat', params: { chatId: teacher.id } }"
+                  v-if="teacher.id != user.pk"
+                >
+                  <i class="fas fa-comment"></i>
+                </router-link>
+                <span v-else>self</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -55,12 +74,12 @@
               <div class="mb-3">
                 <label for="room" class="form-label">Room</label>
                 <select
-                  v-model="room"
+                  v-model="room.id"
                   class="form-select"
                   id="room"
                   name="room"
                 >
-                  <option v-if="!pupilId && !room" :value="null" selected>
+                  <option v-if="!pupilId && !room.id" :value="null" selected>
                     - Unassigned -
                   </option>
                   <option v-else :value="null">- Unassigned -</option>
@@ -114,6 +133,7 @@ import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 import NoSubscriptionComponent from "@/components/NoSubscription.vue";
 import GoBackComponent from "@/components/GoBack.vue";
+import RoundPhotoComponent from "@/components/RoundPhoto.vue";
 
 export default {
   name: "PupilEditor",
@@ -132,27 +152,33 @@ export default {
   components: {
     NoSubscriptionComponent,
     GoBackComponent,
+    RoundPhotoComponent,
   },
   data() {
     return {
       first_name: null,
       last_name: null,
-      room: null,
+      room: {
+        id: null,
+      },
       parents: [],
       school: {},
       schoolRooms: [],
       schoolParents: [],
       photo: null,
-      personal_details: {},
+      personal_details: null,
       error: null,
     };
   },
   computed: {
+    noSubscription() {
+      return Object.keys(this.school).length && !this.school.is_active;
+    },
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
     },
-    noSubscription() {
-      return Object.keys(this.school).length && !this.school.is_active;
+    user() {
+      return JSON.parse(window.localStorage.getItem("user"));
     },
   },
   methods: {
@@ -169,6 +195,15 @@ export default {
         if (data.status == 403) this.$emit("setPermission", false);
       }
     },
+    async getRoomData() {
+      const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.room.id}/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.room = data.body;
+      } else {
+        // TODO: error handling
+      }
+    },
     async getPupilData() {
       if (this.pupilId) {
         const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
@@ -176,10 +211,11 @@ export default {
         if (data.status >= 200 && data.status < 300) {
           this.first_name = data.body.first_name;
           this.last_name = data.body.last_name;
-          this.room = data.body.room;
+          this.room.id = data.body.room;
           this.parents = data.body.parents;
           this.photo = data.body.photo;
           this.personal_details = data.body.personal_details;
+          if (this.room.id) this.getRoomData();
           setPageTitle(
             "Edit " + data.body.first_name + " " + data.body.last_name
           );
@@ -198,7 +234,7 @@ export default {
         });
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        // if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async getSchoolParents() {
@@ -210,7 +246,7 @@ export default {
         });
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        // if (data.status == 403) this.$emit("setPermission", false);
       }
     },
     async onSubmit() {
@@ -229,7 +265,7 @@ export default {
         const payload = {
           first_name: this.first_name,
           last_name: this.last_name,
-          room: this.room,
+          room: this.room.id,
           parents: this.parents,
           school: this.school.id,
         };
@@ -291,20 +327,17 @@ export default {
     },
   },
   created() {
-    if (!this.isManager) {
-      this.$emit("setPermission", false);
-      setPageTitle("Forbidden");
-    } else {
-      this.getSchoolData();
+    this.getSchoolData();
+    if (this.isManager) {
       this.getSchoolRooms();
       this.getSchoolParents();
-      if (this.pupilId) {
-        this.getPupilData();
-      } else {
-        setPageTitle("Add Pupil");
-      }
-      if (this.$route.params.roomId) this.room = this.$route.params.roomId;
     }
+    if (this.pupilId) {
+      this.getPupilData();
+    } else {
+      setPageTitle("Add Pupil");
+    }
+    if (this.$route.params.roomId) this.room = this.$route.params.roomId;
   },
 };
 </script>
