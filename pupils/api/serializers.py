@@ -43,7 +43,6 @@ class PupilPhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pupil
-        # exclude = ['school']
         fields = ['photo', ]
 
 
@@ -51,5 +50,4 @@ class PupilDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pupil
-        # exclude = ['school']
         fields = ['personal_details', ]

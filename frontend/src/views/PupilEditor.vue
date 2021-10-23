@@ -9,13 +9,44 @@
     <div class="row justify-content-center g-2 my-2">
       <div class="col-12 col-md-5 col-lg-4" v-if="pupilId">
         <div class="head-tile align-items-center">
-          <div class="position-relative w-100 d-flex justify-content-center">
+          <div
+            class="
+              position-relative
+              w-100
+              d-flex
+              align-items-center
+              flex-column
+            "
+          >
             <RoundPhotoComponent
               :pupil="{ photo: photo, first_name: first_name }"
             />
-            <button class="btn btn-light btn-sm position-absolute top-0 end-0">
+            <button
+              class="btn btn-light btn-sm position-absolute top-0 end-0"
+              @click="editPhoto = true"
+              v-if="isManager"
+            >
               <i class="fas fa-pen"></i>
             </button>
+            <form @submit.prevent="photoSubmit" v-if="editPhoto">
+              <div class="input-group my-3">
+                <input
+                  class="form-control form-control-sm"
+                  type="file"
+                  id="photoInput"
+                  aria-label="Update photo"
+                  aria-describedby="updatePhotoSubmit"
+                  @change="updatePhoto"
+                />
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-success"
+                  id="updatePhotoSubmit"
+                >
+                  <i class="fas fa-upload"></i>
+                </button>
+              </div>
+            </form>
           </div>
           <h2>{{ first_name }} {{ last_name }}</h2>
           <div
@@ -29,7 +60,10 @@
             >
               <strong>{{ detail[0] }}:</strong> {{ detail[1] }} <br />
             </span>
-            <button class="btn btn-light btn-sm position-absolute top-0 end-0">
+            <button
+              class="btn btn-light btn-sm position-absolute top-0 end-0"
+              v-if="isManager"
+            >
               <i class="fas fa-pen"></i>
             </button>
           </div>
@@ -215,6 +249,8 @@ export default {
       personal_details: null,
       error: null,
       editInfo: false,
+      editPhoto: false,
+      newPhoto: null,
     };
   },
   computed: {
@@ -322,6 +358,7 @@ export default {
             this.editInfo = false;
           } else {
             this.editInfo = false;
+            if (this.room.id) this.getRoomData();
             this.$router.push({
               name: "pupil-edit",
               params: {
@@ -334,6 +371,34 @@ export default {
           // TODO: error handling
           this.error = "There was an error! Please try again!";
         }
+      }
+    },
+    updatePhoto(event) {
+      this.newPhoto = event.target.files[0];
+    },
+    async photoSubmit() {
+      if (this.newPhoto) {
+        const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/photo/`;
+        const method = "PUT";
+        const formData = {
+          photo: this.newPhoto,
+        };
+
+        const data = await apiService(
+          endpoint,
+          method,
+          formData,
+          "multipart/form-data"
+        );
+        if (data.status >= 200 && data.status < 300) {
+          this.photo = data.body.photo;
+          this.editPhoto = false;
+          this.newPhoto = null;
+        } else {
+          // TODO: error handling
+        }
+      } else {
+        // TODO: form validation error
       }
     },
     async deletePupil() {
@@ -385,9 +450,6 @@ export default {
       this.editInfo = true;
     }
     // if (this.$route.params.roomId) this.room.id = this.$route.params.roomId;
-  },
-  updated() {
-    if (this.room.id) this.getRoomData();
   },
 };
 </script>

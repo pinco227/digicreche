@@ -67,7 +67,6 @@ export default {
     },
     updateImages(event) {
       event.target.files.forEach((file, i) => {
-        console.log(file);
         this.form["file" + i] = file;
       });
     },
