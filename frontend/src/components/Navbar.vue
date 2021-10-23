@@ -89,11 +89,6 @@
             <i class="fas fa-basketball-ball"></i>
           </router-link>
         </li>
-        <li class="nav-item" v-if="user.user_type == 3">
-          <router-link :to="{ name: 'parent-children' }" class="nav-link">
-            <i class="fas fa-users"></i>
-          </router-link>
-        </li>
         <li class="nav-item">
           <router-link :to="{ name: 'chat' }" class="nav-link">
             <i class="fas fa-comments"></i>

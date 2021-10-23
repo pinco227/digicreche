@@ -4,7 +4,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rooms.api.permissions import (IsSchoolManager,
-                                   IsSchoolManagerOrTeacherReadOnly)
+                                   IsSchoolManagerOrTeacherParentReadOnly)
 from core.api.permissions import SubscriptionPaidOrReadOnly
 from rooms.api.serializers import RoomSerializer
 from rooms.models import Room
@@ -32,7 +32,7 @@ class RoomRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [
-        IsSchoolManagerOrTeacherReadOnly, SubscriptionPaidOrReadOnly]
+        IsSchoolManagerOrTeacherParentReadOnly, SubscriptionPaidOrReadOnly]
 
 
 class RemoveTeacher(APIView):

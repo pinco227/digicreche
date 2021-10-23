@@ -37,6 +37,7 @@
                   aria-label="Update photo"
                   aria-describedby="updatePhotoSubmit"
                   @change="updatePhoto"
+                  :disabled="noSubscription"
                 />
                 <button
                   type="submit"
@@ -50,22 +51,61 @@
           </div>
           <h2>{{ first_name }} {{ last_name }}</h2>
           <div
-            v-if="personal_details"
+            v-if="!editPersonalDetails"
             class="text-start w-100 position-relative"
           >
             <h4>Personal Details</h4>
-            <span
-              v-for="(detail, index) in Object.entries(personal_details)"
-              :key="index"
-            >
-              <strong>{{ detail[0] }}:</strong> {{ detail[1] }} <br />
+            <span v-for="(detail, index) in personal_details" :key="index">
+              <strong>{{ detail.key }}:</strong> {{ detail.value }} <br />
             </span>
             <button
               class="btn btn-light btn-sm position-absolute top-0 end-0"
-              v-if="isManager"
+              v-if="isManager || user.user_type == 3"
+              @click="editPersonalDetails = true"
             >
               <i class="fas fa-pen"></i>
             </button>
+          </div>
+          <div v-else>
+            <form @submit.prevent="personalDetailsSubmit">
+              <fieldset :disabled="noSubscription">
+                <div
+                  class="mb-3"
+                  v-for="(detail, index) in personal_details"
+                  :key="index"
+                >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="detail.key"
+                      placeholder="detail name"
+                    />
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="detail.value"
+                      placeholder="detail value"
+                    />
+                    <button
+                      class="btn btn-outline-warning bg-light"
+                      @click="personal_details.splice(index, 1)"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <a
+                  class="btn btn-secondary"
+                  @click="personal_details.push({ key: null, value: null })"
+                >
+                  <i class="fas fa-plus"></i>
+                </a>
+                <button type="submit" class="btn btn-success float-end">
+                  Update
+                </button>
+              </fieldset>
+            </form>
           </div>
           <div
             v-if="'teachers' in room && room.teachers.length"
@@ -246,11 +286,12 @@ export default {
       schoolRooms: [],
       schoolParents: [],
       photo: null,
-      personal_details: null,
+      personal_details: [],
       error: null,
       editInfo: false,
       editPhoto: false,
       newPhoto: null,
+      editPersonalDetails: false,
     };
   },
   computed: {
@@ -297,7 +338,15 @@ export default {
           this.room.id = data.body.room;
           this.parents = data.body.parents;
           this.photo = data.body.photo;
-          this.personal_details = data.body.personal_details;
+          // this.personal_details = data.body.personal_details;
+          if (data.body.personal_details) {
+            Object.entries(data.body.personal_details).forEach((detail) => {
+              this.personal_details.push({
+                key: detail[0],
+                value: detail[1],
+              });
+            });
+          }
           if (this.room.id) this.getRoomData();
           setPageTitle(
             "Edit " + data.body.first_name + " " + data.body.last_name
@@ -399,6 +448,28 @@ export default {
         }
       } else {
         // TODO: form validation error
+      }
+    },
+    async personalDetailsSubmit() {
+      const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/details/`;
+      const method = "PUT";
+      let payload = {};
+
+      if (this.personal_details.length) {
+        payload = { personal_details: {} };
+        this.personal_details.forEach((detail) => {
+          payload.personal_details[detail.key] = detail.value;
+        });
+      } else {
+        payload = { personal_details: null };
+      }
+      console.log(payload);
+
+      const data = await apiService(endpoint, method, payload);
+      if (data.status >= 200 && data.status < 300) {
+        this.editPersonalDetails = false;
+      } else {
+        // TODO: error handling
       }
     },
     async deletePupil() {
