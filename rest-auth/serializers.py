@@ -71,15 +71,20 @@ class CustomLoginSerializer(LoginSerializer):
 class CustomUserDetailsSerializer(serializers.ModelSerializer):
     country = CountryField()
     school_slug = serializers.SerializerMethodField()
+    manager = serializers.SerializerMethodField()
 
     class Meta:
         model = DigiCrecheUser
-        fields = ('pk', 'email', 'user_type', 'school', 'school_slug', 'room',
-                  'first_name', 'last_name', 'phone_number', 'street_address1',
-                  'street_address2', 'town_or_city', 'county', 'postcode',
-                  'country', 'last_login', 'date_joined')
+        fields = ('pk', 'email', 'user_type', 'school', 'manager',
+                  'school_slug', 'room', 'first_name', 'last_name',
+                  'phone_number', 'street_address1', 'street_address2',
+                  'town_or_city', 'county', 'postcode', 'country',
+                  'last_login', 'date_joined')
         read_only_fields = ('pk', 'email', 'user_type', 'last_login',
                             'date_joined')
 
     def get_school_slug(self, instance):
         return instance.school.slug if instance.school else None
+
+    def get_manager(self, instance):
+        return instance.school.manager.pk if instance.school else None

@@ -113,27 +113,36 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
           >
-            <li>
+            <li v-if="user.user_type == 1">
               <router-link
                 :to="{
                   name: 'subscription-list',
                 }"
                 class="dropdown-item"
-                v-if="user.user_type == 1"
               >
                 Manage Subscriptions <i class="fas fa-wallet"></i>
               </router-link>
             </li>
-            <li>
+            <li v-if="user.user_type == 1 && $route.params.schoolSlug">
               <router-link
                 :to="{
                   name: 'school-subscription',
                   params: { schoolSlug: $route.params.schoolSlug },
                 }"
                 class="dropdown-item"
-                v-if="user.user_type == 1 && $route.params.schoolSlug"
               >
                 Subscription <i class="far fa-credit-card"></i>
+              </router-link>
+            </li>
+            <li v-if="user.manager">
+              <router-link
+                :to="{
+                  name: 'chat',
+                  params: { chatId: user.manager },
+                }"
+                class="dropdown-item"
+              >
+                Contact Manager <i class="fas fa-comment"></i>
               </router-link>
             </li>
             <li><hr class="dropdown-divider" /></li>
