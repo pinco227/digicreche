@@ -9,11 +9,19 @@
     <div class="row justify-content-center g-2 my-2">
       <div class="col-12 col-md-5 col-lg-4" v-if="pupilId">
         <div class="head-tile align-items-center">
-          <RoundPhotoComponent
-            :pupil="{ photo: photo, first_name: first_name }"
-          />
+          <div class="position-relative w-100 d-flex justify-content-center">
+            <RoundPhotoComponent
+              :pupil="{ photo: photo, first_name: first_name }"
+            />
+            <button class="btn btn-light btn-sm position-absolute top-0 end-0">
+              <i class="fas fa-pen"></i>
+            </button>
+          </div>
           <h2>{{ first_name }} {{ last_name }}</h2>
-          <div v-if="personal_details" class="text-start w-100">
+          <div
+            v-if="personal_details"
+            class="text-start w-100 position-relative"
+          >
             <h4>Personal Details</h4>
             <span
               v-for="(detail, index) in Object.entries(personal_details)"
@@ -21,6 +29,9 @@
             >
               <strong>{{ detail[0] }}:</strong> {{ detail[1] }} <br />
             </span>
+            <button class="btn btn-light btn-sm position-absolute top-0 end-0">
+              <i class="fas fa-pen"></i>
+            </button>
           </div>
           <div
             v-if="'teachers' in room && room.teachers.length"
@@ -48,7 +59,42 @@
       </div>
       <div class="col-12 col-md-7 col-lg-8">
         <div class="head-tile align-items-stretch">
-          <form @submit.prevent="onSubmit">
+          <div class="position-relative w-100" v-if="!editInfo">
+            <button
+              class="btn btn-light btn-sm position-absolute top-0 end-0"
+              @click="editInfo = true"
+              v-if="isManager"
+            >
+              <i class="fas fa-pen"></i>
+            </button>
+            <h4>Details</h4>
+            <dl>
+              <dt>Name</dt>
+              <dd>{{ first_name }} {{ last_name }}</dd>
+              <template v-if="'name' in room">
+                <dt>Room</dt>
+                <dd>{{ room.name }}</dd>
+              </template>
+              <template
+                v-if="
+                  user.user_type != 3 && parents.length && schoolParents.length
+                "
+              >
+                <dt>Parents</dt>
+                <dd>
+                  <span
+                    v-for="parent in Object.values(schoolParents).filter(
+                      (parent) => parents.includes(parent.id)
+                    )"
+                    :key="parent.id"
+                  >
+                    {{ parent.name }}<br />
+                  </span>
+                </dd>
+              </template>
+            </dl>
+          </div>
+          <form @submit.prevent="detailsSubmit" v-else>
             <fieldset :disabled="noSubscription">
               <legend class="mb-3" v-if="!pupilId">Add a pupil</legend>
               <div class="mb-3">
@@ -120,8 +166,8 @@
                 Delete Pupil
               </a>
             </fieldset>
+            <p v-if="error" class="muted mt-2">{{ error }}</p>
           </form>
-          <p v-if="error" class="muted mt-2">{{ error }}</p>
         </div>
       </div>
     </div>
@@ -168,6 +214,7 @@ export default {
       photo: null,
       personal_details: null,
       error: null,
+      editInfo: false,
     };
   },
   computed: {
@@ -249,7 +296,7 @@ export default {
         // if (data.status == 403) this.$emit("setPermission", false);
       }
     },
-    async onSubmit() {
+    async detailsSubmit() {
       if (!this.first_name || !this.last_name) this.error = "Name is required!";
       else if (this.first_name.length > 100 || this.last_name.length > 100)
         this.error = "Name cannot be longer than 100 charachters!";
@@ -271,19 +318,15 @@ export default {
         };
         const data = await apiService(endpoint, method, payload);
         if (data.status >= 200 && data.status < 300) {
-          if (this.room) {
-            this.$router.push({
-              name: "room-pupils",
-              params: {
-                schoolSlug: this.schoolSlug,
-                roomId: this.room,
-              },
-            });
+          if (this.pupilId) {
+            this.editInfo = false;
           } else {
+            this.editInfo = false;
             this.$router.push({
-              name: "school-pupils",
+              name: "pupil-edit",
               params: {
                 schoolSlug: this.schoolSlug,
+                pupilId: data.body.id,
               },
             });
           }
@@ -303,12 +346,12 @@ export default {
       ) {
         const data = await apiService(endpoint, method);
         if (data.status >= 200 && data.status < 300) {
-          if (this.room) {
+          if (this.room.id) {
             this.$router.push({
               name: "room-pupils",
               params: {
                 schoolSlug: this.schoolSlug,
-                roomId: this.room,
+                roomId: this.room.id,
               },
             });
           } else {
@@ -330,14 +373,21 @@ export default {
     this.getSchoolData();
     if (this.isManager) {
       this.getSchoolRooms();
+    }
+    if (this.user.user_type != 3) {
       this.getSchoolParents();
     }
     if (this.pupilId) {
       this.getPupilData();
+      this.editInfo = false;
     } else {
       setPageTitle("Add Pupil");
+      this.editInfo = true;
     }
-    if (this.$route.params.roomId) this.room = this.$route.params.roomId;
+    // if (this.$route.params.roomId) this.room.id = this.$route.params.roomId;
+  },
+  updated() {
+    if (this.room.id) this.getRoomData();
   },
 };
 </script>
