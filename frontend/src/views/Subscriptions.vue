@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-12 col-md-6" v-if="inactive_schools.length">
+      <div class="col-12 col-md-6" v-if="inactive_schools.length">
         <h2>Inactive Subscriptions</h2>
         <div class="list-group">
           <router-link
@@ -24,7 +24,7 @@
           </router-link>
         </div>
       </div>
-      <div class="col-xs-12 col-md-6" v-if="active_schools.length">
+      <div class="col-12 col-md-6" v-if="active_schools.length">
         <h2>Active Subscriptions</h2>
         <div class="list-group">
           <router-link

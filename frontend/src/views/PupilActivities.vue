@@ -5,20 +5,15 @@
         <GoBackComponent />
       </div>
       <div v-if="isManager" class="col-6 text-end">
-        <span id="editPupil" class="d-inline-block" tabindex="0">
-          <router-link
-            :to="{
-              name: 'pupil-edit',
-              params: { schoolSlug: schoolSlug, pupilId: pupilId },
-            }"
-            class="btn btn-light mx-2"
-            :class="{
-              disabled: noSubscription,
-            }"
-          >
-            Edit Pupil
-          </router-link>
-        </span>
+        <router-link
+          :to="{
+            name: 'pupil-edit',
+            params: { schoolSlug: schoolSlug, pupilId: pupilId },
+          }"
+          class="btn btn-light mx-2"
+        >
+          Pupil Info
+        </router-link>
       </div>
     </div>
     <NoSubscriptionComponent
@@ -159,10 +154,7 @@ export default {
           placement: "bottom",
           title: "Requires active subscription",
         };
-        const noSubPops = [
-          document.getElementById("editPupil"),
-          document.getElementById("addActivity"),
-        ];
+        const noSubPops = [document.getElementById("addActivity")];
         noSubPops.forEach((el) => {
           new Tooltip(el, options);
         });

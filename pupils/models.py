@@ -9,10 +9,8 @@ from schools.models import School
 
 def get_upload_path(instance, filename):
     pupil_slug = slugify(instance.first_name + ' ' + instance.last_name)
-    room_slug = slugify(instance.room.name)
     return os.path.join(
         instance.school.slug,
-        room_slug,
         pupil_slug,
         filename)
 

@@ -14,7 +14,7 @@
       <div
         v-for="school in schools"
         :key="school.pk"
-        class="col-xs-6 col-md-4 col-lg-3 text-center"
+        class="col-6 col-md-4 col-lg-3 text-center"
       >
         <router-link
           :to="{ name: 'school-rooms', params: { schoolSlug: school.slug } }"

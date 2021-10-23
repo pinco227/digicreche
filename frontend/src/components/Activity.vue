@@ -1,5 +1,5 @@
 <template>
-  <div class="single-activity col-xs-12 col-md-6 col-lg-6 text-center">
+  <div class="single-activity col-12 col-md-6 col-lg-6 text-center">
     {{ activity_type.icon }} {{ activity_type.name }} <br />
     {{ activity.created_at }}<br />
     {{ activity.description }} <br />

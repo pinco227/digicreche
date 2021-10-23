@@ -7,7 +7,7 @@
     </div>
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
     <div class="row justify-content-center">
-      <div class="col-xs-12 col-md-10 col-lg-8">
+      <div class="col-12 col-md-10 col-lg-8">
         <form @submit.prevent="onSubmit">
           <fieldset :disabled="noSubscription">
             <legend class="mb-3" v-if="roomId">Edit {{ name }}</legend>

@@ -26,14 +26,16 @@
     </div>
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
     <div class="row my-2 justify-content-center">
-      <div class="col-12 head-tile">
-        <h2>{{ school.name }}</h2>
-        <p>
-          Rooms: {{ school.rooms_count }} <br />
-          Teachers: {{ school.teachers_count }} <br />
-          Pupils: {{ school.pupils_count }}
-          <br />
-        </p>
+      <div class="col-12">
+        <div class="head-tile">
+          <h2>{{ school.name }}</h2>
+          <p>
+            Rooms: {{ school.rooms_count }} <br />
+            Teachers: {{ school.teachers_count }} <br />
+            Pupils: {{ school.pupils_count }}
+            <br />
+          </p>
+        </div>
       </div>
     </div>
     <div class="row my-2 justify-content-center g-2">

@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-xs-12 col-md-10 col-lg-8">
+      <div class="col-12 col-md-10 col-lg-8">
         <h1 class="mb-3" v-if="schoolSlug">Edit {{ name }}</h1>
         <h1 class="mb-3" v-else>Add a school</h1>
         <form @submit.prevent="onSubmit">

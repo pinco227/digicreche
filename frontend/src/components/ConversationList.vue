@@ -6,17 +6,19 @@
     }"
   >
     <div class="row my-2">
-      <div class="col-12 head-tile flex-row justify-content-between">
-        <h2>Chats</h2>
-        <button
-          class="btn btn-lg btn-outline-success"
-          id="startChat"
-          v-if="contacts.length"
-          data-bs-toggle="modal"
-          data-bs-target="#contactsModal"
-        >
-          <i class="fas fa-plus"></i>
-        </button>
+      <div class="col-12">
+        <div class="head-tile flex-row justify-content-between">
+          <h2>Chats</h2>
+          <button
+            class="btn btn-lg btn-outline-success"
+            id="startChat"
+            v-if="contacts.length"
+            data-bs-toggle="modal"
+            data-bs-target="#contactsModal"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
       </div>
     </div>
     <div class="list-group">

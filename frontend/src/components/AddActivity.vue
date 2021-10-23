@@ -1,5 +1,5 @@
 <template>
-  <div class="add-activity col-xs-12 col-md-6 col-lg-6 text-center">
+  <div class="add-activity col-12 col-md-6 col-lg-6 text-center">
     <span v-if="!showForm" id="addActivity" class="d-inline-block" tabindex="1">
       <button
         @click="showForm = true"

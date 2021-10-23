@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-xs-12 col-sm-11 col-md-10 col-lg-8">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-8">
         <h2>Account</h2>
         User type:
         <span v-if="user.user_type == 1">Manager</span>
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-xs-12 col-sm-11 col-md-10 col-lg-8">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-8">
         <form @submit.prevent="onSubmit">
           <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>

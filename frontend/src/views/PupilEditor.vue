@@ -6,80 +6,104 @@
       </div>
     </div>
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
-    <div class="row justify-content-center">
-      <div class="col-xs-12 col-md-10 col-lg-8">
-        <form @submit.prevent="onSubmit">
-          <fieldset :disabled="noSubscription">
-            <legend class="mb-3" v-if="pupilId">
-              Edit {{ first_name }} {{ last_name }}
-            </legend>
-            <legend class="mb-3" v-else>Add a pupil</legend>
-            <div class="mb-3">
-              <label for="first_name" class="form-label">First Name</label>
-              <input
-                v-model="first_name"
-                type="text"
-                class="form-control"
-                id="first_name"
-                name="first_name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="last_name" class="form-label">Last Name</label>
-              <input
-                v-model="last_name"
-                type="text"
-                class="form-control"
-                id="last_name"
-                name="last_name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="room" class="form-label">Room</label>
-              <select v-model="room" class="form-select" id="room" name="room">
-                <option v-if="!pupilId && !room" :value="null" selected>
-                  - Unassigned -
-                </option>
-                <option v-else :value="null">- Unassigned -</option>
-                <option
-                  v-for="(room_item, index) in schoolRooms"
-                  :key="index"
-                  :value="room_item.id"
-                >
-                  {{ room_item.name }}
-                </option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="parents" class="form-label">Parent(s)</label>
-              <select
-                multiple
-                v-model="parents"
-                class="form-select"
-                id="parents"
-                name="parents"
-              >
-                <option
-                  v-for="(parent, index) in schoolParents"
-                  :key="index"
-                  :value="parent.id"
-                >
-                  {{ parent.name }}
-                </option>
-              </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a
-              v-if="pupilId"
-              @click="deletePupil"
-              class="btn btn-danger float-end"
+    <div class="row justify-content-center g-2 my-2">
+      <div class="col-12 col-md-5 col-lg-4" v-if="pupilId">
+        <div class="head-tile align-items-center">
+          <div class="round-photo-container">
+            <img :src="photo" :alt="first_name" class="img-fluid" />
+          </div>
+          <h2>{{ first_name }} {{ last_name }}</h2>
+          <div
+            v-if="Object.keys(personal_details).length"
+            class="text-start w-100"
+          >
+            <h4>Personal Details</h4>
+            <span
+              v-for="(detail, index) in Object.entries(personal_details)"
+              :key="index"
             >
-              Delete Pupil
-            </a>
-          </fieldset>
-        </form>
-        <p v-if="error" class="muted mt-2">{{ error }}</p>
+              <strong>{{ detail[0] }}:</strong> {{ detail[1] }} <br />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-7 col-lg-8">
+        <div class="head-tile align-items-stretch">
+          <form @submit.prevent="onSubmit">
+            <fieldset :disabled="noSubscription">
+              <legend class="mb-3" v-if="!pupilId">Add a pupil</legend>
+              <div class="mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input
+                  v-model="first_name"
+                  type="text"
+                  class="form-control"
+                  id="first_name"
+                  name="first_name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input
+                  v-model="last_name"
+                  type="text"
+                  class="form-control"
+                  id="last_name"
+                  name="last_name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="room" class="form-label">Room</label>
+                <select
+                  v-model="room"
+                  class="form-select"
+                  id="room"
+                  name="room"
+                >
+                  <option v-if="!pupilId && !room" :value="null" selected>
+                    - Unassigned -
+                  </option>
+                  <option v-else :value="null">- Unassigned -</option>
+                  <option
+                    v-for="(room_item, index) in schoolRooms"
+                    :key="index"
+                    :value="room_item.id"
+                  >
+                    {{ room_item.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="parents" class="form-label">Parent(s)</label>
+                <select
+                  multiple
+                  v-model="parents"
+                  class="form-select"
+                  id="parents"
+                  name="parents"
+                >
+                  <option
+                    v-for="(parent, index) in schoolParents"
+                    :key="index"
+                    :value="parent.id"
+                  >
+                    {{ parent.name }}
+                  </option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <a
+                v-if="pupilId"
+                @click="deletePupil"
+                class="btn btn-danger float-end"
+              >
+                Delete Pupil
+              </a>
+            </fieldset>
+          </form>
+          <p v-if="error" class="muted mt-2">{{ error }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -118,6 +142,8 @@ export default {
       school: {},
       schoolRooms: [],
       schoolParents: [],
+      photo: null,
+      personal_details: {},
       error: null,
     };
   },
@@ -152,6 +178,8 @@ export default {
           this.last_name = data.body.last_name;
           this.room = data.body.room;
           this.parents = data.body.parents;
+          this.photo = data.body.photo;
+          this.personal_details = data.body.personal_details;
           setPageTitle(
             "Edit " + data.body.first_name + " " + data.body.last_name
           );

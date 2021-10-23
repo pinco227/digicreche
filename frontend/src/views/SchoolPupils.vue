@@ -26,8 +26,10 @@
       v-if="isManager && Object.keys(school).length && !school.is_active"
     />
     <div class="row my-2">
-      <div class="col-12 head-tile">
-        <h2>{{ school.name }}</h2>
+      <div class="col-12">
+        <div class="head-tile">
+          <h2>{{ school.name }}</h2>
+        </div>
       </div>
     </div>
     <div class="row justify-content-center g-2">

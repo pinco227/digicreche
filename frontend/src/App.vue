@@ -83,6 +83,7 @@ body {
   gap: 0.5rem;
   padding: 1rem;
   background: linear-gradient(90deg, var(--light-bg) 0%, var(--body-bg) 100%);
+  box-shadow: 3px 5px 10px -10px var(--body-text);
 }
 .head-tile p {
   margin: 0;
@@ -101,6 +102,7 @@ body {
   font-weight: bolder;
   text-decoration: none;
   height: 100%;
+  box-shadow: 0px 4px 9px -9px var(--body-text);
 }
 .tile:hover {
   background: var(--light-bg);
@@ -117,5 +119,23 @@ body {
   font-size: 1rem;
   color: var(--body-text);
   margin: 0;
+}
+.round-photo-container {
+  width: 50%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 3px 5px 10px -10px var(--body-text);
+}
+.round-photo-container:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.round-photo-container img {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 </style>

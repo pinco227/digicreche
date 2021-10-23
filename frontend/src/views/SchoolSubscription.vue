@@ -123,7 +123,7 @@
       class="row justify-content-center"
       v-if="Object.keys(school).length && school.is_active == false"
     >
-      <div class="col-xs-12 col-md-10 col-lg-8">
+      <div class="col-12 col-md-10 col-lg-8">
         <StripeCard
           v-if="school.is_active == false"
           :school="school"
