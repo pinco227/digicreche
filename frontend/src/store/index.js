@@ -17,6 +17,9 @@ export const store = createStore({
     SET_ACTIVE_CHAT(state, chatId) {
       state.activeChat = chatId;
     },
+    UNSET_ACTIVE_CHAT(state) {
+      state.activeChat = null;
+    },
     SET_CONVERSATIONS(state, conversations) {
       state.conversations = conversations;
     },
@@ -108,6 +111,9 @@ export const store = createStore({
       context.commit("SET_ACTIVE_CHAT", chat_id);
       context.dispatch("loadMessages", { chat_id: chat_id });
       context.dispatch("loadConversations");
+    },
+    clearChat(context) {
+      context.commit("UNSET_ACTIVE_CHAT");
     },
   },
 });
