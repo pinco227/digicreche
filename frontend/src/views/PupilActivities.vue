@@ -197,9 +197,9 @@ ul.timeline {
   clear: left;
 }
 
-.timeline > :deep(li.add-activity) {
+/* .timeline > :deep(li.add-activity) {
   height: 7rem;
-}
+} */
 
 .timeline > :deep(li:before),
 .timeline > :deep(li:after) {
@@ -315,5 +315,60 @@ ul.timeline {
 
 .timeline > :deep(li:nth-child(even)) > .timeline-badge {
   left: -1.25rem;
+}
+
+@media screen and (max-width: 767px) {
+  ul.timeline:before {
+    left: 1.5rem;
+  }
+  ul.timeline > :deep(li:nth-child(2)) {
+    margin-top: 2rem;
+  }
+  ul.timeline > :deep(li) {
+    margin-bottom: 1rem;
+    position: relative;
+    width: 100%;
+    padding: 0 1rem 0 0;
+    float: left;
+    clear: left;
+  }
+  ul.timeline > :deep(li) > .timeline-panel {
+    width: calc(100% - 3.5rem);
+    width: -moz-calc(100% - 3.5em);
+    width: -webkit-calc(100% - 3.5rem);
+    float: right;
+  }
+  ul.timeline > :deep(li) > .timeline-panel > .timeline-heading {
+    flex-direction: row;
+  }
+  ul.timeline > :deep(li) > .timeline-panel > .timeline-body {
+    text-align: left;
+  }
+  ul.timeline > :deep(li) > .timeline-badge,
+  ul.timeline > :deep(li:nth-child(even)) > .timeline-badge {
+    left: 0.25rem;
+    margin-left: 0;
+  }
+  ul.timeline > :deep(li) > .timeline-panel:before {
+    border-left-width: 0;
+    border-right-width: 15px;
+    left: -15px;
+    right: auto;
+  }
+  ul.timeline > :deep(li) > .timeline-panel:after {
+    border-left-width: 0;
+    border-right-width: 14px;
+    left: -14px;
+    right: auto;
+  }
+  .timeline > :deep(li) .timeline-inverted {
+    float: left;
+    clear: left;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .timeline > :deep(li) .timeline-inverted > .timeline-badge {
+    left: 0.25rem;
+  }
 }
 </style>

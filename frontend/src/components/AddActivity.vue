@@ -1,31 +1,47 @@
 <template>
-  <li class="add-activity">
+  <li class="add-activity" :class="{ 'mb-4 py-5': !showForm && vw > 767 }">
     <div class="timeline-badge add" @click="showForm = !showForm">
       <i class="fas fa-plus"></i>
     </div>
     <div class="timeline-panel" v-show="showForm">
       <form @submit.prevent="onSubmit">
-        <div class="timeline-heading">
-          <select v-model="form.type" id="type">
-            <option
-              v-for="(type_item, index) in activity_types"
-              :key="index"
+        <div class="timeline-heading icon-list">
+          <div
+            class="icon-radio"
+            v-for="(type_item, index) in activity_types"
+            :key="index"
+          >
+            <input
+              type="radio"
               :value="type_item.id"
-            >
-              {{ type_item.name }}
-            </option>
-          </select>
+              v-model="form.type"
+              :id="type_item.id"
+              required
+            />
+            <label :for="type_item.id">
+              <i :class="type_item.icon"></i> {{ type_item.name }}
+            </label>
+          </div>
         </div>
         <div class="timeline-body">
           <textarea
             v-model="form.description"
-            rows="3"
             id="description"
             name="description"
+            class="form-control my-1"
+            rows="1"
+            placeholder="comment"
           ></textarea>
-          <input type="file" name="images" multiple @change="updateImages" />
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button @click="showForm = false">X</button>
+          <div class="input-group mt-1">
+            <input
+              type="file"
+              class="form-control"
+              name="images"
+              multiple
+              @change="updateImages"
+            />
+            <button type="submit" class="btn btn-success">Post</button>
+          </div>
         </div>
       </form>
     </div>
@@ -53,12 +69,20 @@ export default {
       showForm: false,
     };
   },
+  computed: {
+    vw() {
+      return Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      );
+    },
+  },
   methods: {
     async getActivityTypes() {
       const endpoint = "/api/activity_types/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
-        this.activity_types = data;
+        this.activity_types = data.body;
       } else {
         // TODO: error handling
       }
@@ -79,3 +103,57 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.icon-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 0.3rem;
+}
+.icon-radio label {
+  padding: 0.3rem;
+  color: var(--orange-accent-dark);
+  background: white;
+  border: 1px solid var(--body-bg);
+  cursor: pointer;
+  box-shadow: 1px 2px 5px -5px var(--body-text);
+}
+.icon-radio label:hover {
+  border: 1px solid var(--orange-accent);
+  color: var(--orange-accent);
+}
+.icon-radio input[type="radio"] {
+  display: none;
+}
+.icon-radio input[type="radio"]:checked + label {
+  border: 1px solid var(--orange-accent);
+  color: var(--light-bg);
+  background: linear-gradient(
+    180deg,
+    var(--orange-accent) 0%,
+    var(--orange-accent-light) 100%
+  );
+  font-weight: 400;
+}
+li.add-activity > .timeline-badge.add {
+  background: linear-gradient(
+    180deg,
+    var(--green-accent) 0%,
+    var(--green-accent-light) 100%
+  );
+  width: 3rem;
+  height: 3rem;
+  top: -1.5rem;
+  right: -1.5rem;
+  cursor: pointer;
+}
+@media screen and (max-width: 767px) {
+  li.add-activity > .timeline-badge.add {
+    left: 0;
+  }
+}
+</style>
