@@ -51,3 +51,10 @@ class PupilDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pupil
         fields = ['personal_details', ]
+
+
+class PupilRoomSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Pupil
+        fields = ['room', ]

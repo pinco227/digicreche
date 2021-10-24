@@ -26,6 +26,10 @@ urlpatterns = [
          pv.PupilDetailsAPIView.as_view(),
          name='pupil-details'),
 
+    path('schools/<slug:slug>/pupils/<int:pk>/room/',
+         pv.PupilRoomAPIView.as_view(),
+         name='pupil-room'),
+
     path('children/',
          pv.ChildrenListAPIView.as_view(),
          name='children-list'),

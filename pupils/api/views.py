@@ -4,7 +4,8 @@ from schools.models import School
 from pupils.models import Pupil
 from pupils.api.serializers import (PupilSerializer,
                                     PupilPhotoSerializer,
-                                    PupilDetailsSerializer)
+                                    PupilDetailsSerializer,
+                                    PupilRoomSerializer)
 from pupils.api.permissions import (IsSchoolManager,
                                     IsSchoolManagerTeacherSafe,
                                     IsSchoolManagerOrParentRUD,
@@ -76,15 +77,22 @@ class PupilRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
         serializer.save(school=school)
 
 
-class PupilPhotoAPIView(generics.RetrieveUpdateDestroyAPIView):
+class PupilPhotoAPIView(generics.RetrieveUpdateAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilPhotoSerializer
     permission_classes = [
         IsSchoolManagerOrParentRUD, SubscriptionPaidOrReadOnly]
 
 
-class PupilDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
+class PupilDetailsAPIView(generics.RetrieveUpdateAPIView):
     queryset = Pupil.objects.all()
     serializer_class = PupilDetailsSerializer
     permission_classes = [
         IsSchoolManagerOrParentRUD, SubscriptionPaidOrReadOnly]
+
+
+class PupilRoomAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Pupil.objects.all()
+    serializer_class = PupilRoomSerializer
+    permission_classes = [
+        IsSchoolManagerParentTeacherRUD, SubscriptionPaidOrReadOnly]

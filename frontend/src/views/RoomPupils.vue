@@ -265,14 +265,16 @@ export default {
       }
     },
     async assignPupil(pupil) {
-      const endpoint = `/api/schools/${this.schoolSlug}/pupils/${pupil.id}/`;
+      const endpoint = `/api/schools/${this.schoolSlug}/pupils/${pupil.id}/room/`;
       const method = "PUT";
-      const payload = pupil;
+      const payload = {
+        room: pupil.room,
+      };
       payload.room = this.roomId;
       const data = await apiService(endpoint, method, payload);
       if (data.status >= 200 && data.status < 300) {
         this.unassignedPupils.splice(this.unassignedPupils.indexOf(pupil), 1);
-        this.pupils.push(payload);
+        this.pupils.push(pupil);
       } else {
         // TODO: error handling
       }
