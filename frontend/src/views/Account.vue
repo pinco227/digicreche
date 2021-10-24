@@ -5,127 +5,134 @@
         <GoBackComponent />
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-8">
-        <h2>Account</h2>
-        User type:
-        <span v-if="user.user_type == 1">Manager</span>
-        <span v-else-if="user.user_type == 2">Teacher</span>
-        <span v-else>Parent</span>
-        <br />
-        <div v-if="user.user_type != 1 && Object.keys(school).length">
-          School: {{ school.name }}<br />
-          <div v-if="(user.user_type == 2) & Object.keys(room).length">
-            Room: {{ room.name }}
-          </div>
+    <div class="row my-2 justify-content-center g-2">
+      <div class="col-12 col-md-5 col-lg-4">
+        <div class="head-tile">
+          <h2>Account</h2>
+          <dl>
+            <dt>User type:</dt>
+            <dd v-if="user.user_type == 1">Manager</dd>
+            <dd v-else-if="user.user_type == 2">Teacher</dd>
+            <dd v-else>Parent</dd>
+            <template v-if="user.user_type != 1 && Object.keys(school).length">
+              <dt>School:</dt>
+              <dd>{{ school.name }}</dd>
+              <template v-if="(user.user_type == 2) & Object.keys(room).length">
+                <dt>Room:</dt>
+                <dd>{{ room.name }}</dd>
+              </template>
+            </template>
+            <dt>Email:</dt>
+            <dd>{{ user.email }}</dd>
+            <dt>Joined:</dt>
+            <dd>{{ moment(user.date_joined) }}</dd>
+          </dl>
         </div>
-        Email: {{ user.email }}<br />
-        Joined: {{ moment(user.date_joined) }}
       </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-8">
-        <form @submit.prevent="onSubmit">
-          <div class="mb-3">
-            <label for="first_name" class="form-label">First Name</label>
-            <input
-              v-model="user.first_name"
-              type="text"
-              class="form-control"
-              id="first_name"
-              name="first_name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="last_name" class="form-label">Last Name</label>
-            <input
-              v-model="user.last_name"
-              type="text"
-              class="form-control"
-              id="last_name"
-              name="last_name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="phone_number" class="form-label">Contact Phone</label>
-            <input
-              v-model="user.phone_number"
-              type="text"
-              class="form-control"
-              id="phone_number"
-              name="phone_number"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="street_address1" class="form-label">Address 1</label>
-            <input
-              v-model="user.street_address1"
-              type="text"
-              class="form-control"
-              id="street_address1"
-              name="street_address1"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="street_address2" class="form-label">Address 2</label>
-            <input
-              v-model="user.street_address2"
-              type="text"
-              class="form-control"
-              id="street_address2"
-              name="street_address2"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="town_or_city" class="form-label">Town or City</label>
-            <input
-              v-model="user.town_or_city"
-              type="text"
-              class="form-control"
-              id="town_or_city"
-              name="town_or_city"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="county" class="form-label">County</label>
-            <input
-              v-model="user.county"
-              type="text"
-              class="form-control"
-              id="county"
-              name="county"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="postcode" class="form-label">Post Code</label>
-            <input
-              v-model="user.postcode"
-              type="text"
-              class="form-control"
-              id="postcode"
-              name="postcode"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="country" class="form-label">Country</label>
-            <select
-              v-model="user.country"
-              class="form-select"
-              id="country"
-              name="country"
-            >
-              <option
-                v-for="(country_item, index) in country_list"
-                :key="index"
-                :value="country_item.code"
+      <div class="col-12 col-md-7 col-lg-8">
+        <div class="head-tile align-items-stretch">
+          <form @submit.prevent="onSubmit">
+            <div class="mb-3">
+              <label for="first_name" class="form-label">First Name</label>
+              <input
+                v-model="user.first_name"
+                type="text"
+                class="form-control"
+                id="first_name"
+                name="first_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="last_name" class="form-label">Last Name</label>
+              <input
+                v-model="user.last_name"
+                type="text"
+                class="form-control"
+                id="last_name"
+                name="last_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">Contact Phone</label>
+              <input
+                v-model="user.phone_number"
+                type="text"
+                class="form-control"
+                id="phone_number"
+                name="phone_number"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="street_address1" class="form-label">Address 1</label>
+              <input
+                v-model="user.street_address1"
+                type="text"
+                class="form-control"
+                id="street_address1"
+                name="street_address1"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="street_address2" class="form-label">Address 2</label>
+              <input
+                v-model="user.street_address2"
+                type="text"
+                class="form-control"
+                id="street_address2"
+                name="street_address2"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="town_or_city" class="form-label">Town or City</label>
+              <input
+                v-model="user.town_or_city"
+                type="text"
+                class="form-control"
+                id="town_or_city"
+                name="town_or_city"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="county" class="form-label">County</label>
+              <input
+                v-model="user.county"
+                type="text"
+                class="form-control"
+                id="county"
+                name="county"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="postcode" class="form-label">Post Code</label>
+              <input
+                v-model="user.postcode"
+                type="text"
+                class="form-control"
+                id="postcode"
+                name="postcode"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <select
+                v-model="user.country"
+                class="form-select"
+                id="country"
+                name="country"
               >
-                {{ country_item.name }}
-              </option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Update</button>
-        </form>
-        <p v-if="error" class="muted mt-2">{{ error }}</p>
+                <option
+                  v-for="(country_item, index) in country_list"
+                  :key="index"
+                  :value="country_item.code"
+                >
+                  {{ country_item.name }}
+                </option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <p v-if="error" class="muted mt-2">{{ error }}</p>
+          </form>
+        </div>
       </div>
     </div>
   </section>

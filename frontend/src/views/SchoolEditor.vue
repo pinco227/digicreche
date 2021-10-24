@@ -7,130 +7,132 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-8">
-        <h1 class="mb-3" v-if="schoolSlug">Edit {{ name }}</h1>
-        <h1 class="mb-3" v-else>Add a school</h1>
-        <form @submit.prevent="onSubmit">
-          <div class="mb-3">
-            <label for="name" class="form-label">School Name</label>
-            <input
-              v-model="name"
-              type="text"
-              class="form-control"
-              id="name"
-              name="name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea
-              v-model="description"
-              rows="3"
-              class="form-control"
-              id="description"
-              name="description"
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Contact Email</label>
-            <input
-              v-model="email"
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="phone_number" class="form-label">Contact Phone</label>
-            <input
-              v-model="phone_number"
-              type="text"
-              class="form-control"
-              id="phone_number"
-              name="phone_number"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="street_address1" class="form-label">Address 1</label>
-            <input
-              v-model="street_address1"
-              type="text"
-              class="form-control"
-              id="street_address1"
-              name="street_address1"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="street_address2" class="form-label">Address 2</label>
-            <input
-              v-model="street_address2"
-              type="text"
-              class="form-control"
-              id="street_address2"
-              name="street_address2"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="town_or_city" class="form-label">Town or City</label>
-            <input
-              v-model="town_or_city"
-              type="text"
-              class="form-control"
-              id="town_or_city"
-              name="town_or_city"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="county" class="form-label">County</label>
-            <input
-              v-model="county"
-              type="text"
-              class="form-control"
-              id="county"
-              name="county"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="postcode" class="form-label">Post Code</label>
-            <input
-              v-model="postcode"
-              type="text"
-              class="form-control"
-              id="postcode"
-              name="postcode"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="country" class="form-label">Country</label>
-            <select
-              v-model="country"
-              class="form-select"
-              id="country"
-              name="country"
-            >
-              <option v-if="!schoolSlug" :value="null" disabled selected>
-                - Please select -
-              </option>
-              <option
-                v-for="(country_item, index) in country_list"
-                :key="index"
-                :value="country_item.code"
+        <div class="head-tile align-items-stretch">
+          <h2 class="mb-3" v-if="schoolSlug">Edit {{ name }}</h2>
+          <h2 class="mb-3" v-else>Add a school</h2>
+          <form @submit.prevent="onSubmit">
+            <div class="mb-3">
+              <label for="name" class="form-label">School Name</label>
+              <input
+                v-model="name"
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                v-model="description"
+                rows="3"
+                class="form-control"
+                id="description"
+                name="description"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Contact Email</label>
+              <input
+                v-model="email"
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">Contact Phone</label>
+              <input
+                v-model="phone_number"
+                type="text"
+                class="form-control"
+                id="phone_number"
+                name="phone_number"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="street_address1" class="form-label">Address 1</label>
+              <input
+                v-model="street_address1"
+                type="text"
+                class="form-control"
+                id="street_address1"
+                name="street_address1"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="street_address2" class="form-label">Address 2</label>
+              <input
+                v-model="street_address2"
+                type="text"
+                class="form-control"
+                id="street_address2"
+                name="street_address2"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="town_or_city" class="form-label">Town or City</label>
+              <input
+                v-model="town_or_city"
+                type="text"
+                class="form-control"
+                id="town_or_city"
+                name="town_or_city"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="county" class="form-label">County</label>
+              <input
+                v-model="county"
+                type="text"
+                class="form-control"
+                id="county"
+                name="county"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="postcode" class="form-label">Post Code</label>
+              <input
+                v-model="postcode"
+                type="text"
+                class="form-control"
+                id="postcode"
+                name="postcode"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <select
+                v-model="country"
+                class="form-select"
+                id="country"
+                name="country"
               >
-                {{ country_item.name }}
-              </option>
-            </select>
-          </div>
+                <option v-if="!schoolSlug" :value="null" disabled selected>
+                  - Please select -
+                </option>
+                <option
+                  v-for="(country_item, index) in country_list"
+                  :key="index"
+                  :value="country_item.code"
+                >
+                  {{ country_item.name }}
+                </option>
+              </select>
+            </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <a
-            v-if="schoolSlug"
-            @click="deleteSchool"
-            class="btn btn-danger float-end"
-          >
-            Delete School
-          </a>
-        </form>
-        <p v-if="error" class="muted mt-2">{{ error }}</p>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a
+              v-if="schoolSlug"
+              @click="deleteSchool"
+              class="btn btn-danger float-end"
+            >
+              Delete School
+            </a>
+          </form>
+          <p v-if="error" class="muted mt-2">{{ error }}</p>
+        </div>
       </div>
     </div>
   </div>

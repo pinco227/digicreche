@@ -7,39 +7,49 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-6" v-if="inactive_schools.length">
-        <h2>Inactive Subscriptions</h2>
-        <div class="list-group">
-          <router-link
-            :to="{
-              name: 'school-subscription',
-              params: {
-                schoolSlug: school.slug,
-              },
-            }"
-            class="list-group-item list-group-item-action"
+        <div class="head-tile">
+          <h2>Inactive Subscriptions</h2>
+        </div>
+        <div class="row justify-content-center g-2 my-2">
+          <div
             v-for="school in inactive_schools"
             :key="school.id"
+            class="col-6 col-md-6 col-lg-4 text-center"
           >
-            {{ school.name }}
-          </router-link>
+            <router-link
+              :to="{
+                name: 'school-subscription',
+                params: { schoolSlug: school.slug },
+              }"
+              class="tile"
+            >
+              <i class="fas fa-school"></i>
+              {{ school.name }}
+            </router-link>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-6" v-if="active_schools.length">
-        <h2>Active Subscriptions</h2>
-        <div class="list-group">
-          <router-link
-            :to="{
-              name: 'school-subscription',
-              params: {
-                schoolSlug: school.slug,
-              },
-            }"
-            class="list-group-item list-group-item-action"
+        <div class="head-tile">
+          <h2>Active Subscriptions</h2>
+        </div>
+        <div class="row justify-content-center g-2 my-2">
+          <div
             v-for="school in active_schools"
             :key="school.id"
+            class="col-6 col-md-6 col-lg-4 text-center"
           >
-            {{ school.name }}
-          </router-link>
+            <router-link
+              :to="{
+                name: 'school-subscription',
+                params: { schoolSlug: school.slug },
+              }"
+              class="tile"
+            >
+              <i class="fas fa-school"></i>
+              {{ school.name }}
+            </router-link>
+          </div>
         </div>
       </div>
     </div>

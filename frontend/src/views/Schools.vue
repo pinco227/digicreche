@@ -13,7 +13,7 @@
     <div class="row justify-content-center g-2 my-2">
       <div
         v-for="school in schools"
-        :key="school.pk"
+        :key="school.id"
         class="col-6 col-md-4 col-lg-3 text-center"
       >
         <router-link

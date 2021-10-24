@@ -156,4 +156,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+.list-group-item.active {
+  font-weight: bold;
+  border-color: var(--orange-accent);
+  background: linear-gradient(
+    90deg,
+    var(--orange-accent) 0%,
+    var(--orange-accent-light) 100%
+  );
+}
 </style>

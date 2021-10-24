@@ -8,42 +8,46 @@
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-8">
-        <form @submit.prevent="onSubmit">
-          <fieldset :disabled="noSubscription">
-            <legend class="mb-3" v-if="roomId">Edit {{ name }}</legend>
-            <legend class="mb-3" v-else>Add a room</legend>
-            <div class="mb-3">
-              <label for="name" class="form-label">Room Name</label>
-              <input
-                v-model="name"
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <textarea
-                v-model="description"
-                rows="3"
-                class="form-control"
-                id="description"
-                name="description"
-              ></textarea>
-            </div>
+        <div class="head-tile align-items-stretch">
+          <form @submit.prevent="onSubmit">
+            <fieldset :disabled="noSubscription">
+              <legend class="mb-3 fs-2 fw-bolder" v-if="roomId">
+                Edit {{ name }}
+              </legend>
+              <legend class="mb-3 fs-2 fw-bolder" v-else>Add a room</legend>
+              <div class="mb-3">
+                <label for="name" class="form-label">Room Name</label>
+                <input
+                  v-model="name"
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea
+                  v-model="description"
+                  rows="3"
+                  class="form-control"
+                  id="description"
+                  name="description"
+                ></textarea>
+              </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a
-              v-if="roomId"
-              @click="deleteRoom"
-              class="btn btn-danger float-end"
-            >
-              Delete Room
-            </a>
-          </fieldset>
-        </form>
-        <p v-if="error" class="muted mt-2">{{ error }}</p>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <a
+                v-if="roomId"
+                @click="deleteRoom"
+                class="btn btn-danger float-end"
+              >
+                Delete Room
+              </a>
+            </fieldset>
+          </form>
+          <p v-if="error" class="muted mt-2">{{ error }}</p>
+        </div>
       </div>
     </div>
   </div>
