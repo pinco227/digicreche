@@ -129,6 +129,23 @@
                 </option>
               </select>
             </div>
+            <div class="mb-3" v-show="!isManager">
+              <label for="school" class="form-label">School</label>
+              <select
+                v-model="user.school"
+                class="form-select"
+                id="school"
+                name="school"
+              >
+                <option
+                  v-for="school in schools"
+                  :key="school.id"
+                  :value="school.id"
+                >
+                  {{ school.name }}
+                </option>
+              </select>
+            </div>
             <button type="submit" class="btn btn-primary">Update</button>
             <p v-if="error" class="muted mt-2">{{ error }}</p>
           </form>
@@ -148,12 +165,29 @@ export default {
   components: {
     GoBackComponent,
   },
+  computed: {
+    isManager() {
+      return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
+    },
+  },
   data() {
     return {
-      user: {},
+      user: {
+        first_name: null,
+        last_name: null,
+        phone_number: null,
+        street_address1: null,
+        street_address2: null,
+        town_or_city: null,
+        county: null,
+        postcode: null,
+        country: null,
+        school: null,
+      },
       school: {},
       room: {},
       country_list: [],
+      schools: [],
       error: null,
       moment: moment,
     };
@@ -161,19 +195,6 @@ export default {
   methods: {
     goBack() {
       this.$router.back();
-    },
-    async getUser() {
-      const endpoint = "/api/rest-auth/user/";
-      const data = await apiService(endpoint);
-      if (data.status >= 200 && data.status < 300) {
-        this.user = data.body;
-        if (data.body.user_type != 1) this.getSchoolData();
-        if (data.body.user_type == 2) this.getRoomData();
-        setPageTitle("User Account");
-      } else {
-        // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
-      }
     },
     async getSchoolData() {
       if (Object.keys(this.user).length && this.user.school_slug) {
@@ -184,6 +205,15 @@ export default {
         } else {
           // TODO: error handling
         }
+      }
+    },
+    async getSchools() {
+      const endpoint = `/api/schools/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.schools = data.body;
+      } else {
+        // TODO: error handling
       }
     },
     async getRoomData() {
@@ -233,7 +263,14 @@ export default {
     },
   },
   created() {
-    this.getUser();
+    const user = JSON.parse(window.localStorage.getItem("user"));
+    this.user = user;
+    if (this.user.user_type != 1) {
+      this.getSchoolData();
+      this.getSchools();
+    }
+    if (this.user.user_type == 2) this.getRoomData();
+    setPageTitle("User Account");
     this.getCountries();
   },
 };

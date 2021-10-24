@@ -42,7 +42,8 @@ class DigiCrecheUser(AbstractUser):
     country = CountryField(blank_label="Country ", null=False, blank=False)
     school = models.ForeignKey(
         School, on_delete=models.DO_NOTHING, null=True,
-        blank=True, related_name='institution')
+        blank=True, related_name='institution',
+        help_text='Leave blank if you are a manager.')
     room = models.ForeignKey(
         Room, null=True, blank=True, on_delete=models.SET_NULL,
         related_name='teachers')
