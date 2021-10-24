@@ -12,7 +12,7 @@ from rest_framework.response import Response
 
 
 class ActivityTypeViewSet(viewsets.ModelViewSet):
-    queryset = ActivityType.objects.all()
+    queryset = ActivityType.objects.all().order_by('name')
     serializer_class = ActivityTypeSerializer
     permission_classes = [IsAdminOrSafe]
 

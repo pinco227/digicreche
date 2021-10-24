@@ -1,20 +1,34 @@
 <template>
-  <div class="single-activity col-12 col-md-6 col-lg-6 text-center">
-    {{ activity_type.icon }} {{ activity_type.name }} <br />
-    {{ activity.created_at }}<br />
-    {{ activity.description }} <br />
-    <img
-      v-for="(image, index) in activity.images"
-      :src="image.image"
-      :alt="activity.description"
-      :key="index"
-      width="100"
-    />
-  </div>
+  <li>
+    <div class="timeline-badge">
+      <i :class="activity_type.icon"></i>
+    </div>
+    <div class="timeline-panel">
+      <div class="timeline-heading">
+        <h4>{{ activity_type.name }}</h4>
+        <small>{{
+          moment(activity.created_at).format("dddd, DD/MM/YYYY, h:mm a")
+        }}</small>
+      </div>
+      <div class="timeline-body">
+        <p>
+          {{ activity.description }}
+        </p>
+        <img
+          v-for="(image, index) in activity.images"
+          :src="image.image"
+          :alt="activity.description"
+          :key="index"
+          height="100"
+        />
+      </div>
+    </div>
+  </li>
 </template>
 
 <script>
 import { apiService } from "@/common/api.service.js";
+import moment from "moment";
 
 export default {
   name: "ActivityComponent",
@@ -23,10 +37,20 @@ export default {
       type: Object,
       required: true,
     },
+    index: {
+      type: Number,
+      required: true,
+    },
+  },
+  computed: {
+    invert() {
+      return this.index % 2;
+    },
   },
   data() {
     return {
       activity_type: {},
+      moment: moment,
     };
   },
   methods: {

@@ -184,9 +184,6 @@ export default {
     },
   },
   methods: {
-    dateTime(value) {
-      return moment(value).format("dddd, MMMM Do YYYY, h:mm:ss a");
-    },
     async getSchoolData() {
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);

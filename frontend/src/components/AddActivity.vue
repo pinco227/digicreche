@@ -1,37 +1,35 @@
 <template>
-  <div class="add-activity col-12 col-md-6 col-lg-6 text-center">
-    <span v-if="!showForm" id="addActivity" class="d-inline-block" tabindex="1">
-      <button
-        @click="showForm = true"
-        class="btn btn-lg btn-outline-success"
-        :class="{
-          disabled: noSubscription,
-        }"
-      >
-        <i class="fas fa-plus"></i>
-      </button>
-    </span>
-    <form v-else @submit.prevent="onSubmit">
-      <select v-model="form.type" id="type">
-        <option
-          v-for="(type_item, index) in activity_types"
-          :key="index"
-          :value="type_item.id"
-        >
-          {{ type_item.name }}
-        </option>
-      </select>
-      <textarea
-        v-model="form.description"
-        rows="3"
-        id="description"
-        name="description"
-      ></textarea>
-      <input type="file" name="images" multiple @change="updateImages" />
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button @click="showForm = false">X</button>
-    </form>
-  </div>
+  <li class="add-activity">
+    <div class="timeline-badge add" @click="showForm = !showForm">
+      <i class="fas fa-plus"></i>
+    </div>
+    <div class="timeline-panel" v-show="showForm">
+      <form @submit.prevent="onSubmit">
+        <div class="timeline-heading">
+          <select v-model="form.type" id="type">
+            <option
+              v-for="(type_item, index) in activity_types"
+              :key="index"
+              :value="type_item.id"
+            >
+              {{ type_item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="timeline-body">
+          <textarea
+            v-model="form.description"
+            rows="3"
+            id="description"
+            name="description"
+          ></textarea>
+          <input type="file" name="images" multiple @change="updateImages" />
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button @click="showForm = false">X</button>
+        </div>
+      </form>
+    </div>
+  </li>
 </template>
 
 <script>
