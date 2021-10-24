@@ -46,6 +46,13 @@
         />
       </ul>
     </div>
+    <div class="row my-2" v-if="next">
+      <div class="col">
+        <button @click="getPupilActivities" class="btn btn-outline-secondary">
+          Load More...
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,6 +88,7 @@ export default {
       pupil: {},
       activities: [],
       school: {},
+      next: null,
     };
   },
   computed: {
@@ -110,10 +118,18 @@ export default {
       }
     },
     async getPupilActivities() {
-      const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
+      let endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
+      if (this.next) {
+        endpoint = this.next;
+      }
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
-        this.activities = data.body;
+        this.activities.push(...data.body.results);
+        if (data.body.next) {
+          this.next = data.body.next;
+        } else {
+          this.next = null;
+        }
       } else {
         // TODO: error handling
         if (data.status == 403) this.$emit("setPermission", false);
