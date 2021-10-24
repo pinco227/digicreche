@@ -23,8 +23,9 @@
             />
             <button
               class="btn btn-light btn-sm position-absolute top-0 end-0"
-              @click="editPhoto = true"
+              @click="editPhoto = !editPhoto"
               v-if="isManager"
+              :disabled="noSubscription"
             >
               <i class="fas fa-pen"></i>
             </button>
@@ -47,6 +48,12 @@
                   <i class="fas fa-upload"></i>
                 </button>
               </div>
+              <a
+                class="btn btn-secondary btn-sm"
+                @click="editPhoto = !editPhoto"
+              >
+                Cancel
+              </a>
             </form>
           </div>
           <h2>{{ first_name }} {{ last_name }}</h2>
@@ -61,7 +68,8 @@
             <button
               class="btn btn-light btn-sm position-absolute top-0 end-0"
               v-if="isManager || user.user_type == 3"
-              @click="editPersonalDetails = true"
+              @click="editPersonalDetails = false"
+              :disabled="noSubscription"
             >
               <i class="fas fa-pen"></i>
             </button>
@@ -87,23 +95,28 @@
                       v-model="detail.value"
                       placeholder="detail value"
                     />
-                    <button
+                    <a
                       class="btn btn-outline-warning bg-light"
                       @click="personal_details.splice(index, 1)"
                     >
                       <i class="fas fa-times"></i>
-                    </button>
+                    </a>
                   </div>
                 </div>
-                <a
-                  class="btn btn-secondary"
-                  @click="personal_details.push({ key: null, value: null })"
-                >
-                  <i class="fas fa-plus"></i>
-                </a>
-                <button type="submit" class="btn btn-success float-end">
-                  Update
-                </button>
+                <div class="d-flex flex-row justify-content-between">
+                  <a
+                    class="btn btn-outline-success"
+                    @click="personal_details.push({ key: null, value: null })"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </a>
+                  <a class="btn btn-secondary" @click="resetPersonalDetails()">
+                    Cancel
+                  </a>
+                  <button type="submit" class="btn btn-success float-end">
+                    Update
+                  </button>
+                </div>
               </fieldset>
             </form>
           </div>
@@ -138,6 +151,7 @@
               class="btn btn-light btn-sm position-absolute top-0 end-0"
               @click="editInfo = true"
               v-if="isManager"
+              :disabled="noSubscription"
             >
               <i class="fas fa-pen"></i>
             </button>
@@ -232,15 +246,21 @@
                   </option>
                 </select>
               </div>
-
-              <button type="submit" class="btn btn-primary">Submit</button>
-              <a
-                v-if="pupilId"
-                @click="deletePupil"
-                class="btn btn-danger float-end"
-              >
-                Delete Pupil
-              </a>
+              <div class="d-flex flex-row justify-content-between">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a
+                  class="btn btn-secondary"
+                  @click="
+                    editInfo = false;
+                    getPupilData();
+                  "
+                >
+                  Cancel
+                </a>
+                <a v-if="pupilId" @click="deletePupil" class="btn btn-danger">
+                  Delete Pupil
+                </a>
+              </div>
             </fieldset>
             <p v-if="error" class="muted mt-2">{{ error }}</p>
           </form>
@@ -452,6 +472,23 @@ export default {
         // TODO: form validation error
       }
     },
+    async resetPersonalDetails() {
+      const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/details/`;
+      const data = await apiService(endpoint);
+      if (data.status >= 200 && data.status < 300) {
+        this.editPersonalDetails = false;
+        if (data.body.personal_details) {
+          Object.entries(data.body.personal_details).forEach((detail) => {
+            this.personal_details.push({
+              key: detail[0],
+              value: detail[1],
+            });
+          });
+        } else this.personal_details = [];
+      } else {
+        // TODO: error handling
+      }
+    },
     async personalDetailsSubmit() {
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/details/`;
       const method = "PUT";
@@ -465,7 +502,6 @@ export default {
       } else {
         payload = { personal_details: null };
       }
-      console.log(payload);
 
       const data = await apiService(endpoint, method, payload);
       if (data.status >= 200 && data.status < 300) {
