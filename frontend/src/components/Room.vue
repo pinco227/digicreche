@@ -7,7 +7,12 @@
       }"
       class="tile"
     >
-      <i :class="room.icon"></i>
+      <template v-if="room.icon">
+        <i :class="room.icon"></i>
+      </template>
+      <template v-else>
+        <i class="fas fa-child"></i>
+      </template>
       {{ room.name }}
       <p class="tile-caption" v-if="hasTeacher">
         <span v-if="room.teachers.length > 1"

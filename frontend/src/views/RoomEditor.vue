@@ -35,6 +35,27 @@
                   name="description"
                 ></textarea>
               </div>
+              <div class="mb-3">
+                <label for="icon-list" class="form-label">Icon</label>
+                <div class="icon-list" id="icon-list">
+                  <div
+                    class="icon-radio"
+                    v-for="(icon, index) in icons"
+                    :key="index"
+                  >
+                    <input
+                      type="radio"
+                      :value="icon"
+                      v-model="room_icon"
+                      :id="icon + index"
+                      required
+                    />
+                    <label :for="icon + index">
+                      <i :class="icon"></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
 
               <button type="submit" class="btn btn-primary">Submit</button>
               <a
@@ -81,6 +102,23 @@ export default {
     return {
       name: null,
       description: null,
+      room_icon: null,
+      icons: [
+        "fas fa-baby",
+        "fas fa-child",
+        "fas fa-cube",
+        "fas fa-cubes",
+        "fas fa-baby-carriage",
+        "fas fa-award",
+        "fas fa-medal",
+        "fas fa-crown",
+        "fas fa-trophy",
+        "fas fa-star",
+        "fas fa-leaf",
+        "fab fa-canadian-maple-leaf",
+        "fab fa-pagelines",
+        "fab fa-envira",
+      ],
       error: null,
       school: {},
     };
@@ -101,6 +139,7 @@ export default {
         if (data.status >= 200 && data.status < 300) {
           this.name = data.body.name;
           this.description = data.body.description;
+          this.room_icon = data.body.icon;
           setPageTitle("Edit " + data.name);
         } else {
           // TODO: error handling
@@ -135,6 +174,7 @@ export default {
         const payload = {
           name: this.name,
           description: this.description,
+          icon: this.room_icon,
           // the school field get updated with the selected school in the backend
           // but as the field is required, we're passing an integer of 1
           school: 1,
@@ -186,3 +226,41 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.icon-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 0.3rem;
+}
+.icon-radio label {
+  padding: 0.5rem 1rem;
+  color: var(--orange-accent-dark);
+  background: white;
+  border: 1px solid var(--body-bg);
+  cursor: pointer;
+  box-shadow: 1px 2px 5px -5px var(--body-text);
+  text-align: center;
+  font-size: 3rem;
+}
+.icon-radio label:hover {
+  border: 1px solid var(--orange-accent);
+  color: var(--orange-accent);
+}
+.icon-radio input[type="radio"] {
+  display: none;
+}
+.icon-radio input[type="radio"]:checked + label {
+  border: 1px solid var(--orange-accent);
+  color: var(--light-bg);
+  background: linear-gradient(
+    180deg,
+    var(--orange-accent) 0%,
+    var(--orange-accent-light) 100%
+  );
+  font-weight: 400;
+}
+</style>
