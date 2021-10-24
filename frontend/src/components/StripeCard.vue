@@ -1,30 +1,86 @@
 <template>
-  <div id="stripe-card" class="d-flex d-flex flex-column align-items-center">
+  <div id="stripe-card">
     <form
       id="payment-form"
-      class="w-75 px-5 d-flex flex-column align-items-center"
       @submit.prevent="submitSubscribe"
       v-if="school.is_active == false"
     >
-      <div v-for="price in prices" :key="price.id">
-        <label>
-          <input
-            type="radio"
-            :value="price.id"
-            v-model="selectedPrice"
-            required
-          />
-          {{ price.amount }} / {{ price.recurring.interval }}
-        </label>
-      </div>
-      <div ref="card" class="form-control m-2"></div>
-      <div v-if="error" class="errors">{{ error }}</div>
-      <input
-        :disabled="disableSubmit"
-        class="btn btn-primary"
-        type="submit"
-        value="Subscribe"
-      />
+      <fieldset :disabled="school.is_active">
+        <div class="row g-2 my-2">
+          <div class="col">
+            <div class="head-tile align-items-center">
+              <h3>Try now for free!</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row g-2 my-2">
+          <div v-for="price in prices" :key="price.id" class="col">
+            <input
+              class="price-radio"
+              type="radio"
+              :value="price.id"
+              v-model="selectedPrice"
+              :id="price.id"
+              required
+            />
+            <label
+              class="card tile price-tile align-items-stretch"
+              :for="price.id"
+              @click="displayCard = true"
+            >
+              <div class="card-body">
+                <span class="price-title">
+                  <strong>{{ price.amount }}</strong> {{ price.currency }} /
+                  {{ price.recurring.interval }}
+                </span>
+                <p>For each School</p>
+                <h4>15 days free</h4>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  Unlimited rooms <i class="fas fa-check"></i>
+                </li>
+                <li class="list-group-item">
+                  Unlimited pupils <i class="fas fa-check"></i>
+                </li>
+                <li class="list-group-item">
+                  Teachers access <i class="fas fa-check"></i>
+                </li>
+                <li class="list-group-item">
+                  Parents access<i class="fas fa-check"></i>
+                </li>
+                <li class="list-group-item">
+                  Chat <i class="fas fa-check"></i>
+                </li>
+                <li class="list-group-item">
+                  Cancel anytime <i class="fas fa-check"></i>
+                </li>
+              </ul>
+            </label>
+          </div>
+        </div>
+        <div class="row my-2" v-show="displayCard">
+          <div class="col">
+            <div class="head-tile">
+              <h3>Get your free trial now!</h3>
+              <p>
+                We need your card number in order to proccess future recurring
+                payments after the trial ends. You can request to cancel at any
+                time and the subscription will be automatically canceled at the
+                end of period (trial).
+              </p>
+              <div ref="card" class="form-control my-2 stripe-card"></div>
+              <div v-if="error" class="errors">{{ error }}</div>
+              <input
+                :disabled="disableSubmit"
+                class="btn btn-success"
+                type="submit"
+                value="Subscribe"
+              />
+            </div>
+          </div>
+        </div>
+      </fieldset>
     </form>
     <div v-else>You already have an active subscription for this school.</div>
   </div>
@@ -54,6 +110,7 @@ export default {
       selectedPrice: null,
       disableSubmit: false,
       error: null,
+      displayCard: false,
     };
   },
   computed: {
@@ -257,3 +314,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.stripe-card {
+  height: 2.4rem;
+  padding: 0.6rem 1rem;
+}
+</style>

@@ -170,7 +170,9 @@
           </div>
           <form @submit.prevent="detailsSubmit" v-else>
             <fieldset :disabled="noSubscription">
-              <legend class="mb-3" v-if="!pupilId">Add a pupil</legend>
+              <legend class="mb-3 fs-2 fw-bolder" v-if="!pupilId">
+                Add a pupil
+              </legend>
               <div class="mb-3">
                 <label for="first_name" class="form-label">First Name</label>
                 <input

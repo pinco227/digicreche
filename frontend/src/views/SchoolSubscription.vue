@@ -6,117 +6,119 @@
       </div>
     </div>
     <div
-      class="row justify-content-center"
+      class="row my-2 g-2 justify-content-center"
       v-if="Object.keys(subscription).length"
     >
       <div class="col-12 col-md-6">
-        <h3>Subscription details</h3>
-        <dl>
-          <dt>Status</dt>
-          <dd>{{ subscription.status }}</dd>
-        </dl>
-        <dl v-if="subscription.trial_start">
-          <dt>Trial started</dt>
-          <dd>{{ moment(subscription.trial_start) }}</dd>
-        </dl>
-        <dl v-if="subscription.trial_end">
-          <dt>Trial end</dt>
-          <dd>{{ moment(subscription.trial_end) }}</dd>
-        </dl>
-        <dl>
-          <dt>Created</dt>
-          <dd>
-            {{ moment(subscription.created) }}
-          </dd>
-          <dt>Current period start</dt>
-          <dd>
-            {{ moment(subscription.current_period_start) }}
-          </dd>
-          <dt>Current period end</dt>
-          <dd>
-            {{ moment(subscription.current_period_end) }}
-          </dd>
-        </dl>
+        <div class="head-tile">
+          <h3>Subscription details</h3>
+          <dl>
+            <dt>Status</dt>
+            <dd>{{ subscription.status }}</dd>
+            <template v-if="subscription.trial_start">
+              <dt>Trial started</dt>
+              <dd>{{ moment(subscription.trial_start) }}</dd>
+            </template>
+            <template v-if="subscription.trial_end">
+              <dt>Trial end</dt>
+              <dd>{{ moment(subscription.trial_end) }}</dd>
+            </template>
+            <dt>Created</dt>
+            <dd>
+              {{ moment(subscription.created) }}
+            </dd>
+            <dt>Current period start</dt>
+            <dd>
+              {{ moment(subscription.current_period_start) }}
+            </dd>
+            <dt>Current period end</dt>
+            <dd>
+              {{ moment(subscription.current_period_end) }}
+            </dd>
+          </dl>
+        </div>
       </div>
       <div class="col-12 col-md-6" v-if="Object.keys(paymentMethod).length">
-        <h3>Billing</h3>
-        <dl>
-          <dt>Name</dt>
-          <dd>{{ paymentMethod.billing_details.name }}</dd>
-        </dl>
-        <h3>Payment</h3>
-        <dl v-if="paymentMethod.type == 'card' && paymentMethod.card">
-          <dt>Card</dt>
-          <dd>
-            {{ paymentMethod.card.brand }}
-            {{ paymentMethod.card.funding }} ending
-            {{ paymentMethod.card.last4 }} <br />
-            Expiry date:
-            {{ paymentMethod.card.exp_month }} /
-            {{ paymentMethod.card.exp_year }}
-          </dd>
-          <dt></dt>
-        </dl>
+        <div class="head-tile">
+          <h3>Billing</h3>
+          <dl>
+            <dt>Name</dt>
+            <dd>{{ paymentMethod.billing_details.name }}</dd>
+          </dl>
+          <h3>Payment</h3>
+          <dl v-if="paymentMethod.type == 'card' && paymentMethod.card">
+            <dt>Card</dt>
+            <dd>
+              {{ paymentMethod.card.brand }}
+              {{ paymentMethod.card.funding }} ending
+              {{ paymentMethod.card.last4 }} <br />
+              Expiry date:
+              {{ paymentMethod.card.exp_month }} /
+              {{ paymentMethod.card.exp_year }}
+            </dd>
+          </dl>
+        </div>
       </div>
-    </div>
-    <div
-      class="row justify-content-center"
-      v-if="Object.keys(subscription).length"
-    >
       <div class="col-12 col-md-6" v-if="selectedPrice">
-        <h3>Plan</h3>
-        <ul class="list-group" v-for="plan in prices" :key="plan.pk">
-          <li class="list-group-item">
-            {{ plan.amount }} {{ plan.currency }} /
-            {{ plan.recurring.interval_count }}
-            {{ plan.recurring.interval }}
-            <span class="badge bg-dark float-end" v-if="plan == selectedPrice"
-              >Current</span
-            >
-            <button
-              type="button"
-              class="btn btn-sm btn-light float-end"
-              @click.prevent="updateSubscription(plan.id)"
-              v-else
-            >
-              Change to this
-            </button>
-          </li>
-        </ul>
+        <div class="head-tile align-items-stretch">
+          <h3>Plan</h3>
+          <ul class="list-group" v-for="plan in prices" :key="plan.pk">
+            <li class="list-group-item">
+              {{ plan.amount }} {{ plan.currency }} /
+              {{ plan.recurring.interval_count }}
+              {{ plan.recurring.interval }}
+              <span class="badge bg-dark float-end" v-if="plan == selectedPrice"
+                >Current</span
+              >
+              <button
+                type="button"
+                class="btn btn-sm btn-light float-end"
+                @click.prevent="updateSubscription(plan.id)"
+                v-else
+              >
+                Change to this
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
       <div
         class="col-12 col-md-6"
         v-if="subscription.cancel_at_period_end == false"
       >
-        <h3>Cancel Subscription</h3>
-        <button
-          type="button"
-          class="btn btn-danger"
-          @click.prevent="cancelOrReactivateSubscription"
-        >
-          Cancel
-        </button>
+        <div class="head-tile">
+          <h3>Cancel Subscription</h3>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click.prevent="cancelOrReactivateSubscription"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
       <div
         class="col-12 col-md-6"
         v-else-if="subscription.cancel_at_period_end == true"
       >
-        <h3>Cancel Subscription</h3>
-        <dl>
-          <dt>Request sent on</dt>
-          <dd>{{ moment(subscription.canceled_at) }}</dd>
-          <dt>
-            Subscription will cancel automatically at the end of the current
-            period
-          </dt>
-        </dl>
-        <button
-          type="button"
-          class="btn btn-success"
-          @click.prevent="cancelOrReactivateSubscription"
-        >
-          Reactivate
-        </button>
+        <div class="head-tile">
+          <h3>Cancel Subscription</h3>
+          <dl>
+            <dt>Request sent on</dt>
+            <dd>{{ moment(subscription.canceled_at) }}</dd>
+            <dt>
+              Subscription will cancel automatically at the end of the current
+              period
+            </dt>
+          </dl>
+          <button
+            type="button"
+            class="btn btn-success"
+            @click.prevent="cancelOrReactivateSubscription"
+          >
+            Reactivate
+          </button>
+        </div>
       </div>
     </div>
     <div

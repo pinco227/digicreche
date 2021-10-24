@@ -84,6 +84,7 @@ body {
   padding: 1rem;
   background: linear-gradient(90deg, var(--light-bg) 0%, var(--body-bg) 100%);
   box-shadow: 3px 5px 10px -10px var(--body-text);
+  height: 100%;
 }
 .head-tile p {
   margin: 0;
@@ -119,6 +120,62 @@ body {
   font-size: 1rem;
   color: var(--body-text);
   margin: 0;
+}
+.price-radio {
+  display: none;
+}
+.price-radio:checked + .price-tile {
+  border: 3px solid var(--orange-accent);
+  background: var(--light-bg);
+  color: var(--orange-accent-dark);
+}
+.price-radio:checked + .price-tile .price-title strong {
+  color: var(--orange-accent);
+}
+.price-tile {
+  color: var(--body-text);
+  padding: 0;
+}
+.price-tile:hover {
+  color: var(--orange-accent-dark);
+  cursor: pointer;
+}
+.price-tile:hover .price-title strong {
+  color: var(--orange-accent);
+}
+.price-tile .card-body {
+  text-align: center;
+}
+.price-tile .list-group {
+  border: none;
+}
+.price-tile .list-group-item {
+  background: none;
+  font-size: 1.25rem;
+  padding: 0.2rem 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.price-tile .list-group-item i {
+  font-size: 1rem;
+  color: var(--green-accent-light);
+}
+.price-tile .price-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+.price-tile .price-title strong {
+  font-size: 3rem;
+  font-weight: bolder;
+  display: block;
+  text-align: center;
+  color: var(--orange-accent-dark);
+}
+.price-tile p {
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--green-accent);
 }
 .round-photo-container {
   width: 50%;
