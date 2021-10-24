@@ -113,6 +113,16 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
           >
+            <li>
+              <router-link
+                :to="{
+                  name: 'pricing',
+                }"
+                class="dropdown-item"
+              >
+                Pricing <i class="fas fa-tags"></i>
+              </router-link>
+            </li>
             <li v-if="user.user_type == 1">
               <router-link
                 :to="{

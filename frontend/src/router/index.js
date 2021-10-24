@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
+import Pricing from "@/views/Pricing.vue";
 import SchoolRoutes from "./schools";
 import RoomRoutes from "./rooms";
 import PupilRoutes from "./pupils";
@@ -11,6 +12,11 @@ const BaseRoutes = [
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/pricing",
+    name: "pricing",
+    component: Pricing,
   },
   {
     path: "/:pathMatch(.*)*",

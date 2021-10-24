@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="row g-2 my-2">
-          <div v-for="price in prices" :key="price.id" class="col">
+          <div v-for="price in prices" :key="price.id" class="col-12 col-sm-6">
             <input
               class="price-radio"
               type="radio"
