@@ -13,7 +13,6 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
     - [Structure](#structure)
     - [Skeleton](#skeleton)
       - [Wireframes](#wireframes)
-      - [Improvements](#improvements)
     - [Design Choices](#design-choices)
   - [Features](#features)
   - [Database](#database)
@@ -79,6 +78,22 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
       - Chat [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/chat-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/chat-md-lg.png)
       - Profile [mobile](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/profile-mobile.png) / [medium-large](https://github.com/pinco227/digicreche/blob/main/docs/wireframes/profile-md-lg.png)
 
+- ### Design Choices 
+  - #### Colours
+    - The colour palette consists of two accent colours, orange and green, in different shades (dark, light) and a range of neutral colours, from off-withe to dark grey.
+    - According to [The Psychology of Color](https://www.toptal.com/designers/ux/color-in-ux), the chosen colours represent cheerfulness and comfort.
+    ![Colour Psychology Wheel](https://github.com/pinco227/dev.pi/blob/main/docs/colour-wheel.jpg)  
+    - The 60-30-10 Rule was also taken into consideration when building the project. The light shades which are used mostly for background are considered neutral and makes up to 60% of the palette. The dark shades are complementary and makes up to 30%, while the accent colours completes the remaining 10% of the design.
+    - Few other colours we're used to improve UX. E.g.: red was used for errors and delete buttons.
+  - #### Typography
+    There are two fonts used throughout the project:
+    - [Open Sans](https://fonts.google.com/specimen/Open+Sans?query=Open+sans) is used for all the content. This font was preffered for its excellent legibility, especially on mobile devices. Different weights were used to improve UX.
+    - [Arima Madurai](https://fonts.google.com/specimen/Arima+Madurai?query=Arima+Madurai) is used brand text only.
+  - #### Media
+    There are no media assets used in building this project. The images used for demo content are stock images from [Unsplash.com](https://unsplash.com/)
+  - #### Iconography
+    Icons are used throughout the project to help the user understand more efficiently the meaning of the content. They are a very good asset to improve UX.
+
 ## Features
   - ### Planned features
     - Single page app (SPA).
@@ -87,6 +102,15 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
     - Timeline-styled day activities.
     - Profile page.
     - Contact page.
+  - ### Extra features
+    - Subscription based freemium access for manager users.
+    - Pricing page.
+    - Live chat built using websockets.
+    - Assign pupil to room widget (in two simple clicks).
+    - Assign teacher to room widget (in two simple clicks).
+    - Room icons.
+    - Pupil personal details - custom dynamic fields.
+    - Photo lightbox for activities timeline.
 
 ## Database
   - ### Entity Relationship Diagram
