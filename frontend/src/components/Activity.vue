@@ -14,13 +14,28 @@
         <p>
           {{ activity.description }}
         </p>
-        <img
-          v-for="(image, index) in activity.images"
-          :src="image.image"
-          :alt="activity.description"
-          :key="index"
-          height="100"
-        />
+        <div class="activity-image-container">
+          <img
+            class="image"
+            v-for="(image, index) in images"
+            :src="image"
+            :alt="activity.description"
+            :key="index"
+            @click="
+              this.photo_index = index;
+              this.visible = true;
+            "
+          />
+        </div>
+        <vue-easy-lightbox
+          scrollDisabled
+          escDisabled
+          moveDisabled
+          :visible="visible"
+          :imgs="images"
+          :index="photo_index"
+          @hide="visible = false"
+        ></vue-easy-lightbox>
       </div>
     </div>
   </li>
@@ -46,11 +61,16 @@ export default {
     invert() {
       return this.index % 2;
     },
+    images() {
+      return this.activity.images.map(({ image }) => image);
+    },
   },
   data() {
     return {
       activity_type: {},
       moment: moment,
+      photo_index: null,
+      visible: false,
     };
   },
   methods: {

@@ -99,7 +99,7 @@ export default {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 2;
     },
     noSubscription() {
-      return Object.keys(this.school).length && !this.school.is_active;
+      return Boolean(Object.keys(this.school).length && !this.school.is_active);
     },
   },
   methods: {
@@ -262,15 +262,42 @@ ul.timeline {
   color: rgb(36, 43, 51);
   color: var(--body-text);
 }
+.timeline
+  > :deep(li)
+  > .timeline-panel
+  > .timeline-body
+  > .activity-image-container {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-end;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+.timeline
+  > :deep(li)
+  > .timeline-panel
+  > .timeline-body
+  > .activity-image-container
+  img {
+  cursor: pointer;
+  height: 4rem;
+}
 
 .timeline > :deep(li:nth-child(even)) > .timeline-panel > .timeline-heading {
   flex-direction: row;
 }
-
 .timeline > :deep(li:nth-child(even)) > .timeline-panel > .timeline-body {
   text-align: left;
 }
-
+.timeline
+  > :deep(li:nth-child(even))
+  > .timeline-panel
+  > .timeline-body
+  > .activity-image-container {
+  justify-content: flex-start;
+}
 .timeline > :deep(li) > .timeline-panel:before {
   position: absolute;
   top: 0;
@@ -367,6 +394,13 @@ ul.timeline {
   }
   ul.timeline > :deep(li) > .timeline-panel > .timeline-body {
     text-align: left;
+  }
+  ul.timeline
+    > :deep(li)
+    > .timeline-panel
+    > .timeline-body
+    > .activity-image-container {
+    justify-content: flex-start;
   }
   ul.timeline > :deep(li) > .timeline-badge,
   ul.timeline > :deep(li:nth-child(even)) > .timeline-badge {
