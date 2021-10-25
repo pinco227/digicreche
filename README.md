@@ -48,7 +48,6 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
     - quickly understand the design flow.
   - #### As a parent I need to:
     - see my child's progress.
-    - be notified about new child's activities.
     - be able to contact the staff.
     - be able to update profile details and child details.
   - #### As a childcare staff I need to:
@@ -209,12 +208,7 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
   * [dbdiagram.io](https://dbdiagram.io/) for database diagram creation.
 
 ## Testing
-
-### Encountered issues
-  - `django.db.utils.OperationalError: no such table: schools_school` This error was given when trying to migrate or to create migrations. Issue was found during deployment and it revealed that **CustomRegisterSerializer** was creating this issue as it was trying to extract the school list to add it in a choice field before school database was even created.
-  - **FIXED**: by following this [StackOverflow answer](https://stackoverflow.com/a/52732608) that is recommending using lazy django utils.
-  - `Uncaught (in promise) SyntaxError: Unexpected end of JSON input` This error was thrown when assigning and removing teachers to/from rooms. The assignment was fulfilled, but there was no dynamic change on the page, unless refreshed. This was caused by the fact that teacher assignment endpoints only return status and no json.
-  - **FIXED**: by checking if the `content-type` header of the response equals `application/json`, if not, then `response.text()` is called instead. For consistency, the api endpoints for assigning and removing teachers to/from rooms, were edited to return json response, for both 2XX and 4XX status codes.
+  ### [Click Here for Full Testing Process](https://github.com/pinco227/digicreche/blob/main/TEST.md)
 
 ## Credits
 - [This article](https://soshace.com/upload-multiple-images-to-a-django-model-without-plugins/) and [this solution](https://www.py4u.net/discuss/192406) for multiple file upload using admin and API.
