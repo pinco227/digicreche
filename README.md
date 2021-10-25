@@ -2,6 +2,35 @@
 
 **DigiCreche** is an educational app which also serves as a Milestone Project for the **Software Developer Diploma** programme of **Code Institute**.
 
+This is an MVP of a child-care management app. It is a RESTful API SPA built using Django REST Framework and VueJS.
+
+## Table of Contents
+  - [Demo](#demo)
+  - [UX](#ux)
+    - [Business Goals](#business-goals)
+    - [User Needs](#user-needs)
+    - [User Scenarios](#user-scenarios)
+    - [Structure](#structure)
+    - [Skeleton](#skeleton)
+      - [Wireframes](#wireframes)
+      - [Improvements](#improvements)
+    - [Design Choices](#design-choices)
+  - [Features](#features)
+  - [Database](#database)
+  - [API endpoints](#api-endpoints)
+  - [Technologies used](#technologies-used)
+  - [Testing](#testing)
+  - [Deployment](#deployment)
+  - [Credits](#credits)
+  - [Acknowledgements](#acknowledgements)
+  - [ToDo](#todo)
+
+## Demo
+
+### [Live App](https://digicreche.herokuapp.com/)
+
+[![Screenshot](https://github.com/pinco227/digicreche/blob/main/docs/mockup.png)](https://digicreche.herokuapp.com/)
+
 ## UX
 - ### Business Goals
   - Sell subscription service to childcares.
