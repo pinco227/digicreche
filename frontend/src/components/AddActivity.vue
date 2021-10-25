@@ -79,6 +79,7 @@ export default {
   },
   methods: {
     async getActivityTypes() {
+      // Fetches activity types from API in order to populate type field
       const endpoint = "/api/activity_types/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -90,11 +91,13 @@ export default {
       }
     },
     updateImages(event) {
+      // Adds uploaded images to form data
       event.target.files.forEach((file, i) => {
         this.form["file" + i] = file;
       });
     },
     onSubmit() {
+      // Emits submit event to parent component
       this.$emit("onSubmit", this.form);
       this.showForm = false;
       this.form = { type: null, description: null };

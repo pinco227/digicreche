@@ -1,5 +1,6 @@
 import { CSRF_TOKEN } from "./csrf_token";
 
+// API calls handler function
 const apiService = async (
   endpoint,
   method,

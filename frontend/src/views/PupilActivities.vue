@@ -1,5 +1,5 @@
 <template>
-  <div id="activities">
+  <section id="activities">
     <div class="row my-2">
       <div class="col-6">
         <GoBackComponent />
@@ -53,7 +53,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -107,6 +107,7 @@ export default {
       this.$router.back();
     },
     async getPupilData() {
+      // Fetches Pupil data from API
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -121,6 +122,7 @@ export default {
       }
     },
     async getPupilActivities() {
+      // Fetches Pupil activities from API
       let endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
       if (this.next) {
         endpoint = this.next;
@@ -142,6 +144,7 @@ export default {
       }
     },
     async getSchoolData() {
+      // Fetches School data from API in order to check for subscription
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -149,6 +152,7 @@ export default {
       }
     },
     async addActivity(formData) {
+      // Sends new activity Form data through API POST
       let endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/activities/`;
       let method = "POST";
 
@@ -176,6 +180,8 @@ export default {
     }
   },
   watch: {
+    // Activates bootstrap tooltips when the school is completely fetched
+    // and the subscription is not active
     noSubscription: function () {
       if (this.noSubscription) {
         const options = {

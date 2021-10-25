@@ -6,6 +6,7 @@
       </div>
     </div>
     <div class="row my-2 justify-content-center g-2">
+      <!-- ACCOUNT INFO -->
       <div class="col-12 col-md-5 col-lg-4">
         <div class="head-tile">
           <h2>Account</h2>
@@ -29,9 +30,11 @@
           </dl>
         </div>
       </div>
+      <!-- ACCOUNT FORM -->
       <div class="col-12 col-md-7 col-lg-8">
         <div class="head-tile align-items-stretch">
           <form @submit.prevent="onSubmit">
+            <!-- FIRST NAME -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('first_name') }"
@@ -51,6 +54,7 @@
                 </small>
               </template>
             </div>
+            <!-- LAST NAME -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('last_name') }"
@@ -70,6 +74,7 @@
                 </small>
               </template>
             </div>
+            <!-- PHONE NUMBER -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('phone_number') }"
@@ -85,6 +90,7 @@
                 </small>
               </template>
             </div>
+            <!-- STREET ADDRESS 1 -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('street_address1') }"
@@ -103,6 +109,7 @@
                 </small>
               </template>
             </div>
+            <!-- STREET ADDRESS 2 -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('street_address2') }"
@@ -121,6 +128,7 @@
                 </small>
               </template>
             </div>
+            <!-- TOWN OR CITY -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('town_or_city') }"
@@ -140,6 +148,7 @@
                 </small>
               </template>
             </div>
+            <!-- COUNTY -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('county') }"
@@ -159,6 +168,7 @@
                 </small>
               </template>
             </div>
+            <!-- POSTCODE -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('postcode') }"
@@ -177,6 +187,7 @@
                 </small>
               </template>
             </div>
+            <!-- COUNTRY -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('country') }"
@@ -203,6 +214,7 @@
                 </small>
               </template>
             </div>
+            <!-- SCHOOL for no-managers -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('school') }"
@@ -280,6 +292,7 @@ export default {
       this.$router.back();
     },
     async getSchoolData() {
+      // Fetches the school data if user is not manager
       if (Object.keys(this.user).length && this.user.school_slug) {
         const endpoint = `/api/schools/${this.user.school_slug}/`;
         const data = await apiService(endpoint);
@@ -291,6 +304,7 @@ export default {
       }
     },
     async getSchools() {
+      // Fetches the list of schools to populate school select field
       const endpoint = `/api/schools/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -300,6 +314,7 @@ export default {
       }
     },
     async getRoomData() {
+      // Fetches room data if user is assigned to a room (teacher)
       if (
         Object.keys(this.user).length &&
         this.user.school_slug &&
@@ -315,6 +330,7 @@ export default {
       }
     },
     async getCountries() {
+      // Fetches a list of countries to populate the country select field
       const endpoint = "/api/countries/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -324,6 +340,7 @@ export default {
       }
     },
     async onSubmit() {
+      // Sends the form data through API POST
       let endpoint = "/api/rest-auth/user/";
       let method = "PUT";
 
@@ -352,6 +369,8 @@ export default {
     this.phoneInput = this.user.phone_number;
   },
   mounted() {
+    // Watches for phone number changes and updates the data to be submitted
+    // with the international formatted phone number
     this.$watch(
       () => this.$refs.phoneInput.phoneObject.number,
       (value) => {

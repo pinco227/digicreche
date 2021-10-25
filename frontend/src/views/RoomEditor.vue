@@ -1,12 +1,12 @@
 <template>
-  <div class="room-editor mt-2">
-    <div class="row">
+  <section id="room-editor">
+    <div class="row my-2">
       <div class="col-12">
         <GoBackComponent />
       </div>
     </div>
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
-    <div class="row justify-content-center">
+    <div class="row my-2 justify-content-center">
       <div class="col-12 col-md-10 col-lg-8">
         <div class="head-tile align-items-stretch">
           <form @submit.prevent="onSubmit">
@@ -15,6 +15,7 @@
                 Edit {{ name }}
               </legend>
               <legend class="mb-3 fs-2 fw-bolder" v-else>Add a room</legend>
+              <!-- NAME -->
               <div
                 class="mb-3"
                 :class="{ invalid: error.hasOwnProperty('name') }"
@@ -34,6 +35,7 @@
                   </small>
                 </template>
               </div>
+              <!-- DESCRIPTION -->
               <div
                 class="mb-3"
                 :class="{ invalid: error.hasOwnProperty('description') }"
@@ -53,6 +55,7 @@
                   </small>
                 </template>
               </div>
+              <!-- ICON -->
               <div
                 class="mb-3"
                 :class="{ invalid: error.hasOwnProperty('icon') }"
@@ -96,7 +99,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -158,6 +161,7 @@ export default {
   },
   methods: {
     async getRoomData() {
+      // Fetches Room data from API
       if (this.roomId) {
         const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
         const data = await apiService(endpoint);
@@ -176,6 +180,7 @@ export default {
       }
     },
     async getSchoolData() {
+      // Fetches School data from API in order to check subscription
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -190,6 +195,7 @@ export default {
       }
     },
     async onSubmit() {
+      // Sends form data through API
       let endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
       let method = "POST";
 
@@ -226,6 +232,7 @@ export default {
       }
     },
     async deleteRoom() {
+      // Sends DELETE API request in order to delete room
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
       const method = "DELETE";
       if (confirm(`Are you sure you want to delete ${this.name} ?`)) {

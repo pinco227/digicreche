@@ -1,5 +1,5 @@
 <template>
-  <div id="school-pupils">
+  <section id="school-pupils">
     <div class="row my-2">
       <div class="col-6">
         <GoBackComponent />
@@ -44,7 +44,7 @@
       <h3>Pupils ({{ school.pupils_count }})</h3>
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -85,6 +85,7 @@ export default {
   },
   methods: {
     async getSchoolData() {
+      // Fetches school data from API
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -99,6 +100,7 @@ export default {
       }
     },
     async getSchoolPupils() {
+      // Fetches school pupils from API
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -120,6 +122,8 @@ export default {
     this.getSchoolPupils();
   },
   watch: {
+    // Activates bootstrap tooltips when the school is completely fetched
+    // and the subscription is not active
     noSubscription: function () {
       if (this.noSubscription) {
         const noSubPop = document.getElementById("addPupil");

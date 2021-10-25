@@ -75,6 +75,7 @@ export default {
   },
   methods: {
     async getActivityTypeData() {
+      // Fetches activity type data from API (gets name and icon)
       const endpoint = `/api/activity_types/${this.activity.type}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {

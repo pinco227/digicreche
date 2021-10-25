@@ -1,19 +1,21 @@
 <template>
-  <div id="children">
+  <section id="children">
     <div class="row my-2">
       <div class="col-6">
         <GoBackComponent />
       </div>
     </div>
-    <div class="row">
+    <div class="row my-2">
       <div class="col-12">
-        <h2>Children</h2>
+        <div class="head-tile">
+          <h2>Children</h2>
+        </div>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row my-2 justify-content-center">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -38,6 +40,7 @@ export default {
       this.$router.back();
     },
     async getChildren() {
+      // Fetches children list from API
       const endpoint = `/api/children/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {

@@ -1,15 +1,19 @@
 <template>
   <nav class="navbar dc-navbar navbar-light">
     <div class="container-xxl position-relative p-0 justify-content-center">
+      <!-- BRAND LOGO -->
       <router-link :to="{ name: 'home' }" class="navbar-brand"
         >Digi<strong>Creche</strong>
       </router-link>
       <ul class="nav">
+        <!-- SCHOOLS (for managers) -->
         <li class="nav-item" v-if="user.user_type == 1">
           <router-link :to="{ name: 'manager-schools' }" class="nav-link">
             <i class="fas fa-school"></i>
           </router-link>
         </li>
+        <!-- SCHOOL PUPILS (for managers) -->
+        <!-- shows if a school is selected -->
         <li
           class="nav-item"
           v-if="user.user_type == 1 && $route.params.schoolSlug"
@@ -26,6 +30,8 @@
             <i class="fas fa-users"></i>
           </router-link>
         </li>
+        <!-- SCHOOL ROOMS (for managers) -->
+        <!-- shows if a school is selected -->
         <li
           class="nav-item"
           v-if="user.user_type == 1 && $route.params.schoolSlug"
@@ -42,6 +48,8 @@
             <i class="fas fa-book-open"></i>
           </router-link>
         </li>
+        <!-- ROOM PUPILS (for managers and teachers) -->
+        <!-- shows if a school is selected or if user is a teacher and is assigned to a room -->
         <li
           class="nav-item"
           v-if="
@@ -64,11 +72,14 @@
             <i class="fas fa-user-friends"></i>
           </router-link>
         </li>
+        <!-- CHILDREN (for parents) -->
         <li class="nav-item" v-if="user.user_type == 3">
           <router-link :to="{ name: 'parent-children' }" class="nav-link">
             <i class="fas fa-user-friends"></i>
           </router-link>
         </li>
+        <!-- PUPIL ACTIVITIES -->
+        <!-- shows if a school is selected, a user is assigned to a school (parent or teacher), or a pupil is selected -->
         <li
           class="nav-item"
           v-if="
@@ -89,16 +100,19 @@
             <i class="fas fa-basketball-ball"></i>
           </router-link>
         </li>
+        <!-- CHAT -->
         <li class="nav-item">
           <router-link :to="{ name: 'chat' }" class="nav-link">
             <i class="fas fa-comments"></i>
           </router-link>
         </li>
+        <!-- USER ACCOUNT -->
         <li class="nav-item">
           <router-link :to="{ name: 'user_account' }" class="nav-link">
             <i class="fas fa-user-circle"></i>
           </router-link>
         </li>
+        <!-- DROPDOWN MENU -->
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -113,6 +127,7 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
           >
+            <!-- PRICING (for managers) -->
             <li v-if="user.user_type == 1">
               <router-link
                 :to="{
@@ -123,6 +138,8 @@
                 Pricing <i class="fas fa-tags"></i>
               </router-link>
             </li>
+            <!-- SUBSCRIPTIONS (for managers) -->
+            <!-- a list of schools sorted by subscription status -->
             <li v-if="user.user_type == 1">
               <router-link
                 :to="{
@@ -133,6 +150,8 @@
                 Manage Subscriptions <i class="fas fa-wallet"></i>
               </router-link>
             </li>
+            <!-- SUBSCRIPTION (for managers) -->
+            <!-- shows only if a school is selected -->
             <li v-if="user.user_type == 1 && $route.params.schoolSlug">
               <router-link
                 :to="{
@@ -144,6 +163,7 @@
                 Subscription <i class="far fa-credit-card"></i>
               </router-link>
             </li>
+            <!-- CONTACT MANAGER (for teachers and parents) -->
             <li v-if="user.manager">
               <router-link
                 :to="{
@@ -156,6 +176,7 @@
               </router-link>
             </li>
             <li><hr class="dropdown-divider" /></li>
+            <!-- Log out -->
             <li>
               <a href="/accounts/logout/" class="dropdown-item">
                 Log Out <i class="fas fa-sign-out-alt"></i>

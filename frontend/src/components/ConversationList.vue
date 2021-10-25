@@ -5,6 +5,7 @@
       'col-md-5 col-lg-6 d-none d-md-block': activeChat,
     }"
   >
+    <!-- CONVERSATION LIST -->
     <div class="row my-2">
       <div class="col-12">
         <div class="head-tile flex-row justify-content-between">
@@ -32,7 +33,7 @@
         <span :class="{ 'fw-bolder': chat.unread }">{{ chat.name }}</span>
       </button>
     </div>
-    <!-- Modal -->
+    <!-- MODAL WITH AVAILABLE CONTACTS TO CHAT WITH -->
     <div
       class="modal fade"
       id="contactsModal"
@@ -86,10 +87,12 @@ export default {
   methods: {
     ...mapActions(["loadConversations", "selectChat"]),
     setChat(id) {
+      // Sets current chat window and changes the route
       this.selectChat(id);
       this.$router.push({ name: "chat", params: { chatId: id } });
     },
     async getContacts() {
+      // Fetches contacts from API
       const endpoint = `/api/contacts/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {

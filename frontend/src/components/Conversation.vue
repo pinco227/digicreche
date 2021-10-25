@@ -57,6 +57,7 @@ export default {
     ...mapMutations({ send: "SEND_MESSAGE" }),
     ...mapActions(["loadConversations", "loadMore"]),
     async sendMessage() {
+      // Sends a message through websocket
       const conversation = this.conversations.find(
         ({ id }) => id === this.activeChat
       );

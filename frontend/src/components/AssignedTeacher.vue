@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     triggerUnassignTeacher() {
+      // Emits unassign teacher signal to parent component
       this.$emit("unassign-teacher", this.teacher);
     },
   },

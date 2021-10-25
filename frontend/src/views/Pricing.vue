@@ -63,6 +63,7 @@ export default {
   },
   methods: {
     async getPrices() {
+      // Fetches available Prices from API
       const endpoint = "/api/prices/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {

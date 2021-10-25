@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <section id="room">
     <div class="row my-2">
       <div class="col-6">
         <GoBackComponent />
@@ -41,6 +41,7 @@
     />
     <div class="row my-2">
       <div class="col-12">
+        <!-- ROOM DETAILS & TEACHERS -->
         <div class="head-tile">
           <h2>{{ room.name }}</h2>
           <p>{{ room.description }}</p>
@@ -75,6 +76,7 @@
         </div>
       </div>
     </div>
+    <!-- PUPIL LIST -->
     <div class="row justify-content-center my-2 g-2">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
       <div v-if="isManager" class="col-6 col-md-3 col-lg-2 text-center">
@@ -123,7 +125,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -175,6 +177,7 @@ export default {
   },
   methods: {
     async getRoomData() {
+      // Fetches Room data from API
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -189,6 +192,7 @@ export default {
       }
     },
     async getRoomPupils() {
+      // Fethces room pupils from API
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/pupils/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -202,6 +206,7 @@ export default {
       }
     },
     async getUnassignedTeachers() {
+      // Fetches a list of unassigned teachers of room's school
       const endpoint = `/api/schools/${this.schoolSlug}/teachers/unassigned/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -219,6 +224,7 @@ export default {
       }
     },
     async getUnassignedPupils() {
+      // Fetches a list of unassigned pupils of room's school
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -232,6 +238,7 @@ export default {
       }
     },
     async getSchoolData() {
+      // Fetches School data from API in order to check subscription
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -239,6 +246,7 @@ export default {
       }
     },
     async assignTeacher(teacher) {
+      // Assigns a teacher to current room by sending its id through API
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/assign-teacher/`;
       const method = "POST";
       const payload = {
@@ -258,6 +266,7 @@ export default {
       }
     },
     async unassignTeacher(teacher) {
+      // Unassign a teacher from room by sending its id through API DELETE
       if (this.isManager) {
         const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/remove-teacher/${teacher.id}/`;
         const method = "DELETE";
@@ -279,6 +288,7 @@ export default {
       }
     },
     async assignPupil(pupil) {
+      // Assigns a pupil to room by sending the room id through API
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${pupil.id}/room/`;
       const method = "PUT";
       const payload = {
@@ -328,6 +338,8 @@ export default {
     }
   },
   watch: {
+    // Activates bootstrap tooltips when the school is completely fetched
+    // and the subscription is not active
     noSubscription: function () {
       if (this.noSubscription) {
         const options = {

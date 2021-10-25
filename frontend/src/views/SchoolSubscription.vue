@@ -10,6 +10,7 @@
       v-if="Object.keys(subscription).length"
     >
       <div class="col-12 col-md-6">
+        <!-- SUBSCRIPTION DETAILS -->
         <div class="head-tile">
           <h3>Subscription details</h3>
           <dl>
@@ -39,6 +40,7 @@
         </div>
       </div>
       <div class="col-12 col-md-6" v-if="Object.keys(paymentMethod).length">
+        <!-- BILLING DETAILS -->
         <div class="head-tile">
           <h3>Billing</h3>
           <dl>
@@ -60,6 +62,7 @@
         </div>
       </div>
       <div class="col-12 col-md-6" v-if="selectedPrice">
+        <!-- PLAN DETAILS -->
         <div class="head-tile align-items-stretch">
           <h3>Plan</h3>
           <ul class="list-group" v-for="plan in prices" :key="plan.pk">
@@ -82,6 +85,7 @@
           </ul>
         </div>
       </div>
+      <!-- CANCEL/REACTIVATE SUBSCRIPTION -->
       <div
         class="col-12 col-md-6"
         v-if="subscription.cancel_at_period_end == false"
@@ -186,6 +190,7 @@ export default {
   },
   methods: {
     async getSchoolData() {
+      // Fetches school data from API in order to get subscription id
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -205,6 +210,7 @@ export default {
       }
     },
     async getSubscriptionData() {
+      // Fetches subscription data from API
       if (Object.keys(this.school).length && this.school.subscription) {
         const endpoint = `/api/retrieve-subscription/${this.school.subscription}/`;
         const data = await apiService(endpoint);
@@ -220,6 +226,7 @@ export default {
       }
     },
     async getPaymentData() {
+      // Fetches payment information from API
       if (Object.keys(this.school).length && this.school.subscription) {
         const endpoint = `/api/retrieve-payment-method/`;
         const method = "POST";
@@ -239,6 +246,7 @@ export default {
       }
     },
     async getPrices() {
+      // Fetches available prices from API
       const endpoint = "/api/prices/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -250,6 +258,7 @@ export default {
       }
     },
     async cancelOrReactivateSubscription() {
+      // Sends POST API request in order to cancel or reactivate a subscription
       if (Object.keys(this.subscription).length) {
         let endpoint = "";
         let confirmMessage = "";
@@ -279,6 +288,7 @@ export default {
       }
     },
     async updateSubscription(price_id) {
+      // Sends POST API request with new plan id in order to update subscription
       if (Object.keys(this.subscription).length) {
         const endpoint = `/api/update-subscription/`;
         const method = "POST";

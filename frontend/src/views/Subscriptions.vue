@@ -6,6 +6,7 @@
       </div>
     </div>
     <div class="row">
+      <!-- SCHOOL WITH INACTIVE SUBSCRIPTION -->
       <div class="col-12 col-md-6" v-if="inactive_schools.length">
         <div class="head-tile">
           <h2>Inactive Subscriptions</h2>
@@ -29,6 +30,7 @@
           </div>
         </div>
       </div>
+      <!-- SCHOOLS WITH ACTIVE SUBSCRIPTION -->
       <div class="col-12 col-md-6" v-if="active_schools.length">
         <div class="head-tile">
           <h2>Active Subscriptions</h2>
@@ -81,6 +83,7 @@ export default {
       this.$router.back();
     },
     async getSchools() {
+      // Fetches manager's own schools from API and filters them by status
       const endpoint = "/api/my-schools/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {

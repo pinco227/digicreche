@@ -1,5 +1,5 @@
 <template>
-  <div class="pupil-editor">
+  <section id="pupil-editor">
     <div class="row my-2">
       <div class="col-12">
         <GoBackComponent />
@@ -8,6 +8,7 @@
     <NoSubscriptionComponent :school="school" v-if="noSubscription" />
     <div class="row justify-content-center g-2 my-2">
       <div class="col-12 col-md-5 col-lg-4" v-if="pupilId">
+        <!-- PUPIL PHOTO -->
         <div class="head-tile align-items-center">
           <div
             class="
@@ -66,6 +67,7 @@
             </form>
           </div>
           <h2>{{ first_name }} {{ last_name }}</h2>
+          <!-- PUPIL PERSONAL DETAILS -->
           <div
             v-if="!editPersonalDetails"
             class="text-start w-100 position-relative"
@@ -135,6 +137,7 @@
               </fieldset>
             </form>
           </div>
+          <!-- PUPIL TEACHERS -->
           <div
             v-if="'teachers' in room && room.teachers.length"
             class="text-start w-100"
@@ -157,6 +160,7 @@
               </li>
             </ul>
           </div>
+          <!-- PUPIL PARENTS -->
           <div
             v-if="user.user_type != 3 && parents.length && schoolParents.length"
             class="text-start w-100"
@@ -181,8 +185,10 @@
           </div>
         </div>
       </div>
+      <!-- PUPIL INFO & FORM -->
       <div class="col-12 col-md-7 col-lg-8">
         <div class="head-tile align-items-stretch">
+          <!-- INFO -->
           <div class="position-relative w-100" v-if="!editInfo">
             <button
               class="btn btn-light btn-sm position-absolute top-0 end-0"
@@ -219,11 +225,13 @@
               </template>
             </dl>
           </div>
+          <!-- FORM -->
           <form @submit.prevent="detailsSubmit" v-else>
             <fieldset :disabled="noSubscription">
               <legend class="mb-3 fs-2 fw-bolder" v-if="!pupilId">
                 Add a pupil
               </legend>
+              <!-- FIRST NAME -->
               <div
                 class="mb-3"
                 :class="{ invalid: error.hasOwnProperty('first_name') }"
@@ -242,6 +250,7 @@
                   </small>
                 </template>
               </div>
+              <!-- LAST NAME -->
               <div
                 class="mb-3"
                 :class="{ invalid: error.hasOwnProperty('last_name') }"
@@ -260,6 +269,7 @@
                   </small>
                 </template>
               </div>
+              <!-- ROOM -->
               <div
                 class="mb-3"
                 :class="{ invalid: error.hasOwnProperty('room') }"
@@ -289,6 +299,7 @@
                   </small>
                 </template>
               </div>
+              <!-- PARENTS -->
               <div
                 class="mb-3"
                 :class="{ invalid: error.hasOwnProperty('parents') }"
@@ -335,7 +346,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -400,6 +411,7 @@ export default {
       this.$router.back();
     },
     async getSchoolData() {
+      // Fetches pupil's school data in order to check for subscription
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -413,6 +425,7 @@ export default {
       }
     },
     async getRoomData() {
+      // Fetches pupil's room data in order to get the teachers
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.room.id}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -424,6 +437,7 @@ export default {
       }
     },
     async getPupilData() {
+      // Fetches Pupil data
       if (this.pupilId) {
         const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
         const data = await apiService(endpoint);
@@ -456,6 +470,7 @@ export default {
       }
     },
     async getSchoolRooms() {
+      // Fetches pupil's school room in order to populate the room field
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -469,6 +484,7 @@ export default {
       }
     },
     async getSchoolParents() {
+      // Fetches pupil's school parents in order to populate the parents field
       const endpoint = `/api/schools/${this.schoolSlug}/parents/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -482,6 +498,7 @@ export default {
       }
     },
     async detailsSubmit() {
+      // Sends form data through API
       let endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
       let method = "POST";
 
@@ -524,9 +541,11 @@ export default {
       }
     },
     updatePhoto(event) {
+      // Updates the photo with new uploaded one
       this.newPhoto = event.target.files[0];
     },
     async photoSubmit() {
+      // Sends photo upload data through API PUT
       if (this.newPhoto) {
         const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/photo/`;
         const method = "PUT";
@@ -557,6 +576,8 @@ export default {
       }
     },
     async resetPersonalDetails() {
+      // Fetches the personal details only, in order to reset them if there
+      // has been unwanted changes
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/details/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -576,6 +597,7 @@ export default {
       }
     },
     async personalDetailsSubmit() {
+      // Sends personal details form data through API PUT
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/details/`;
       const method = "PUT";
       let payload = {};
@@ -602,6 +624,7 @@ export default {
       }
     },
     async deletePupil() {
+      // Sends DELETE request to API in order to delete Pupil
       const endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
       const method = "DELETE";
       if (
@@ -653,7 +676,6 @@ export default {
       setPageTitle("Add Pupil");
       this.editInfo = true;
     }
-    // if (this.$route.params.roomId) this.room.id = this.$route.params.roomId;
   },
 };
 </script>

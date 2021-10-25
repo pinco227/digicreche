@@ -78,6 +78,7 @@ export const store = createStore({
   },
   actions: {
     async loadConversations(context) {
+      // Fetches conversation list from API and commits to state
       const endpoint = "/api/chats/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -87,6 +88,7 @@ export const store = createStore({
       }
     },
     async loadMessages(context, { chat_id, next }) {
+      // Fetches messages of active conversation from API and commits to state
       let endpoint = `/api/chats/${chat_id}/`;
       if (next) endpoint = context.state.messages.next;
 

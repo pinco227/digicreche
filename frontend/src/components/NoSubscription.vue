@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center mt-2" v-if="!school.is_active">
+  <div class="row justify-content-center my-2" v-if="!school.is_active">
     <div class="col-12 col-md-10 col-lg-8">
       <div
         class="alert alert-danger d-flex align-items-center gap-3"

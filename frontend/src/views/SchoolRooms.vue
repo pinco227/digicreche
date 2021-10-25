@@ -1,5 +1,5 @@
 <template>
-  <div class="school">
+  <section id="school">
     <div class="row my-2">
       <div class="col-6">
         <GoBackComponent />
@@ -41,7 +41,7 @@
     <div class="row my-2 justify-content-center g-2">
       <RoomComponent v-for="room in rooms" :room="room" :key="room.id" />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -81,6 +81,7 @@ export default {
   },
   methods: {
     async getSchoolData() {
+      // Fetches school data from API
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -95,6 +96,7 @@ export default {
       }
     },
     async getSchoolRooms() {
+      // Fetches school rooms from API
       const endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -117,6 +119,8 @@ export default {
     }
   },
   watch: {
+    // Activates bootstrap tooltips when the school is completely fetched
+    // and the subscription is not active
     noSubscription: function () {
       if (this.noSubscription) {
         const noSubPop = document.getElementById("addRoom");

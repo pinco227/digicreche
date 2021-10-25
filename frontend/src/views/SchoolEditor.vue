@@ -1,16 +1,17 @@
 <template>
-  <div class="school-editor">
+  <section id="school-editor">
     <div class="row my-2">
       <div class="col-12">
         <GoBackComponent />
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row my-2 justify-content-center">
       <div class="col-12 col-md-10 col-lg-8">
         <div class="head-tile align-items-stretch">
           <h2 class="mb-3" v-if="schoolSlug">Edit {{ name }}</h2>
           <h2 class="mb-3" v-else>Add a school</h2>
           <form @submit.prevent="onSubmit">
+            <!-- NAME -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('name') }"
@@ -30,6 +31,7 @@
                 </small>
               </template>
             </div>
+            <!-- DESCRIPTION -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('description') }"
@@ -49,6 +51,7 @@
                 </small>
               </template>
             </div>
+            <!-- EMAIL -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('email') }"
@@ -68,6 +71,7 @@
                 </small>
               </template>
             </div>
+            <!-- PHONE NUMBER -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('phone_number') }"
@@ -83,6 +87,7 @@
                 </small>
               </template>
             </div>
+            <!-- STREET ADDRESS 1 -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('street_address1') }"
@@ -101,6 +106,7 @@
                 </small>
               </template>
             </div>
+            <!-- STREET ADDRESS 2 -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('street_address2') }"
@@ -119,6 +125,7 @@
                 </small>
               </template>
             </div>
+            <!-- TOWN OR CITY -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('town_or_city') }"
@@ -138,6 +145,7 @@
                 </small>
               </template>
             </div>
+            <!-- COUNTY -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('county') }"
@@ -157,6 +165,7 @@
                 </small>
               </template>
             </div>
+            <!-- POSTCODE -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('postcode') }"
@@ -175,6 +184,7 @@
                 </small>
               </template>
             </div>
+            <!-- COUNTRY -->
             <div
               class="mb-3"
               :class="{ invalid: error.hasOwnProperty('country') }"
@@ -217,7 +227,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -263,6 +273,7 @@ export default {
   },
   methods: {
     async getSchoolData() {
+      // Fetches school data from API
       if (this.schoolSlug) {
         const endpoint = `/api/schools/${this.schoolSlug}/`;
         const data = await apiService(endpoint);
@@ -297,6 +308,7 @@ export default {
       }
     },
     async getCountries() {
+      // Fetches a list of countries drom API to populate the country field
       const endpoint = "/api/countries/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
@@ -308,6 +320,7 @@ export default {
       }
     },
     async onSubmit() {
+      // Sends form data through API
       let endpoint = "/api/schools/";
       let method = "POST";
 
@@ -349,6 +362,7 @@ export default {
       }
     },
     async deleteSchool() {
+      // Sends DELETE API request in order to delete school
       const endpoint = `/api/schools/${this.schoolSlug}/`;
       const method = "DELETE";
       if (confirm(`Are you sure you want to delete ${this.name} ?`)) {

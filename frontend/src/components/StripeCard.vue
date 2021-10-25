@@ -14,6 +14,7 @@
             </div>
           </div>
         </div>
+        <!-- PLANS -->
         <div class="row g-2 my-2" v-show="!school.subscription">
           <div v-for="price in prices" :key="price.id" class="col-12 col-sm-6">
             <input
@@ -61,6 +62,7 @@
             </label>
           </div>
         </div>
+        <!-- CARD -->
         <div class="row my-2" v-show="displayCard">
           <div class="col">
             <div class="head-tile">
@@ -125,6 +127,7 @@ export default {
     },
   },
   methods: {
+    // STRIPE METHODS
     onSubscriptionComplete(result) {
       // Payment was successful.
       if (
@@ -238,6 +241,7 @@ export default {
       }
     },
     createSubscription({ email, schoolId, paymentMethodId, priceId }) {
+      // Sends payment data through API POST
       const spinner = document.getElementById("spinner");
       spinner.style.display = "block";
       return (
@@ -294,6 +298,7 @@ export default {
       );
     },
     submitSubscribe() {
+      // Submits the subscribe form
       const spinner = document.getElementById("spinner");
       spinner.style.display = "block";
       this.disableSubmit = true;

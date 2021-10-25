@@ -1,5 +1,5 @@
 <template>
-  <div class="schools mt-2">
+  <section id="schools">
     <div class="row my-2">
       <div class="col-6">
         <GoBackComponent />
@@ -25,7 +25,7 @@
         </router-link>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     async getSchools() {
+      // Fetches a list of manager's own schools from API
       const endpoint = "/api/my-schools/";
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2 row justify-content-center">
+  <div class="my-2 row justify-content-center">
     <div class="col-12">
       <button type="button" @click="goBack" class="btn btn-light">Back</button>
     </div>
