@@ -92,7 +92,8 @@ export default {
         setPageTitle(data.body.name + " Pupils");
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        if (data.status == 403 || data.status == 401)
+          this.$emit("setPermission", false);
       }
     },
     async getSchoolPupils() {
@@ -105,7 +106,8 @@ export default {
         });
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        if (data.status == 403 || data.status == 401)
+          this.$emit("setPermission", false);
       }
     },
   },

@@ -15,7 +15,10 @@
                 Edit {{ name }}
               </legend>
               <legend class="mb-3 fs-2 fw-bolder" v-else>Add a room</legend>
-              <div class="mb-3">
+              <div
+                class="mb-3"
+                :class="{ invalid: error.hasOwnProperty('name') }"
+              >
                 <label for="name" class="form-label">Room Name</label>
                 <input
                   v-model="name"
@@ -23,9 +26,18 @@
                   class="form-control"
                   id="name"
                   name="name"
+                  required
                 />
+                <template v-if="error.hasOwnProperty('name')">
+                  <small v-for="(err, i) in error.name" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
-              <div class="mb-3">
+              <div
+                class="mb-3"
+                :class="{ invalid: error.hasOwnProperty('description') }"
+              >
                 <label for="description" class="form-label">Description</label>
                 <textarea
                   v-model="description"
@@ -33,9 +45,18 @@
                   class="form-control"
                   id="description"
                   name="description"
+                  required
                 ></textarea>
+                <template v-if="error.hasOwnProperty('description')">
+                  <small v-for="(err, i) in error.description" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
-              <div class="mb-3">
+              <div
+                class="mb-3"
+                :class="{ invalid: error.hasOwnProperty('icon') }"
+              >
                 <label for="icon-list" class="form-label">Icon</label>
                 <div class="icon-list" id="icon-list">
                   <div
@@ -55,6 +76,11 @@
                     </label>
                   </div>
                 </div>
+                <template v-if="error.hasOwnProperty('icon')">
+                  <small v-for="(err, i) in error.icon" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
 
               <button type="submit" class="btn btn-primary">Submit</button>
@@ -67,7 +93,6 @@
               </a>
             </fieldset>
           </form>
-          <p v-if="error" class="muted mt-2">{{ error }}</p>
         </div>
       </div>
     </div>
@@ -119,7 +144,7 @@ export default {
         "fab fa-pagelines",
         "fab fa-envira",
       ],
-      error: null,
+      error: {},
       school: {},
     };
   },
@@ -143,7 +168,8 @@ export default {
           setPageTitle("Edit " + data.name);
         } else {
           // TODO: error handling
-          if (data.status == 403) this.$emit("setPermission", false);
+          if (data.status == 403 || data.status == 401)
+            this.$emit("setPermission", false);
         }
       }
     },
@@ -155,43 +181,39 @@ export default {
         setPageTitle(data.body.name);
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        if (data.status == 403 || data.status == 401)
+          this.$emit("setPermission", false);
       }
     },
     async onSubmit() {
-      if (!this.name) this.error = "Name is required!";
-      else if (this.name.length > 100)
-        this.error = "Name cannot be longer than 100 charachters!";
-      else {
-        let endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
-        let method = "POST";
+      let endpoint = `/api/schools/${this.schoolSlug}/rooms/`;
+      let method = "POST";
 
-        if (this.roomId) {
-          endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
-          method = "PUT";
-        }
+      if (this.roomId) {
+        endpoint = `/api/schools/${this.schoolSlug}/rooms/${this.roomId}/`;
+        method = "PUT";
+      }
 
-        const payload = {
-          name: this.name,
-          description: this.description,
-          icon: this.room_icon,
-          // the school field get updated with the selected school in the backend
-          // but as the field is required, we're passing an integer of 1
-          school: 1,
-        };
-        const data = await apiService(endpoint, method, payload);
-        if (data.status >= 200 && data.status < 300) {
-          this.$router.push({
-            name: "room-pupils",
-            params: {
-              schoolSlug: this.schoolSlug,
-              roomId: data.body.id,
-            },
-          });
-        } else {
-          // TODO: error handling
-          this.error = "There was an error! Please try again!";
-        }
+      const payload = {
+        name: this.name,
+        description: this.description,
+        icon: this.room_icon,
+        // the school field get updated with the selected school in the backend
+        // but as the field is required, we're passing an integer of 1
+        school: 1,
+      };
+      const data = await apiService(endpoint, method, payload);
+      if (data.status >= 200 && data.status < 300) {
+        this.$router.push({
+          name: "room-pupils",
+          params: {
+            schoolSlug: this.schoolSlug,
+            roomId: data.body.id,
+          },
+        });
+      } else {
+        // TODO: error handling
+        this.error = data.body;
       }
     },
     async deleteRoom() {
@@ -206,7 +228,6 @@ export default {
           });
         } else {
           // TODO: error handling
-          this.error = "Error!";
         }
       }
     },

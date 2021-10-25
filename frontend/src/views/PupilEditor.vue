@@ -30,10 +30,14 @@
               <i class="fas fa-pen"></i>
             </button>
             <form @submit.prevent="photoSubmit" v-if="editPhoto">
-              <div class="input-group my-3">
+              <div
+                class="input-group my-3"
+                :class="{ invalid: error.hasOwnProperty('photo') }"
+              >
                 <input
                   class="form-control form-control-sm"
                   type="file"
+                  accept="image/*"
                   id="photoInput"
                   aria-label="Update photo"
                   aria-describedby="updatePhotoSubmit"
@@ -47,6 +51,11 @@
                 >
                   <i class="fas fa-upload"></i>
                 </button>
+                <template v-if="error.hasOwnProperty('photo')">
+                  <small v-for="(err, i) in error.photo" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
               <a
                 class="btn btn-secondary btn-sm"
@@ -68,7 +77,7 @@
             <button
               class="btn btn-light btn-sm position-absolute top-0 end-0"
               v-if="isManager || user.user_type == 3"
-              @click="editPersonalDetails = false"
+              @click="editPersonalDetails = true"
               :disabled="noSubscription"
             >
               <i class="fas fa-pen"></i>
@@ -81,6 +90,7 @@
                   class="mb-3"
                   v-for="(detail, index) in personal_details"
                   :key="index"
+                  :class="{ invalid: error.hasOwnProperty('personal_details') }"
                 >
                   <div class="input-group">
                     <input
@@ -102,6 +112,11 @@
                       <i class="fas fa-times"></i>
                     </a>
                   </div>
+                  <template v-if="error.hasOwnProperty('personal_details')">
+                    <small v-for="(err, i) in error.personal_details" :key="i">
+                      {{ err }}
+                    </small>
+                  </template>
                 </div>
                 <div class="d-flex flex-row justify-content-between">
                   <a
@@ -187,7 +202,10 @@
               <legend class="mb-3 fs-2 fw-bolder" v-if="!pupilId">
                 Add a pupil
               </legend>
-              <div class="mb-3">
+              <div
+                class="mb-3"
+                :class="{ invalid: error.hasOwnProperty('first_name') }"
+              >
                 <label for="first_name" class="form-label">First Name</label>
                 <input
                   v-model="first_name"
@@ -196,8 +214,16 @@
                   id="first_name"
                   name="first_name"
                 />
+                <template v-if="error.hasOwnProperty('first_name')">
+                  <small v-for="(err, i) in error.first_name" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
-              <div class="mb-3">
+              <div
+                class="mb-3"
+                :class="{ invalid: error.hasOwnProperty('last_name') }"
+              >
                 <label for="last_name" class="form-label">Last Name</label>
                 <input
                   v-model="last_name"
@@ -206,8 +232,16 @@
                   id="last_name"
                   name="last_name"
                 />
+                <template v-if="error.hasOwnProperty('last_name')">
+                  <small v-for="(err, i) in error.last_name" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
-              <div class="mb-3">
+              <div
+                class="mb-3"
+                :class="{ invalid: error.hasOwnProperty('room') }"
+              >
                 <label for="room" class="form-label">Room</label>
                 <select
                   v-model="room.id"
@@ -227,8 +261,16 @@
                     {{ room_item.name }}
                   </option>
                 </select>
+                <template v-if="error.hasOwnProperty('room')">
+                  <small v-for="(err, i) in error.room" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
-              <div class="mb-3">
+              <div
+                class="mb-3"
+                :class="{ invalid: error.hasOwnProperty('parents') }"
+              >
                 <label for="parents" class="form-label">Parent(s)</label>
                 <select
                   multiple
@@ -245,6 +287,11 @@
                     {{ parent.name }}
                   </option>
                 </select>
+                <template v-if="error.hasOwnProperty('parents')">
+                  <small v-for="(err, i) in error.parents" :key="i">
+                    {{ err }}
+                  </small>
+                </template>
               </div>
               <div class="d-flex flex-row justify-content-between">
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -262,7 +309,6 @@
                 </a>
               </div>
             </fieldset>
-            <p v-if="error" class="muted mt-2">{{ error }}</p>
           </form>
         </div>
       </div>
@@ -309,7 +355,7 @@ export default {
       schoolParents: [],
       photo: null,
       personal_details: [],
-      error: null,
+      error: {},
       editInfo: false,
       editPhoto: false,
       newPhoto: null,
@@ -338,7 +384,8 @@ export default {
         this.school = data.body;
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        if (data.status == 403 || data.status == 401)
+          this.$emit("setPermission", false);
       }
     },
     async getRoomData() {
@@ -375,7 +422,8 @@ export default {
           );
         } else {
           // TODO: error handling
-          if (data.status == 403) this.$emit("setPermission", false);
+          if (data.status == 403 || data.status == 401)
+            this.$emit("setPermission", false);
         }
       }
     },
@@ -404,44 +452,39 @@ export default {
       }
     },
     async detailsSubmit() {
-      if (!this.first_name || !this.last_name) this.error = "Name is required!";
-      else if (this.first_name.length > 100 || this.last_name.length > 100)
-        this.error = "Name cannot be longer than 100 charachters!";
-      else {
-        let endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
-        let method = "POST";
+      let endpoint = `/api/schools/${this.schoolSlug}/pupils/`;
+      let method = "POST";
 
+      if (this.pupilId) {
+        endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
+        method = "PUT";
+      }
+
+      const payload = {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        room: this.room.id,
+        parents: this.parents,
+        school: this.school.id,
+      };
+      const data = await apiService(endpoint, method, payload);
+      if (data.status >= 200 && data.status < 300) {
         if (this.pupilId) {
-          endpoint = `/api/schools/${this.schoolSlug}/pupils/${this.pupilId}/`;
-          method = "PUT";
-        }
-
-        const payload = {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          room: this.room.id,
-          parents: this.parents,
-          school: this.school.id,
-        };
-        const data = await apiService(endpoint, method, payload);
-        if (data.status >= 200 && data.status < 300) {
-          if (this.pupilId) {
-            this.editInfo = false;
-          } else {
-            this.editInfo = false;
-            if (this.room.id) this.getRoomData();
-            this.$router.push({
-              name: "pupil-edit",
-              params: {
-                schoolSlug: this.schoolSlug,
-                pupilId: data.body.id,
-              },
-            });
-          }
+          this.editInfo = false;
         } else {
-          // TODO: error handling
-          this.error = "There was an error! Please try again!";
+          this.editInfo = false;
+          if (this.room.id) this.getRoomData();
+          this.$router.push({
+            name: "pupil-edit",
+            params: {
+              schoolSlug: this.schoolSlug,
+              pupilId: data.body.id,
+            },
+          });
         }
+      } else {
+        // TODO: error handling
+        this.error = data.body;
       }
     },
     updatePhoto(event) {
@@ -538,7 +581,6 @@ export default {
           }
         } else {
           // TODO: error handling
-          this.error = "Error!";
         }
       }
     },

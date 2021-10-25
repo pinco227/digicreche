@@ -182,7 +182,8 @@ export default {
         setPageTitle(data.body.name);
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        if (data.status == 403 || data.status == 401)
+          this.$emit("setPermission", false);
       }
     },
     async getRoomPupils() {
@@ -192,7 +193,8 @@ export default {
         this.pupils = data.body;
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        if (data.status == 403 || data.status == 401)
+          this.$emit("setPermission", false);
       }
     },
     async getUnassignedTeachers() {

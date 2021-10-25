@@ -195,7 +195,8 @@ export default {
         }
       } else {
         // TODO: error handling
-        if (data.status == 403) this.$emit("setPermission", false);
+        if (data.status == 403 || data.status == 401)
+          this.$emit("setPermission", false);
       }
     },
     async getSubscriptionData() {
@@ -206,7 +207,8 @@ export default {
           this.subscription = data.body;
         } else {
           // TODO: error handling
-          if (data.status == 403) this.$emit("setPermission", false);
+          if (data.status == 403 || data.status == 401)
+            this.$emit("setPermission", false);
         }
       }
     },
@@ -222,7 +224,8 @@ export default {
           this.paymentMethod = data.body;
         } else {
           // TODO: error handling
-          if (data.status == 403) this.$emit("setPermission", false);
+          if (data.status == 403 || data.status == 401)
+            this.$emit("setPermission", false);
         }
       }
     },
@@ -256,7 +259,8 @@ export default {
             this.subscription = data.body;
           } else {
             // TODO: error handling
-            if (data.status == 403) this.$emit("setPermission", false);
+            if (data.status == 403 || data.status == 401)
+              this.$emit("setPermission", false);
           }
         }
       }
@@ -279,7 +283,8 @@ export default {
             this.subscription = data.body;
           } else {
             // TODO: error handling
-            if (data.status == 403) this.$emit("setPermission", false);
+            if (data.status == 403 || data.status == 401)
+              this.$emit("setPermission", false);
           }
         }
       }

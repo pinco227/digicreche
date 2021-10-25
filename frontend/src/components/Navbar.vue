@@ -113,7 +113,7 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
           >
-            <li>
+            <li v-if="user.user_type == 1">
               <router-link
                 :to="{
                   name: 'pricing',

@@ -222,4 +222,11 @@ body {
     var(--orange-accent-light) 100%
   );
 }
+.invalid .form-label,
+.invalid small {
+  color: red;
+}
+.invalid .form-control {
+  border: 1px solid red;
+}
 </style>

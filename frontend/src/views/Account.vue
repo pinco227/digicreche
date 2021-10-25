@@ -32,7 +32,10 @@
       <div class="col-12 col-md-7 col-lg-8">
         <div class="head-tile align-items-stretch">
           <form @submit.prevent="onSubmit">
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('first_name') }"
+            >
               <label for="first_name" class="form-label">First Name</label>
               <input
                 v-model="user.first_name"
@@ -40,9 +43,18 @@
                 class="form-control"
                 id="first_name"
                 name="first_name"
+                required
               />
+              <template v-if="error.hasOwnProperty('first_name')">
+                <small v-for="(err, i) in error.first_name" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('last_name') }"
+            >
               <label for="last_name" class="form-label">Last Name</label>
               <input
                 v-model="user.last_name"
@@ -50,9 +62,18 @@
                 class="form-control"
                 id="last_name"
                 name="last_name"
+                required
               />
+              <template v-if="error.hasOwnProperty('last_name')">
+                <small v-for="(err, i) in error.last_name" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('phone_number') }"
+            >
               <label for="phone_number" class="form-label">Contact Phone</label>
               <input
                 v-model="user.phone_number"
@@ -61,8 +82,16 @@
                 id="phone_number"
                 name="phone_number"
               />
+              <template v-if="error.hasOwnProperty('phone_number')">
+                <small v-for="(err, i) in error.phone_number" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('street_address1') }"
+            >
               <label for="street_address1" class="form-label">Address 1</label>
               <input
                 v-model="user.street_address1"
@@ -71,8 +100,16 @@
                 id="street_address1"
                 name="street_address1"
               />
+              <template v-if="error.hasOwnProperty('street_address1')">
+                <small v-for="(err, i) in error.street_address1" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('street_address2') }"
+            >
               <label for="street_address2" class="form-label">Address 2</label>
               <input
                 v-model="user.street_address2"
@@ -81,8 +118,16 @@
                 id="street_address2"
                 name="street_address2"
               />
+              <template v-if="error.hasOwnProperty('street_address2')">
+                <small v-for="(err, i) in error.street_address2" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('town_or_city') }"
+            >
               <label for="town_or_city" class="form-label">Town or City</label>
               <input
                 v-model="user.town_or_city"
@@ -90,9 +135,18 @@
                 class="form-control"
                 id="town_or_city"
                 name="town_or_city"
+                required
               />
+              <template v-if="error.hasOwnProperty('town_or_city')">
+                <small v-for="(err, i) in error.town_or_city" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('county') }"
+            >
               <label for="county" class="form-label">County</label>
               <input
                 v-model="user.county"
@@ -100,9 +154,18 @@
                 class="form-control"
                 id="county"
                 name="county"
+                required
               />
+              <template v-if="error.hasOwnProperty('county')">
+                <small v-for="(err, i) in error.county" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('postcode') }"
+            >
               <label for="postcode" class="form-label">Post Code</label>
               <input
                 v-model="user.postcode"
@@ -111,14 +174,23 @@
                 id="postcode"
                 name="postcode"
               />
+              <template v-if="error.hasOwnProperty('postcode')">
+                <small v-for="(err, i) in error.postcode" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('country') }"
+            >
               <label for="country" class="form-label">Country</label>
               <select
                 v-model="user.country"
                 class="form-select"
                 id="country"
                 name="country"
+                required
               >
                 <option
                   v-for="(country_item, index) in country_list"
@@ -128,8 +200,17 @@
                   {{ country_item.name }}
                 </option>
               </select>
+              <template v-if="error.hasOwnProperty('country')">
+                <small v-for="(err, i) in error.country" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3" v-show="!isManager">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('school') }"
+              v-show="!isManager"
+            >
               <label for="school" class="form-label">School</label>
               <select
                 v-model="user.school"
@@ -145,9 +226,13 @@
                   {{ school.name }}
                 </option>
               </select>
+              <template v-if="error.hasOwnProperty('school')">
+                <small v-for="(err, i) in error.school" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
-            <p v-if="error" class="muted mt-2">{{ error }}</p>
           </form>
         </div>
       </div>
@@ -188,7 +273,7 @@ export default {
       room: {},
       country_list: [],
       schools: [],
-      error: null,
+      error: {},
       moment: moment,
     };
   },
@@ -241,24 +326,15 @@ export default {
       }
     },
     async onSubmit() {
-      if (!this.user.first_name || !this.user.last_name)
-        this.error = "Full name is required!";
-      else if (
-        this.user.first_name.length > 100 ||
-        this.user.last_name.length > 100
-      )
-        this.error = "Name cannot be longer than 100 charachters!";
-      else {
-        let endpoint = "/api/rest-auth/user/";
-        let method = "PUT";
+      let endpoint = "/api/rest-auth/user/";
+      let method = "PUT";
 
-        const data = await apiService(endpoint, method, this.user);
-        if (data.status >= 200 && data.status < 300) {
-          console.log("saved");
-        } else {
-          // TODO: error handling
-          this.error = "There was an error! Please try again!";
-        }
+      const data = await apiService(endpoint, method, this.user);
+      if (data.status >= 200 && data.status < 300) {
+        console.log("saved");
+      } else {
+        // TODO: error handling
+        this.error = data.body;
       }
     },
   },

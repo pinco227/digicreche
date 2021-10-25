@@ -11,7 +11,10 @@
           <h2 class="mb-3" v-if="schoolSlug">Edit {{ name }}</h2>
           <h2 class="mb-3" v-else>Add a school</h2>
           <form @submit.prevent="onSubmit">
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('name') }"
+            >
               <label for="name" class="form-label">School Name</label>
               <input
                 v-model="name"
@@ -19,9 +22,18 @@
                 class="form-control"
                 id="name"
                 name="name"
+                required
               />
+              <template v-if="error.hasOwnProperty('name')">
+                <small v-for="(err, i) in error.name" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('description') }"
+            >
               <label for="description" class="form-label">Description</label>
               <textarea
                 v-model="description"
@@ -29,9 +41,18 @@
                 class="form-control"
                 id="description"
                 name="description"
+                required
               ></textarea>
+              <template v-if="error.hasOwnProperty('description')">
+                <small v-for="(err, i) in error.description" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('email') }"
+            >
               <label for="email" class="form-label">Contact Email</label>
               <input
                 v-model="email"
@@ -39,9 +60,18 @@
                 class="form-control"
                 id="email"
                 name="email"
+                required
               />
+              <template v-if="error.hasOwnProperty('email')">
+                <small v-for="(err, i) in error.email" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('phone_number') }"
+            >
               <label for="phone_number" class="form-label">Contact Phone</label>
               <input
                 v-model="phone_number"
@@ -50,8 +80,16 @@
                 id="phone_number"
                 name="phone_number"
               />
+              <template v-if="error.hasOwnProperty('phone_number')">
+                <small v-for="(err, i) in error.phone_number" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('street_address1') }"
+            >
               <label for="street_address1" class="form-label">Address 1</label>
               <input
                 v-model="street_address1"
@@ -60,8 +98,16 @@
                 id="street_address1"
                 name="street_address1"
               />
+              <template v-if="error.hasOwnProperty('street_address1')">
+                <small v-for="(err, i) in error.street_address1" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('street_address2') }"
+            >
               <label for="street_address2" class="form-label">Address 2</label>
               <input
                 v-model="street_address2"
@@ -70,8 +116,16 @@
                 id="street_address2"
                 name="street_address2"
               />
+              <template v-if="error.hasOwnProperty('street_address2')">
+                <small v-for="(err, i) in error.street_address2" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('town_or_city') }"
+            >
               <label for="town_or_city" class="form-label">Town or City</label>
               <input
                 v-model="town_or_city"
@@ -79,9 +133,18 @@
                 class="form-control"
                 id="town_or_city"
                 name="town_or_city"
+                required
               />
+              <template v-if="error.hasOwnProperty('town_or_city')">
+                <small v-for="(err, i) in error.town_or_city" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('county') }"
+            >
               <label for="county" class="form-label">County</label>
               <input
                 v-model="county"
@@ -89,9 +152,18 @@
                 class="form-control"
                 id="county"
                 name="county"
+                required
               />
+              <template v-if="error.hasOwnProperty('county')">
+                <small v-for="(err, i) in error.county" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('postcode') }"
+            >
               <label for="postcode" class="form-label">Post Code</label>
               <input
                 v-model="postcode"
@@ -100,14 +172,23 @@
                 id="postcode"
                 name="postcode"
               />
+              <template v-if="error.hasOwnProperty('postcode')">
+                <small v-for="(err, i) in error.postcode" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
-            <div class="mb-3">
+            <div
+              class="mb-3"
+              :class="{ invalid: error.hasOwnProperty('country') }"
+            >
               <label for="country" class="form-label">Country</label>
               <select
                 v-model="country"
                 class="form-select"
                 id="country"
                 name="country"
+                required
               >
                 <option v-if="!schoolSlug" :value="null" disabled selected>
                   - Please select -
@@ -120,6 +201,11 @@
                   {{ country_item.name }}
                 </option>
               </select>
+              <template v-if="error.hasOwnProperty('country')">
+                <small v-for="(err, i) in error.country" :key="i">
+                  {{ err }}
+                </small>
+              </template>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -131,7 +217,6 @@
               Delete School
             </a>
           </form>
-          <p v-if="error" class="muted mt-2">{{ error }}</p>
         </div>
       </div>
     </div>
@@ -170,7 +255,7 @@ export default {
       postcode: null,
       country: null,
       country_list: [],
-      error: null,
+      error: {},
     };
   },
   computed: {
@@ -198,7 +283,8 @@ export default {
           setPageTitle("Edit " + data.body.name);
         } else {
           // TODO: error handling
-          if (data.status == 403) this.$emit("setPermission", false);
+          if (data.status == 403 || data.status == 401)
+            this.$emit("setPermission", false);
         }
       }
     },
@@ -212,41 +298,36 @@ export default {
       }
     },
     async onSubmit() {
-      if (!this.name) this.error = "Name is required!";
-      else if (this.name.length > 100)
-        this.error = "Name cannot be longer than 100 charachters!";
-      else {
-        let endpoint = "/api/schools/";
-        let method = "POST";
+      let endpoint = "/api/schools/";
+      let method = "POST";
 
-        if (this.schoolSlug) {
-          endpoint = `/api/schools/${this.schoolSlug}/`;
-          method = "PUT";
-        }
+      if (this.schoolSlug) {
+        endpoint = `/api/schools/${this.schoolSlug}/`;
+        method = "PUT";
+      }
 
-        const payload = {
-          manager: JSON.parse(window.localStorage.getItem("user")).pk,
-          name: this.name,
-          description: this.description,
-          email: this.email,
-          phone_number: this.phone_number,
-          street_address1: this.street_address1,
-          street_address2: this.street_address2,
-          town_or_city: this.town_or_city,
-          county: this.county,
-          postcode: this.postcode,
-          country: this.country,
-        };
-        const data = await apiService(endpoint, method, payload);
-        if (data.status >= 200 && data.status < 300) {
-          this.$router.push({
-            name: "school-rooms",
-            params: { schoolSlug: data.body.slug },
-          });
-        } else {
-          // TODO: error handling
-          this.error = "There was an error! Please try again!";
-        }
+      const payload = {
+        manager: JSON.parse(window.localStorage.getItem("user")).pk,
+        name: this.name,
+        description: this.description,
+        email: this.email,
+        phone_number: this.phone_number,
+        street_address1: this.street_address1,
+        street_address2: this.street_address2,
+        town_or_city: this.town_or_city,
+        county: this.county,
+        postcode: this.postcode,
+        country: this.country,
+      };
+      const data = await apiService(endpoint, method, payload);
+      if (data.status >= 200 && data.status < 300) {
+        this.$router.push({
+          name: "school-rooms",
+          params: { schoolSlug: data.body.slug },
+        });
+      } else {
+        // TODO: error handling
+        this.error = data.body;
       }
     },
     async deleteSchool() {
@@ -258,7 +339,6 @@ export default {
           this.$router.push({ name: "manager-schools" });
         } else {
           // TODO: error handling
-          this.error = "Error!";
         }
       }
     },
