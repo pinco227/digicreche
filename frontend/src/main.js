@@ -6,10 +6,13 @@ import App from "./App.vue";
 import router from "./router";
 import timeago from "vue-timeago3";
 import VueNativeSock from "vue-native-websocket-vue3";
+import VueToast from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
 
 const app = createApp(App);
 const ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 
+app.use(VueToast, { position: "bottom" });
 app.use(timeago);
 app.use(VueNativeSock, `${ws_scheme}://${location.host}/ws/chat/`, {
   store: store,

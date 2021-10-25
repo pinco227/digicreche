@@ -44,7 +44,9 @@ export default {
         this.pupils = data.body;
         setPageTitle("Children");
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
         if (data.status == 403 || data.status == 401)
           this.$emit("setPermission", false);
       }

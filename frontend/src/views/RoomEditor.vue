@@ -167,7 +167,9 @@ export default {
           this.room_icon = data.body.icon;
           setPageTitle("Edit " + data.name);
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
           if (data.status == 403 || data.status == 401)
             this.$emit("setPermission", false);
         }
@@ -180,7 +182,9 @@ export default {
         this.school = data.body;
         setPageTitle(data.body.name);
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
         if (data.status == 403 || data.status == 401)
           this.$emit("setPermission", false);
       }
@@ -198,12 +202,15 @@ export default {
         name: this.name,
         description: this.description,
         icon: this.room_icon,
-        // the school field get updated with the selected school in the backend
-        // but as the field is required, we're passing an integer of 1
-        school: 1,
+        school: this.school.id,
       };
       const data = await apiService(endpoint, method, payload);
       if (data.status >= 200 && data.status < 300) {
+        if (this.roomId) {
+          this.$toast.success(`Room ${data.body.name} successfully updated!`);
+        } else {
+          this.$toast.success(`Room ${data.body.name} successfully added!`);
+        }
         this.$router.push({
           name: "room-pupils",
           params: {
@@ -212,8 +219,10 @@ export default {
           },
         });
       } else {
-        // TODO: error handling
         this.error = data.body;
+        if (Object.prototype.hasOwnProperty.call(this.error, "detail")) {
+          this.$toast.error(this.error.detail);
+        }
       }
     },
     async deleteRoom() {
@@ -222,12 +231,15 @@ export default {
       if (confirm(`Are you sure you want to delete ${this.name} ?`)) {
         const data = await apiService(endpoint, method);
         if (data.status >= 200 && data.status < 300) {
+          this.$toast.info(`Room ${this.name} deleted!`);
           this.$router.push({
             name: "school-rooms",
             params: { schoolSlug: this.schoolSlug },
           });
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
         }
       }
     },

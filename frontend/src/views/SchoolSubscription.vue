@@ -130,6 +130,7 @@
           v-if="school.is_active == false"
           :school="school"
           :prices="prices"
+          :preSelectedPrice="selectedPrice"
           @update="getSchoolData"
         />
       </div>
@@ -189,31 +190,37 @@ export default {
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
         this.school = data.body;
-        if (this.school.is_active) {
+        if (this.school.subscription) {
           this.getSubscriptionData();
           this.getPaymentData();
         }
+        // if (this.school.is_active) {
+        // }
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
         if (data.status == 403 || data.status == 401)
           this.$emit("setPermission", false);
       }
     },
     async getSubscriptionData() {
-      if (Object.keys(this.school).length && this.school.is_active) {
+      if (Object.keys(this.school).length && this.school.subscription) {
         const endpoint = `/api/retrieve-subscription/${this.school.subscription}/`;
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {
           this.subscription = data.body;
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
           if (data.status == 403 || data.status == 401)
             this.$emit("setPermission", false);
         }
       }
     },
     async getPaymentData() {
-      if (Object.keys(this.school).length && this.school.is_active) {
+      if (Object.keys(this.school).length && this.school.subscription) {
         const endpoint = `/api/retrieve-payment-method/`;
         const method = "POST";
         const payload = {
@@ -223,7 +230,9 @@ export default {
         if (data.status >= 200 && data.status < 300) {
           this.paymentMethod = data.body;
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
           if (data.status == 403 || data.status == 401)
             this.$emit("setPermission", false);
         }
@@ -235,7 +244,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.prices = data.body;
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async cancelOrReactivateSubscription() {
@@ -258,7 +269,9 @@ export default {
           if (data.status >= 200 && data.status < 300) {
             this.subscription = data.body;
           } else {
-            // TODO: error handling
+            if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+              this.$toast.error(data.body.detail);
+            }
             if (data.status == 403 || data.status == 401)
               this.$emit("setPermission", false);
           }
@@ -282,7 +295,9 @@ export default {
           if (data.status >= 200 && data.status < 300) {
             this.subscription = data.body;
           } else {
-            // TODO: error handling
+            if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+              this.$toast.error(data.body.detail);
+            }
             if (data.status == 403 || data.status == 401)
               this.$emit("setPermission", false);
           }

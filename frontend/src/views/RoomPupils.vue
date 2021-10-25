@@ -181,7 +181,9 @@ export default {
         this.room = data.body;
         setPageTitle(data.body.name);
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
         if (data.status == 403 || data.status == 401)
           this.$emit("setPermission", false);
       }
@@ -192,7 +194,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.pupils = data.body;
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
         if (data.status == 403 || data.status == 401)
           this.$emit("setPermission", false);
       }
@@ -209,7 +213,9 @@ export default {
           return mapped_teacher;
         });
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async getUnassignedPupils() {
@@ -220,7 +226,9 @@ export default {
           return !pupil.room;
         });
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async getSchoolData() {
@@ -244,7 +252,9 @@ export default {
         );
         this.room.teachers.push(teacher);
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async unassignTeacher(teacher) {
@@ -261,7 +271,9 @@ export default {
             this.room.teachers.splice(this.room.teachers.indexOf(teacher), 1);
             this.unassignedTeachers.push(teacher);
           } else {
-            // TODO: error handling
+            if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+              this.$toast.error(data.body.detail);
+            }
           }
         }
       }
@@ -278,7 +290,9 @@ export default {
         this.unassignedPupils.splice(this.unassignedPupils.indexOf(pupil), 1);
         this.pupils.push(pupil);
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
   },

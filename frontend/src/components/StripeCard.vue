@@ -9,11 +9,12 @@
         <div class="row g-2 my-2">
           <div class="col">
             <div class="head-tile align-items-center">
-              <h3>Try now for free!</h3>
+              <h3 v-if="!school.subscription">Try now for free!</h3>
+              <h3 v-else>Complete subscription!</h3>
             </div>
           </div>
         </div>
-        <div class="row g-2 my-2">
+        <div class="row g-2 my-2" v-show="!school.subscription">
           <div v-for="price in prices" :key="price.id" class="col-12 col-sm-6">
             <input
               class="price-radio"
@@ -21,6 +22,7 @@
               :value="price.id"
               v-model="selectedPrice"
               :id="price.id"
+              :checked="preSelectedPrice && price.id == preSelectedPrice.id"
               required
             />
             <label
@@ -101,6 +103,10 @@ export default {
       type: Array,
       required: true,
     },
+    preSelectedPrice: {
+      type: Object,
+      required: false,
+    },
   },
   data() {
     return {
@@ -125,7 +131,8 @@ export default {
         result.subscription.status === "active" ||
         result.subscription.status === "trialing"
       ) {
-        this.error = "Success.";
+        this.$toast.success("Subscription successfully purchased!");
+        this.disableSubmit = false;
         this.$emit("update");
       }
     },
@@ -190,7 +197,7 @@ export default {
             }
           })
           .catch((error) => {
-            this.error = error;
+            this.$toast.error(error);
             this.disableSubmit = false;
             spinner.style.display = "none";
           });
@@ -249,7 +256,7 @@ export default {
           .then((result) => {
             if (result.error) {
               // The card had an error when trying to attach it to a customer.
-              throw result.error.message;
+              throw result.error;
             }
             return result;
           })
@@ -275,7 +282,7 @@ export default {
           .catch((error) => {
             // An error has happened. Display the failure to the user here.
             // We utilize the HTML element we created.
-            this.error = error;
+            this.$toast.error(error);
             this.disableSubmit = false;
             spinner.style.display = "none";
           })
@@ -288,28 +295,32 @@ export default {
       const billingName = `${this.user.first_name} ${this.user.last_name}`;
       const priceId = this.selectedPrice;
 
-      this.stripe
-        .createPaymentMethod({
-          type: "card",
-          card: this.card,
-          billing_details: {
-            name: billingName,
-          },
-        })
-        .then((result) => {
-          if (result.error) {
-            this.error = result.error.message;
-            this.disableSubmit = false;
-            spinner.style.display = "none";
-          } else {
-            this.createSubscription({
-              email: this.user.email,
-              schoolId: this.school.id,
-              paymentMethodId: result.paymentMethod.id,
-              priceId: priceId,
-            });
-          }
-        });
+      if (priceId) {
+        this.stripe
+          .createPaymentMethod({
+            type: "card",
+            card: this.card,
+            billing_details: {
+              name: billingName,
+            },
+          })
+          .then((result) => {
+            if (result.error) {
+              this.$toast.error(result.error.message);
+              this.disableSubmit = false;
+              spinner.style.display = "none";
+            } else {
+              this.createSubscription({
+                email: this.user.email,
+                schoolId: this.school.id,
+                paymentMethodId: result.paymentMethod.id,
+                priceId: priceId,
+              });
+            }
+          });
+      } else {
+        this.$toast.error("Select a price first!");
+      }
     },
   },
   mounted() {

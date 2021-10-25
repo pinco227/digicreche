@@ -383,7 +383,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.school = data.body;
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
         if (data.status == 403 || data.status == 401)
           this.$emit("setPermission", false);
       }
@@ -394,7 +396,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.room = data.body;
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async getPupilData() {
@@ -421,7 +425,9 @@ export default {
             "Edit " + data.body.first_name + " " + data.body.last_name
           );
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
           if (data.status == 403 || data.status == 401)
             this.$emit("setPermission", false);
         }
@@ -435,8 +441,9 @@ export default {
           return { id: room.id, name: room.name };
         });
       } else {
-        // TODO: error handling
-        // if (data.status == 403) this.$emit("setPermission", false);
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async getSchoolParents() {
@@ -447,8 +454,9 @@ export default {
           return { id: parent.id, name: parent.name };
         });
       } else {
-        // TODO: error handling
-        // if (data.status == 403) this.$emit("setPermission", false);
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async detailsSubmit() {
@@ -471,7 +479,11 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         if (this.pupilId) {
           this.editInfo = false;
+          this.$toast.success(
+            `${data.body.first_name}'s info successfully updated!`
+          );
         } else {
+          this.$toast.success(`${data.body.first_name} successfully added!`);
           this.editInfo = false;
           if (this.room.id) this.getRoomData();
           this.$router.push({
@@ -483,8 +495,10 @@ export default {
           });
         }
       } else {
-        // TODO: error handling
         this.error = data.body;
+        if (Object.prototype.hasOwnProperty.call(this.error, "detail")) {
+          this.$toast.error(this.error.detail);
+        }
       }
     },
     updatePhoto(event) {
@@ -508,11 +522,16 @@ export default {
           this.photo = data.body.photo;
           this.editPhoto = false;
           this.newPhoto = null;
+          this.$toast.success(
+            `${this.first_name}'s photo successfully updated!`
+          );
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
         }
       } else {
-        // TODO: form validation error
+        this.$toast.warning("Select a photo first!");
       }
     },
     async resetPersonalDetails() {
@@ -529,7 +548,9 @@ export default {
           });
         } else this.personal_details = [];
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async personalDetailsSubmit() {
@@ -549,8 +570,13 @@ export default {
       const data = await apiService(endpoint, method, payload);
       if (data.status >= 200 && data.status < 300) {
         this.editPersonalDetails = false;
+        this.$toast.success(
+          `${this.first_name}'s personal details successfully updated!`
+        );
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async deletePupil() {
@@ -563,6 +589,9 @@ export default {
       ) {
         const data = await apiService(endpoint, method);
         if (data.status >= 200 && data.status < 300) {
+          this.$toast.info(
+            `Pupil ${this.first_name} ${this.last_name} deleted!`
+          );
           if (this.room.id) {
             this.$router.push({
               name: "room-pupils",
@@ -580,7 +609,9 @@ export default {
             });
           }
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
         }
       }
     },

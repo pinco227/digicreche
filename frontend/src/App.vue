@@ -99,6 +99,10 @@ a:hover {
   background-color: var(--green-accent);
   border-color: var(--green-accent);
 }
+.btn-check:focus + .btn-success,
+.btn-success:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 218, 11, 0.15);
+}
 .btn-primary {
   color: #fff;
   border-color: var(--orange-accent);
@@ -110,6 +114,21 @@ a:hover {
 }
 .btn-primary:hover {
   border-color: var(--orange-accent-dark);
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  border-color: var(--orange-accent-dark);
+}
+.btn-check:active + .btn-primary,
+.btn-check:checked + .btn-primary,
+.btn-primary.active,
+.btn-primary:active,
+.show > .btn-primary.dropdown-toggle {
+  border-color: var(--orange-accent-dark);
+}
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 161, 60, 0.5);
 }
 .head-tile {
   display: flex;
@@ -271,5 +290,40 @@ a:hover {
   border-color: #00da0b;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(0, 218, 11, 0.15);
+}
+.form-select:focus {
+  border-color: #00da0b;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(0, 218, 11, 0.15);
+}
+.form-check-input:checked {
+  background-color: var(--orange-accent);
+  border-color: var(--orange-accent);
+}
+.form-check-input:focus {
+  border-color: #00da0b;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(0, 218, 11, 0.15);
+}
+.popover {
+  border-radius: 0;
+  border: 0;
+  background: linear-gradient(180deg, var(--light-bg) 0%, var(--body-bg) 100%);
+  box-shadow: 3px 5px 10px -10px var(--body-text);
+}
+.popover-header {
+  background: none;
+}
+
+.bs-popover-auto[data-popper-placement^="bottom"] > .popover-arrow::before,
+.bs-popover-bottom > .popover-arrow::before {
+  border-bottom-color: #fffdfd;
+}
+.bs-popover-auto[data-popper-placement^="bottom"] > .popover-arrow::after,
+.bs-popover-bottom > .popover-arrow::after {
+  border-bottom-color: #fffdfd;
+}
+.list-group {
+  border-radius: 0;
 }
 </style>

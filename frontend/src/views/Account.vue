@@ -331,10 +331,12 @@ export default {
 
       const data = await apiService(endpoint, method, this.user);
       if (data.status >= 200 && data.status < 300) {
-        console.log("saved");
+        this.$toast.success("Account successfully saved!");
       } else {
-        // TODO: error handling
         this.error = data.body;
+        if (Object.prototype.hasOwnProperty.call(this.error, "detail")) {
+          this.$toast.error(this.error.detail);
+        }
       }
     },
   },

@@ -63,6 +63,10 @@ class CreateCustomerSubscription(APIView):
                     },
                 )
             else:
+                stripe.PaymentMethod.attach(
+                    payment_method,
+                    customer=user.customer.id,
+                )
                 customer = stripe.Customer.retrieve(user.customer.id)
 
             djstripe_customer = sm.Customer.sync_from_stripe_data(
@@ -110,7 +114,9 @@ class CreateCustomerSubscription(APIView):
             }
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
+            print(str(e))
+            return Response({'error': str(e)},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateSubscription(APIView):
