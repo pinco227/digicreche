@@ -76,7 +76,7 @@ export default {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
     },
     noSubscription() {
-      return Object.keys(this.school).length && !this.school.is_active;
+      return Boolean(Object.keys(this.school).length && !this.school.is_active);
     },
   },
   methods: {

@@ -84,7 +84,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.activity_types = data.body;
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     updateImages(event) {

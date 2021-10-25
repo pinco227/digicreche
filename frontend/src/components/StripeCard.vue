@@ -184,7 +184,12 @@ export default {
                 const data = await apiService(endpoint, method, payload);
                 if (data.status >= 200 && data.status < 300) {
                   subscription = data.body;
-                  console.log("OK", subscription);
+                } else {
+                  if (
+                    Object.prototype.hasOwnProperty.call(data.body, "detail")
+                  ) {
+                    this.$toast.error(data.body.detail);
+                  }
                 }
 
                 return {

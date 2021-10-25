@@ -130,6 +130,9 @@ a:hover {
 .btn-primary:focus {
   box-shadow: 0 0 0 0.25rem rgba(255, 161, 60, 0.5);
 }
+.btn-group-sm > .btn {
+  border-radius: 0;
+}
 .head-tile {
   display: flex;
   flex-direction: column;

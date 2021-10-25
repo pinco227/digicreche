@@ -364,7 +364,7 @@ export default {
   },
   computed: {
     noSubscription() {
-      return Object.keys(this.school).length && !this.school.is_active;
+      return Boolean(Object.keys(this.school).length && !this.school.is_active);
     },
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
