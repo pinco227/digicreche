@@ -116,6 +116,57 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
   - ### Entity Relationship Diagram
     ![ER Diagram](https://github.com/pinco227/digicreche/blob/main/docs/db-er.png) 
 
+## API endpoints
+  - Auth
+    - POST `/api/rest-auth/login/`
+    - GET `/api/rest-auth/logout/`
+    - POST `/api/rest-auth/password/reset/`
+    - POST `/api/rest-auth/password/reset/confirm/`
+    - POST `/api/rest-auth/password/change/`
+    - POST `/api/rest-auth/registration/`
+    - GET|PUT|PATCH `/api/rest-auth/user/`
+  - Subscription
+    - GET `/api/prices/`
+    - POST `/api/create-subscription/`
+    - POST `/api/cancel-subscription/`
+    - POST `/api/update-subscription/`
+    - POST `/api/reactivate-subscription/`
+    - POST `/api/retrieve-stripe-subscription/`
+    - POST `/api/retrieve-payment-method/`
+    - GET `/api/retrieve-subscription/<int:pk>/`
+  - Schools
+    - GET|POST `/api/schools/`
+    - GET|PUT|PATCH|DELETE `/api/schools/<slug:slug>/`
+    - GET `/api/my-schools/`
+    - GET `/api/schools/<slug:slug>/teachers/`
+    - GET `/api/schools/<slug:slug>/teachers/unassigned/`
+    - GET `/api/schools/<slug:slug>/parents/`
+    - Rooms
+      - GET|POST `/api/schools/<slug:slug>/rooms/`
+      - GET|PUT|PATCH|DELETE `/api/schools/<slug:slug>/rooms/<int:pk>/`
+      - DELETE `/api/schools/<slug:slug>/rooms/<int:pk>/remove-teacher/<int:id>/`
+      - POST `/api/schools/<slug:slug>/rooms/<int:pk>/assign-teacher/`
+    - Pupils
+      - GET|POST `/api/schools/<slug:slug>/pupils/`
+      - GET `/api/schools/<slug:slug>/rooms/<int:pk>/pupils/`
+      - GET `/api/schools/<slug:slug>/unassigned/`
+      - GET|PUT|PATCH|DELETE `/api/schools/<slug:slug>/pupils/<int:pk>/`
+      - GET|PUT|PATCH `/api/schools/<slug:slug>/pupils/<int:pk>/photo/`
+      - GET|PUT|PATCH `/api/schools/<slug:slug>/pupils/<int:pk>/details/`
+      - GET|PUT|PATCH `/api/schools/<slug:slug>/pupils/<int:pk>/room/`
+      - GET `/api/children/`
+    - Activities
+      - GET|POST `/api/activity_types/`
+      - GET|PUT|PATCH|DELETE `/api/activity_types/<int:pk>/`
+      - GET|POST `/api/schools/<slug:slug>/pupils/<int:pk>/activities/`
+      - GET|PUT|PATCH `/api/schools/<slug:slug>/activity/<int:pk>/`
+  - Chat
+    - GET `/api/chats/`
+    - GET|POST `/api/chats/<int:pk>/`
+    - GET `/api/contacts/`
+  - Helpers
+    - GET `/api/countries/`
+
 ## Technologies used
 - Workspace
   * [Ubuntu20.04](https://ubuntu.com/) as Operating System
