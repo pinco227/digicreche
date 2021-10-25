@@ -16,7 +16,7 @@ class ActivityType(models.Model):
 
 class Activity(models.Model):
 
-    type = models.ForeignKey(ActivityType, null=True, blank=False,
+    type = models.ForeignKey(ActivityType, null=True, blank=True,
                              on_delete=models.SET_NULL)
     description = models.CharField(max_length=500, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,7 +30,6 @@ class Activity(models.Model):
     def __str__(self):
         return (self.pupil.first_name + ' ' +
                 self.pupil.last_name + ' > ' +
-                self.type.name + ' > ' +
                 self.created_at.strftime("%d/%m/%y %H:%M"))
 
 
