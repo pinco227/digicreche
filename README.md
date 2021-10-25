@@ -111,10 +111,51 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
     - Room icons.
     - Pupil personal details - custom dynamic fields.
     - Photo lightbox for activities timeline.
-
+    - Custom activity types
 ## Database
   - ### Entity Relationship Diagram
     ![ER Diagram](https://github.com/pinco227/digicreche/blob/main/docs/db-er.png) 
+
+## Technologies used
+- Workspace
+  * [Ubuntu20.04](https://ubuntu.com/) as Operating System
+  * [Visual Studio Code](https://code.visualstudio.com/) as Integrated Development Environment
+- Languages
+  * [HTML5](https://en.wikipedia.org/wiki/HTML5)
+  * [CSS3](https://en.wikipedia.org/wiki/CSS)
+  * [JS](https://en.wikipedia.org/wiki/JavaScript)
+  * [Python](https://www.python.org/)
+- Frameworks & Libraries
+  * [Django](https://www.djangoproject.com/) is used as back-end framework.
+  * [Vue.js](https://v3.vuejs.org/) is used as a front-end framework.
+  * [Bootstrap5](https://getbootstrap.com/) is used for its great responsiveness, styling classes, icons and its javascript functionality.
+  * [Font Awesome](https://fontawesome.com/) icons were used for writing the auto-generated CV.
+  * [Google Fonts](https://fonts.google.com/) is used as the main font resource.
+  * Main Python and Django packages:
+    * [Django REST Framework](https://www.django-rest-framework.org/) is used for creating RESTful API backend.
+    * [Channels Redis](https://github.com/django/channels_redis) used for chat implementation.
+    * [Daphne](https://github.com/django/daphne) is used to run project on an asynchronous server to support websockets.
+    * [Stripe](https://pypi.org/project/stripe/) and [DJ-Stripe](https://github.com/dj-stripe/dj-stripe) for Stripe payment platform implementation.
+    * [AllAuth](https://django-allauth.readthedocs.io/en/latest/installation.html) for user authentication.
+    * [Storages & S3 boto](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html) for cloud media storage.
+    * [WhiteNoise](http://whitenoise.evans.io/en/stable/) for serving own static files without relying on cloud storages.
+  * Main NPM and Vue.js packages:
+    * [Vue Router](https://router.vuejs.org/) for front-end SPA routing.
+    * [VueX](https://next.vuex.vuejs.org/) as a state management library, used in chat websocket implementation.
+    * [Moment.js](https://momentjs.com/docs/) and [Vue Timeago3](https://www.npmjs.com/package/vue-timeago3) for time formating.
+    * [vue-native-websocket-vue3](https://github.com/likaia/vue-native-websocket-vue3/blob/HEAD/README-EN.md) for websocket implementation.
+    * [vue-toast-notification](https://www.npmjs.com/package/vue-toast-notification) for response feedback messages.
+    * [vue-tel-input](https://www.npmjs.com/package/vue-tel-input) for phone number field input masking.
+    * [vue-easy-lightbox](https://github.com/XiongAmao/vue-easy-lightbox) for photo lightbox.
+- Version Control
+  * [Git](https://git-scm.com/) as Version Control System.
+  * [Github](https://www.github.com) for repository hosting.
+  * [Commitizen](https://github.com/commitizen/cz-cli) for commit linting.
+- Wireframes
+  * [Draw.io](https://app.diagrams.net/) for creating [wireframes](#wireframes).
+- Media
+  * [Photopea](https://www.photopea.com/) online photo editor tool for creating the demo mockup image.
+  * [dbdiagram.io](https://dbdiagram.io/) for database diagram creation.
 
 ## Testing
 
