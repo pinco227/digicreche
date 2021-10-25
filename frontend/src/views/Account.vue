@@ -75,13 +75,10 @@
               :class="{ invalid: error.hasOwnProperty('phone_number') }"
             >
               <label for="phone_number" class="form-label">Contact Phone</label>
-              <input
-                v-model="user.phone_number"
-                type="text"
-                class="form-control"
-                id="phone_number"
-                name="phone_number"
-              />
+              <vue-tel-input
+                v-model="phoneInput"
+                ref="phoneInput"
+              ></vue-tel-input>
               <template v-if="error.hasOwnProperty('phone_number')">
                 <small v-for="(err, i) in error.phone_number" :key="i">
                   {{ err }}
@@ -274,6 +271,7 @@ export default {
       country_list: [],
       schools: [],
       error: {},
+      phoneInput: null,
       moment: moment,
     };
   },
@@ -332,6 +330,7 @@ export default {
       const data = await apiService(endpoint, method, this.user);
       if (data.status >= 200 && data.status < 300) {
         this.$toast.success("Account successfully saved!");
+        this.phoneInput = this.user.phone_number;
       } else {
         this.error = data.body;
         if (Object.prototype.hasOwnProperty.call(this.error, "detail")) {
@@ -350,6 +349,15 @@ export default {
     if (this.user.user_type == 2) this.getRoomData();
     setPageTitle("User Account");
     this.getCountries();
+    this.phoneInput = this.user.phone_number;
+  },
+  mounted() {
+    this.$watch(
+      () => this.$refs.phoneInput.phoneObject.number,
+      (value) => {
+        this.user.phone_number = value;
+      }
+    );
   },
 };
 </script>

@@ -73,13 +73,10 @@
               :class="{ invalid: error.hasOwnProperty('phone_number') }"
             >
               <label for="phone_number" class="form-label">Contact Phone</label>
-              <input
-                v-model="phone_number"
-                type="text"
-                class="form-control"
-                id="phone_number"
-                name="phone_number"
-              />
+              <vue-tel-input
+                v-model="phoneInput"
+                ref="phoneInput"
+              ></vue-tel-input>
               <template v-if="error.hasOwnProperty('phone_number')">
                 <small v-for="(err, i) in error.phone_number" :key="i">
                   {{ err }}
@@ -256,6 +253,7 @@ export default {
       country: null,
       country_list: [],
       error: {},
+      phoneInput: null,
     };
   },
   computed: {
@@ -274,6 +272,7 @@ export default {
           this.description = data.body.description;
           this.email = data.body.email;
           this.phone_number = data.body.phone_number;
+          this.phoneInput = this.phone_number;
           this.street_address1 = data.body.street_address1;
           this.street_address2 = data.body.street_address2;
           this.town_or_city = data.body.town_or_city;
@@ -337,6 +336,7 @@ export default {
         } else {
           this.$toast.success(`School ${data.body.name} successfully added!`);
         }
+        this.phoneInput = this.phone_number;
         this.$router.push({
           name: "school-rooms",
           params: { schoolSlug: data.body.slug },
@@ -376,6 +376,14 @@ export default {
       }
       this.getCountries();
     }
+  },
+  mounted() {
+    this.$watch(
+      () => this.$refs.phoneInput.phoneObject.number,
+      (value) => {
+        this.phone_number = value;
+      }
+    );
   },
 };
 </script>
