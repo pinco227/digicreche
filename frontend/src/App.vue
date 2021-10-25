@@ -76,6 +76,38 @@ body {
   font-weight: 300;
   color: var(--body-text);
 }
+
+a {
+  color: var(--green-accent);
+}
+a:hover {
+  color: var(--green-accent-light);
+}
+.btn {
+  border-radius: 0;
+}
+.btn-light {
+  color: var(--body-text);
+  background-color: var(--light-bg);
+  border-color: var(--light-bg);
+}
+.btn-success {
+  color: #fff;
+  background-color: var(--green-accent);
+  border-color: var(--green-accent);
+}
+.btn-primary {
+  color: #fff;
+  border-color: var(--orange-accent);
+  background: linear-gradient(
+    180deg,
+    var(--orange-accent) 0%,
+    var(--orange-accent-light) 100%
+  );
+}
+.btn-primary:hover {
+  border-color: var(--orange-accent-dark);
+}
 .head-tile {
   display: flex;
   flex-direction: column;
@@ -228,5 +260,13 @@ body {
 }
 .invalid .form-control {
   border: 1px solid red;
+}
+.form-control {
+  border-radius: 0;
+}
+.form-control:focus {
+  border-color: #00da0b;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(0, 218, 11, 0.15);
 }
 </style>

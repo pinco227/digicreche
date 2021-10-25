@@ -2,18 +2,94 @@
 {% block style %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <style>
-        .login-form-container {
-            width: 300px;
-            margin: auto;
-        }
-        .registration-form-container {
-            width: 400px;
-            margin: auto;
-        }
+    @import url("https://fonts.googleapis.com/css2?family=Arima+Madurai:wght@300;400;500;700;800;900&family=Open+Sans:wght@300;400;600;700;800&display=swap");
+    body {
+        background-color: #ebebeb;
+        color: #454545;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 300;
+    }
+    a {
+        color: #33670a;
+    }
+    a:hover {
+        color: #00da0b;
+    }
+    .brand {
+        font-family: "Arima Madurai", cursive;
+        background: linear-gradient(
+            90deg,
+            #e25a00 0%,
+            #ffa13c 37%,
+            transparent 38%,
+            transparent 36%,
+            #33670a 36%,
+            #00da0b 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent !important;
+        font-weight: 400;
+        font-size: 2rem;
+        padding: 0 1rem;
+        margin: 0;
+    }
+    .brand strong {
+        font-weight: 900;
+    }
+    .head-tile {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        padding: 1rem;
+        background: linear-gradient(90deg, #fffdfd 0%, #ebebeb 100%);
+        box-shadow: 3px 5px 10px -10px #454545;
+        height: 100%;
+    }
+    .form-control {
+        border-radius: 0;
+    }
+    .form-control:focus {
+        border-color: #00da0b;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(0, 218, 11, .15);
+    }
+    .btn {
+        border-radius: 0;
+    }
+    .btn-success {
+        color: #fff;
+        background-color: #33670a;
+        border-color: #33670a;
+    }
+    .btn-primary {
+        color: #fff;
+        border-color: #e25a00;
+        background: linear-gradient(
+            180deg,
+            #e25a00 0%,
+            #ffa13c 100%
+        );
+    }
+    .btn-primary:hover {
+        border-color: #a74809;
+    }
     </style>
 {% endblock style %}
 {% block content %}
-    {% block auth %}{% endblock auth %}
+<main>
+    <div class="container-xxl">
+    <div class="row">
+        <div class="col">
+            <h2 class="text-center my-5">
+                <span class="brand">Digi<strong>Creche</strong></span>
+            </h2>
+        </div>
+    </div>
+        {% block auth %}{% endblock auth %}
+    </div>
+</main>
 {% endblock content %}
 {% block scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script>
