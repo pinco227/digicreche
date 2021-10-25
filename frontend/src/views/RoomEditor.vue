@@ -170,7 +170,7 @@ export default {
           if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
             this.$toast.error(data.body.detail);
           }
-          if (data.status == 403 || data.status == 401)
+          if (data.status == 403 || data.status == 404 || data.status == 401)
             this.$emit("setPermission", false);
         }
       }
