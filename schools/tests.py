@@ -17,9 +17,12 @@ class SchoolViewSetTestCase(APITestCase):
     def setUp(self):
         User = get_user_model()
         self.user = User.objects.create_user(
-            email='davinci@user.com', password='some-very-strong-password')
+            user_type=1,
+            email='davinci@user.com',
+            password='some-very-strong-password')
         self.school = School.objects.create(
-            manager=self.user, slug='test-setup', name='Test Set Up',
+            manager=self.user, name='Test Set Up', description="test",
+            slug='test-setup', email="davinci@user.com",
             town_or_city='Dublin', county='Dublin', country='IE')
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
@@ -34,15 +37,14 @@ class SchoolViewSetTestCase(APITestCase):
     def test_school_list_un_authenticated(self):
         self.client.force_authenticate(user=None)
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_school_create(self):
         data = {
-            "slug": "davinci-school",
+            "manager": self.user.pk,
             "name": "School DaVinci",
             "description": "automated test school",
             "email": "davinci@school.test",
-            "phone_number": "+353871237654",
             "street_address1": "test street 1",
             "street_address2": "test street 2",
             "town_or_city": "Dublin",
@@ -52,8 +54,8 @@ class SchoolViewSetTestCase(APITestCase):
         }
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['manager'], 'davinci@user.com')
-        self.assertEqual(response.data['slug'], 'davinci-school')
+        self.assertEqual(response.data['manager'], self.user.pk)
+        self.assertEqual(response.data['slug'], 'school-davinci')
         self.assertEqual(response.data['email'], 'davinci@school.test')
 
     def test_single_school_retrieve(self):
@@ -65,11 +67,21 @@ class SchoolViewSetTestCase(APITestCase):
         self.assertEqual(serializer_data, response_data)
 
     def test_school_update_manager(self):
-        data = {'name': 'Test Updated'}
+        data = {
+            "manager": self.user.pk,
+            "name": 'Test Updated',
+            "description": "test updated",
+            "slug": 'test-setup',
+            "email": "davinci@user.com",
+            "town_or_city": 'Dublin',
+            "county": 'Dublin',
+            "country": 'IE'
+        }
         response = self.client.patch(reverse(
             'school-detail', kwargs={'slug': 'test-setup'}), data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], 'Test Updated')
+        self.assertEqual(response.data['description'], 'test updated')
 
     def test_school_update_random_user(self):
         User = get_user_model()

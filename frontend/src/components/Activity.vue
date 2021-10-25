@@ -11,7 +11,7 @@
         }}</small>
       </div>
       <div class="timeline-body">
-        <p>
+        <p v-show="activity.description != 'null'">
           {{ activity.description }}
         </p>
         <div class="activity-image-container">
