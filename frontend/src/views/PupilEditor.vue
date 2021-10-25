@@ -157,6 +157,28 @@
               </li>
             </ul>
           </div>
+          <div
+            v-if="user.user_type != 3 && parents.length && schoolParents.length"
+            class="text-start w-100"
+          >
+            <h4>Parents</h4>
+            <ul class="list-group">
+              <li
+                v-for="parent in Object.values(schoolParents).filter((parent) =>
+                  parents.includes(parent.id)
+                )"
+                :key="parent.id"
+                class="list-group-item d-flex justify-content-between"
+              >
+                {{ parent.name }}
+                <router-link
+                  :to="{ name: 'chat', params: { chatId: parent.id } }"
+                >
+                  <i class="fas fa-comment"></i>
+                </router-link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-7 col-lg-8">
