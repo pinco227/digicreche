@@ -1,11 +1,12 @@
 <template>
   <main>
     <DefaultNavbarComponent />
-    <div class="container-xxl">
+    <div class="container-xxl position-relative">
       <div v-if="permission">
         <router-view @setPermission="updatePermission"></router-view>
       </div>
       <NoPermissionComponnent v-else />
+      <SpinnerComponent />
     </div>
   </main>
 </template>
@@ -13,6 +14,7 @@
 <script>
 import DefaultNavbarComponent from "@/components/Navbar.vue";
 import NoPermissionComponnent from "@/components/NoPermission.vue";
+import SpinnerComponent from "@/components/Spinner.vue";
 import { apiService } from "@/common/api.service.js";
 import { setPageTitle } from "@/common/functions.js";
 
@@ -21,6 +23,7 @@ export default {
   components: {
     DefaultNavbarComponent,
     NoPermissionComponnent,
+    SpinnerComponent,
   },
   data() {
     return {

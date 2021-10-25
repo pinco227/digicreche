@@ -136,6 +136,8 @@ export default {
       paymentMethodId,
       isRetry,
     }) {
+      const spinner = document.getElementById("spinner");
+      spinner.style.display = "block";
       if (
         subscription &&
         (subscription.status === "active" || subscription.status === "trialing")
@@ -177,10 +179,7 @@ export default {
                   subscription = data.body;
                   console.log("OK", subscription);
                 }
-                // subscription = this.stripe.subscriptions.retrieve(
-                //   subscription.id
-                // );
-                console.log(subscription);
+
                 return {
                   priceId: priceId,
                   subscription: subscription,
@@ -193,6 +192,7 @@ export default {
           .catch((error) => {
             this.error = error;
             this.disableSubmit = false;
+            spinner.style.display = "none";
           });
       } else {
         // No customer action needed.
@@ -200,6 +200,8 @@ export default {
       }
     },
     handleRequiresPaymentMethod({ subscription, paymentMethodId, priceId }) {
+      const spinner = document.getElementById("spinner");
+      spinner.style.display = "block";
       if (
         subscription.status === "active" ||
         subscription.status === "trialing"
@@ -224,6 +226,8 @@ export default {
       }
     },
     createSubscription({ email, schoolId, paymentMethodId, priceId }) {
+      const spinner = document.getElementById("spinner");
+      spinner.style.display = "block";
       return (
         fetch("/api/create-subscription/", {
           method: "POST",
@@ -273,10 +277,13 @@ export default {
             // We utilize the HTML element we created.
             this.error = error;
             this.disableSubmit = false;
+            spinner.style.display = "none";
           })
       );
     },
     submitSubscribe() {
+      const spinner = document.getElementById("spinner");
+      spinner.style.display = "block";
       this.disableSubmit = true;
       const billingName = `${this.user.first_name} ${this.user.last_name}`;
       const priceId = this.selectedPrice;
@@ -293,6 +300,7 @@ export default {
           if (result.error) {
             this.error = result.error.message;
             this.disableSubmit = false;
+            spinner.style.display = "none";
           } else {
             this.createSubscription({
               email: this.user.email,

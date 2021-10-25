@@ -106,3 +106,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.head-tile {
+  height: auto;
+}
+</style>

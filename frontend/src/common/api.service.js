@@ -6,6 +6,9 @@ const apiService = async (
   data,
   type = "application/json"
 ) => {
+  const spinner = document.getElementById("spinner");
+  spinner.style.display = "block";
+
   const config = {
     method: method || "GET",
     headers: {
@@ -36,6 +39,7 @@ const apiService = async (
   } else {
     body = await response.text();
   }
+  spinner.style.display = "none";
   return {
     status: response.status,
     body: body,
