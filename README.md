@@ -245,7 +245,6 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
       ```bash
       export SECRET_KEY='<secret_key>'
       export DEVELOPMENT=True
-      export DJANGO_SETTINGS_MODULE=digicreche.settings
       export STRIPE_TEST_PUBLIC_KEY='<stripe_test_pkey>'
       export STRIPE_TEST_SECRET_KEY='<stripe_test_skey>'
       export STRIPE_WH_SECRET='<stripe_webhook_secret>'
@@ -286,7 +285,7 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
       ```
   2. Commit and push changes to forked repository.
   3. Create a [Heroku](https://heroku.com) account and click **New** on top right of the dashboard to **Create a new app**.
-  4. Create and configure AWS [AWS IAM](https://console.aws.amazon.com/iam/) User (retrieve access keys) and [AWS S3 bucket](https://s3.console.aws.amazon.com/s3).
+  4. Create and configure [AWS IAM](https://console.aws.amazon.com/iam/) User (retrieve access keys) and [AWS S3 bucket](https://s3.console.aws.amazon.com/s3).
   5. Within the newly created heroku app go to **Settings** tab and press **Reveal Config Vars**. Add following variables: `HOSTNAME`, `SECRET_KEY`, `STRIPE_TEST_PUBLIC_KEY`, `STRIPE_TEST_SECRET_KEY`, `STRIPE_WH_SECRET`, `USE_AWS`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_S3_REGION_NAME`, `AWS_STORAGE_BUCKET_NAME`.
   6. Within heroku app, go to **Resources** tab and add the following add-ons: 
 Heroku Postgres and Heroku Redis. These will create the following config vars: `DATABASE_URL`, `REDIS_TLS_URL`, `REDIS_URL`.
@@ -304,11 +303,13 @@ Heroku Postgres and Heroku Redis. These will create the following config vars: `
 ## Credits
 - [This article](https://soshace.com/upload-multiple-images-to-a-django-model-without-plugins/) and [this solution](https://www.py4u.net/discuss/192406) for multiple file upload using admin and API.
 - [Alexandr Ogurtov](https://github.com/aogz) for his [websocket consumer and store mutations](https://github.com/aogz/django-vue-websocket-chat/blob/master/chat/consumers.py) that served as a model in creating DigiCreche's websocket consumer and Vue store mutations.
+- [Code With Stein YT VIDEO](https://www.youtube.com/watch?v=AqhmjaP4DR4) and [SaaS Pegasus article](https://www.saaspegasus.com/guides/django-stripe-integrate/) as main resources, alongside with Stripe documentation, for building the subscription system.
 
 ## Aknowledgements
-- [Code Institute](https://codeinstitute.net/) for their awesome **Full Stack Software Development** course.
+- [Code Institute](https://codeinstitute.net/) for their awesome **Full Stack Software Development** course and their **Tutor** support.
 - [Michele Saba (Udemy)](https://www.udemy.com/user/michele-saba/) for his [Complete Guide to Django REST Framework and Vue JS](https://www.udemy.com/course/the-complete-guide-to-django-rest-framework-and-vue-js/).
 - [Connor Lindsey (Scrimba)](https://scrimba.com/learn/vuex) for his Vuex tutorial.
 - [Very Academy](https://github.com/veryacademy) for [this video](https://www.youtube.com/watch?v=zizzeE4Obc0) about deploying.
 - [Ajmal (Steemit)](https://steemit.com/@ajmaln) for his tutorial about [Creating a Simple Chat App with DjangoRestFramework](https://steemit.com/utopian-io/@ajmaln/part-1-creating-a-simple-chat-app-with-djangorestframework)
 - [Hannah (Dev.to)](https://dev.to/earthcomfy) for her [Getting Started With Django Channels](https://dev.to/earthcomfy/getting-started-with-django-channels-a-simple-chat-app-2a7m) helpful tutorial.
+- **My Mentor**: [Nishant Kumar](https://github.com/nishant8BITS) for continuous helpful feedback.
