@@ -83,8 +83,6 @@ export const store = createStore({
       const data = await apiService(endpoint);
       if (data.status >= 200 && data.status < 300) {
         context.commit("SET_CONVERSATIONS", data.body);
-      } else {
-        // TODO: error handling
       }
     },
     async loadMessages(context, { chat_id, next }) {
@@ -99,8 +97,6 @@ export const store = createStore({
         } else {
           context.commit("SET_MESSAGES", data.body);
         }
-      } else {
-        // TODO: error handling
       }
     },
     loadMore(context) {

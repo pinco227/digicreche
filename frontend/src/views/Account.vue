@@ -299,7 +299,9 @@ export default {
         if (data.status >= 200 && data.status < 300) {
           this.school = data.body;
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
         }
       }
     },
@@ -310,7 +312,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.schools = data.body;
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async getRoomData() {
@@ -325,7 +329,9 @@ export default {
         if (data.status >= 200 && data.status < 300) {
           this.room = data.body;
         } else {
-          // TODO: error handling
+          if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+            this.$toast.error(data.body.detail);
+          }
         }
       }
     },
@@ -336,7 +342,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.country_list = data.body;
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
       }
     },
     async onSubmit() {
@@ -348,6 +356,7 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.$toast.success("Account successfully saved!");
         this.phoneInput = this.user.phone_number;
+        this.$emit("updateUser");
       } else {
         this.error = data.body;
         if (Object.prototype.hasOwnProperty.call(this.error, "detail")) {

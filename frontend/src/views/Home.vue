@@ -1,8 +1,9 @@
+<template><section id="home"></section></template>
+
 <script>
-// import { apiService } from "@/common/api.service.js";
 export default {
   name: "Home",
-  async beforeCreate() {
+  beforeCreate() {
     const user = JSON.parse(window.localStorage.getItem("user"));
     const schoolSlug = user.school_slug;
     const roomId = user.room;

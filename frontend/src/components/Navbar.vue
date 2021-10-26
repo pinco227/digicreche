@@ -193,9 +193,10 @@
 import { Dropdown } from "bootstrap";
 export default {
   name: "DefaultNavbarComponent",
-  computed: {
-    user: () => {
-      return JSON.parse(window.localStorage.getItem("user"));
+  props: {
+    user: {
+      type: Object,
+      required: true,
     },
   },
   mounted() {

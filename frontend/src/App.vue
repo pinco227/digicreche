@@ -1,9 +1,12 @@
 <template>
   <main>
-    <DefaultNavbarComponent />
+    <DefaultNavbarComponent :user="user" />
     <div class="container-xxl position-relative">
       <div v-if="permission">
-        <router-view @setPermission="updatePermission"></router-view>
+        <router-view
+          @setPermission="updatePermission"
+          @updateUser="setUserInfo"
+        ></router-view>
       </div>
       <NoPermissionComponnent v-else />
       <SpinnerComponent />
@@ -27,6 +30,7 @@ export default {
   },
   data() {
     return {
+      user: {},
       permission: true,
     };
   },
@@ -36,9 +40,12 @@ export default {
       // to be accessed gobally
       const data = await apiService("/api/rest-auth/user/");
       if (data.status >= 200 && data.status < 300) {
+        this.user = data.body;
         window.localStorage.setItem("user", JSON.stringify(data.body));
       } else {
-        // TODO: error handling
+        if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
+          this.$toast.error(data.body.detail);
+        }
         if (data.status == 403) this.updatePermission(false);
       }
     },
