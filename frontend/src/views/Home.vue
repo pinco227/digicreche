@@ -3,12 +3,18 @@
 <script>
 export default {
   name: "Home",
-  beforeCreate() {
+  created() {
     const user = JSON.parse(window.localStorage.getItem("user"));
-    const schoolSlug = user.school_slug;
-    const roomId = user.room;
+    let schoolSlug = null;
+    let roomId = null;
+    let user_type = null;
+    if (Object.keys(user).length) {
+      schoolSlug = user.school_slug;
+      roomId = user.room;
+      user_type = user.user_type;
+    }
 
-    switch (user.user_type) {
+    switch (user_type) {
       case 1:
         this.$router.push({ name: "manager-schools" });
         break;
