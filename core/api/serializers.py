@@ -1,17 +1,13 @@
 from rest_framework import serializers
-from djstripe.models import Price, Subscription, PaymentMethod
+from djstripe.models import Plan, Subscription, PaymentMethod
 
 
-class PriceSerializer(serializers.ModelSerializer):
-    amount = serializers.SerializerMethodField()
+class PlanSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Price
-        fields = ['pk', 'id', 'metadata', 'active', 'currency',
-                  'recurring', 'type', 'amount']
-
-    def get_amount(self, instance):
-        return instance.unit_amount / 100
+        model = Plan
+        fields = ['djstripe_id', 'id', 'metadata', 'active', 'currency',
+                  'interval', 'interval_count', 'amount']
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):

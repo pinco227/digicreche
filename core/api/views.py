@@ -1,7 +1,7 @@
 import djstripe.models as sm
 import stripe
 from core.api.permissions import IsManager
-from core.api.serializers import (PaymentMethodSerializer, PriceSerializer,
+from core.api.serializers import (PaymentMethodSerializer, PlanSerializer,
                                   SubscriptionSerializer)
 from django.conf import settings
 from django_countries import countries
@@ -23,9 +23,9 @@ class ListCountries(APIView):
             dict(zip(('code', 'name'), country)) for country in countries)
 
 
-class PriceListAPIView(generics.ListAPIView):
-    queryset = sm.Price.objects.all()
-    serializer_class = PriceSerializer
+class PlanListAPIView(generics.ListAPIView):
+    queryset = sm.Plan.objects.filter(active=True)
+    serializer_class = PlanSerializer
     permission_classes = [IsManager]
 
 

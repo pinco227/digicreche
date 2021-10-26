@@ -65,11 +65,11 @@
         <!-- PLAN DETAILS -->
         <div class="head-tile align-items-stretch">
           <h3>Plan</h3>
-          <ul class="list-group" v-for="plan in prices" :key="plan.pk">
+          <ul class="list-group" v-for="plan in prices" :key="plan.djstripe_id">
             <li class="list-group-item">
               {{ plan.amount }} {{ plan.currency }} /
-              {{ plan.recurring.interval_count }}
-              {{ plan.recurring.interval }}
+              {{ plan.interval_count }}
+              {{ plan.interval }}
               <span
                 class="badge bg-dark float-end"
                 v-if="plan.id == selectedPrice"
@@ -217,7 +217,9 @@ export default {
     },
     updateSelectedPlan(plan) {
       if (Object.keys(this.prices).length) {
-        const selectedPrice = this.prices.find(({ pk }) => pk === plan);
+        const selectedPrice = this.prices.find(
+          ({ djstripe_id }) => djstripe_id === plan
+        );
         this.selectedPrice = selectedPrice.id;
       }
     },

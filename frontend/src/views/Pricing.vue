@@ -18,7 +18,7 @@
           <div class="card-body">
             <span class="price-title">
               <strong>{{ price.amount }}</strong> {{ price.currency }} /
-              {{ price.recurring.interval }}
+              {{ price.interval }}
             </span>
             <p>For each School</p>
             <h4>15 days free</h4>
