@@ -61,7 +61,7 @@
           </dl>
         </div>
       </div>
-      <div class="col-12 col-md-6" v-if="selectedPrice">
+      <div class="col-12 col-md-6" v-show="selectedPrice">
         <!-- PLAN DETAILS -->
         <div class="head-tile align-items-stretch">
           <h3>Plan</h3>
@@ -70,7 +70,9 @@
               {{ plan.amount }} {{ plan.currency }} /
               {{ plan.recurring.interval_count }}
               {{ plan.recurring.interval }}
-              <span class="badge bg-dark float-end" v-if="plan == selectedPrice"
+              <span
+                class="badge bg-dark float-end"
+                v-if="plan.id == selectedPrice"
                 >Current</span
               >
               <button
@@ -169,23 +171,12 @@ export default {
       error: null,
       moment: moment,
       prices: [],
+      selectedPrice: null,
     };
   },
   computed: {
     isManager() {
       return JSON.parse(window.localStorage.getItem("user")).user_type == 1;
-    },
-    selectedPrice() {
-      if (
-        Object.keys(this.subscription).length &&
-        Object.keys(this.prices).length
-      ) {
-        const price = this.prices.find(
-          ({ pk }) => pk === this.subscription.plan
-        );
-        return price;
-      }
-      return null;
     },
   },
   methods: {
@@ -214,6 +205,7 @@ export default {
         const data = await apiService(endpoint);
         if (data.status >= 200 && data.status < 300) {
           this.subscription = data.body;
+          this.updateSelectedPlan(this.subscription.plan);
         } else {
           if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
             this.$toast.error(data.body.detail);
@@ -221,6 +213,12 @@ export default {
           if (data.status == 403 || data.status == 401)
             this.$emit("setPermission", false);
         }
+      }
+    },
+    updateSelectedPlan(plan) {
+      if (Object.keys(this.prices).length) {
+        const selectedPrice = this.prices.find(({ pk }) => pk === plan);
+        this.selectedPrice = selectedPrice.id;
       }
     },
     async getPaymentData() {
@@ -302,6 +300,7 @@ export default {
           const data = await apiService(endpoint, method, payload);
           if (data.status >= 200 && data.status < 300) {
             this.subscription = data.body;
+            this.updateSelectedPlan(this.subscription.plan);
           } else {
             if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
               this.$toast.error(data.body.detail);
