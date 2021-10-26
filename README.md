@@ -201,11 +201,10 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
   * [Git](https://git-scm.com/) as Version Control System.
   * [Github](https://www.github.com) for repository hosting.
   * [Commitizen](https://github.com/commitizen/cz-cli) for commit linting.
-- Wireframes
-  * [Draw.io](https://app.diagrams.net/) for creating [wireframes](#wireframes).
+- Wireframes & Diagrams
+  * [Draw.io](https://app.diagrams.net/) for creating [wireframes](#wireframes) and [DB schema](#database).
 - Media
   * [Photopea](https://www.photopea.com/) online photo editor tool for creating the demo mockup image.
-  * [dbdiagram.io](https://dbdiagram.io/) for database diagram creation.
 
 ## Testing
   ### [Click Here for Full Testing Process](https://github.com/pinco227/digicreche/blob/main/TEST.md)

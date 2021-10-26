@@ -47,7 +47,7 @@
       </ul>
     </div>
     <div class="row my-2" v-if="next">
-      <div class="col">
+      <div class="col text-center">
         <button @click="getPupilActivities" class="btn btn-outline-secondary">
           Load More...
         </button>
@@ -131,7 +131,9 @@ export default {
       if (data.status >= 200 && data.status < 300) {
         this.activities.push(...data.body.results);
         if (data.body.next) {
-          this.next = data.body.next;
+          const host = window.location.host;
+          const split_path = data.body.next.split(host);
+          this.next = split_path[split_path.length - 1];
         } else {
           this.next = null;
         }

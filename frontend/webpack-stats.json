@@ -11,6 +11,11 @@
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/bundle.js",
       "publicPath": "http://0.0.0.0:8080/bundle.js"
     },
+    "bundle.js.map": {
+      "name": "bundle.js.map",
+      "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/bundle.js.map",
+      "publicPath": "http://0.0.0.0:8080/bundle.js.map"
+    },
     "index.html": {
       "name": "index.html",
       "path": "/home/pinco/Desktop/MS4/digicreche/frontend/dist/index.html",
@@ -20,7 +25,9 @@
   "chunks": {
     "app": [
       "bundle.css",
-      "bundle.js"
+      "bundle.js",
+      "bundle.css.map",
+      "bundle.js.map"
     ]
   },
   "publicPath": "http://0.0.0.0:8080/"
