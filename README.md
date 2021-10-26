@@ -22,7 +22,7 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
   - [Deployment](#deployment)
   - [Credits](#credits)
   - [Acknowledgements](#acknowledgements)
-  - [ToDo](#todo)
+  - [TODO](#todo)
 
 ## Demo
 
@@ -314,7 +314,7 @@ Heroku Postgres and Heroku Redis. These will create the following config vars: `
 - [Alexandr Ogurtov](https://github.com/aogz) for his [websocket consumer and store mutations](https://github.com/aogz/django-vue-websocket-chat/blob/master/chat/consumers.py) that served as a model in creating DigiCreche's websocket consumer and Vue store mutations.
 - [Code With Stein YT VIDEO](https://www.youtube.com/watch?v=AqhmjaP4DR4) and [SaaS Pegasus article](https://www.saaspegasus.com/guides/django-stripe-integrate/) as main resources, alongside with Stripe documentation, for building the subscription system.
 
-## Aknowledgements
+## Acknowledgements
 - [Code Institute](https://codeinstitute.net/) for their awesome **Full Stack Software Development** course and their **Tutor** support.
 - [Michele Saba (Udemy)](https://www.udemy.com/user/michele-saba/) for his [Complete Guide to Django REST Framework and Vue JS](https://www.udemy.com/course/the-complete-guide-to-django-rest-framework-and-vue-js/).
 - [Connor Lindsey (Scrimba)](https://scrimba.com/learn/vuex) for his Vuex tutorial.
@@ -322,3 +322,16 @@ Heroku Postgres and Heroku Redis. These will create the following config vars: `
 - [Ajmal (Steemit)](https://steemit.com/@ajmaln) for his tutorial about [Creating a Simple Chat App with DjangoRestFramework](https://steemit.com/utopian-io/@ajmaln/part-1-creating-a-simple-chat-app-with-djangorestframework)
 - [Hannah (Dev.to)](https://dev.to/earthcomfy) for her [Getting Started With Django Channels](https://dev.to/earthcomfy/getting-started-with-django-channels-a-simple-chat-app-2a7m) helpful tutorial.
 - **My Mentor**: [Nishant Kumar](https://github.com/nishant8BITS) for continuous helpful feedback.
+
+## TODO
+  - Custom created icons to better describe the navigation buttons.
+  - About and Pricing pages available outside authorization (no login required).
+  - School finder by town
+  - Notifications in website and push notifications new chat messages, new pupil activities.
+  - Email alerts and notifications for subscription changes, new users for the school, pupil-parent assignments, teacher-room assignments, etc.
+  - A list of school parents for managers and lists of room's pupil parents for teachers.
+  - A parent information page where a manager or a teacher can get emergency contact details, as phone number.
+  - A teacher information page where parents can get contact details.
+  - Chat sounds.
+  - List of invoices and advanced subscription management.
+  - School financial management system integrated for managers, where based on price assigned for each pupil, salary for teachers and subscription costs, financial reports can be rendered and monitored.
