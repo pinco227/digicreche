@@ -51,3 +51,64 @@
 > :heavy_check_mark: Every javascript method was tested for the expected outcome by using the app, in console by using `console.log()` or by manually calling the function.
 
 > :heavy_check_mark: Every python function, django method or API view was tested for the expected outcome by using the app, by accessing the route, in python console, while debug mode was set to on, by using `print()` and by watching for the correct response. 
+
+## Testing Functionality
+   - ### Testing links and buttons
+        > ### Header (every page except dashboard) :heavy_check_mark:
+        > - top navigation fully functional including the brand title.
+        > - navigation toggle "burger" working as expecting, opening the dropdown navigation.
+        > ### Schools :heavy_check_mark:
+        > - clicking on a school opens the school rooms page.
+        > - clicking on Add school opens the school editor.
+        > ### School Rooms :heavy_check_mark:
+        > - clicking on a room opens the room pupils page.
+        > - clicking on Edit school opens the school editor.
+        > - clicking on Add room opens the room editor.
+        > ### Room Pupils :heavy_check_mark:
+        > - clicking on a pupil opens the pupil's activities page.
+        > - clicking on Edit room opens the room editor.
+        > - clicking on Add pupil opens the pupil editor.
+        > - clicking + teachers opens the unassigned teachers popover, clicking on a teacher in the list, assigns teacher to room. Clicking on red trash beside teacher, opens the confirm dialog and then unassigns teacher.
+        > - clicking + Assign pupil opens the unassigned pupils popover, clicking on a pupil in the list, assigns pupil to room.
+        > ### Pupil Activities :heavy_check_mark:
+        > - clicking on a photo, opens the image lightbox.
+        > - clicking on + opens the add activity form. Filling the form and submitting it, adds activity to pupil.
+        > - clicking on Pupil Info, opens the pupil's info page.
+        > ### Pupil Info :heavy_check_mark:
+        > - clicking on every pen button and then cancel button, toggles editor forms. These are not available when logged as a teacher or a parent.
+        > - uploading a photo, replaces the current pupil's photo.
+        > - personal details: add new, save, add new, reset, works as expected.
+        > - clicking on teacher's or parent's chat icon, opens chat window.
+        > - clicking delete pupil, opens a confirm dialog, then deletes the pupil.
+
+   - ### Testing form validation
+        > :heavy_check_mark: **Login** and **Registration** form: this form has built-in validation from all-auth package and backend validation from user model.
+
+        > :heavy_check_mark: **Account** form: was tested while implementing custom validation, by submitting form with empty or invalid fields. There is front-end html form validation and backend validation made by API serializer and django model.
+
+        > :heavy_check_mark: **School editor**, **Room editor** and **Pupil editor**: These forms function the same way as the Account form. If front-end validation fails, serializer and model validation will be sent as response through API and error messages will be displayed beside the invalid fields. Tested.
+   - ### Testing for errors
+        > :heavy_check_mark: Full app browsing and functionality was tested with browser's console open. Console is clear of errors.
+
+        > :heavy_check_mark: Python console with debug mode on is clear of errors.
+
+## Testing Compatibility
+   - ### Responsiveness
+        > Using DevTools and different device sizes such as mobile and tablet, the website was tested for any possible screen size combination and orientation. No issues found. **App is size compatible** :heavy_check_mark:.
+   - ### OS test
+        > #### Desktop
+        > The website was tested on Ubuntu 20.04, Windows 7 and Windows 10 systems. Further tests were made using [LambdaTest](https://www.lambdatest.com/), for MacOS Mojave. Result as expected, **desktop system-cross compatible** :heavy_check_mark:.
+
+        > #### Mobile
+        > The website was tested on Android 6, Android 9, Android 10 and iOS 14 systems. Further tests were made using [LambdaTest](https://www.lambdatest.com/), for iOS on iPad Pro. Result as expected, **mobile system-cross compatible** :heavy_check_mark:.
+   - ### Devices test
+        > The website was tested on HP 15" notebook, ASUS 15" notebook, ACER 15" notebook, Huawei P30 PRO, Huawei P20 PRO, Huawei P10, iPhone 11, Samsung Galaxy Note10, Samsung Galaxy A7, Samsung Galaxy TabS6, Lenovo Yoga Tab. Further device tests were made using [LambdaTest](https://www.lambdatest.com/), for iPad Pro (11 inch) and MacOS. The result is consistent, website is **platform-cross compatible** :heavy_check_mark:.
+   - ### Browser test
+        > The website was tested on Google Chrome, Firefox, Safari, Edge, Samsung Internet, Opera, Vivaldi and Yandex. This website is NOT designed to be compatible with IE. Browsers versions were all up to date. Results were consistent. Conclusion: the website is **browser-cross compatible** :heavy_check_mark:.
+
+## Testing Performance
+Performance has been tested using Chrome's **Lighthouse** tool for both desktop and mobile. Mobile tests were made using **remote device** connection and an actual mobile phone. Being a RESTful app, there are more or less API requests for each page, and performance relies more on server responses. Therefore, every test is different, but all tests had performance in a range between 85 and 95.
+
+> :heavy_check_mark:
+>
+>   ![LightHouse Performance Result for Landing page](https://github.com/digicreche/dev.pi/blob/main/docs/perf.png)  
