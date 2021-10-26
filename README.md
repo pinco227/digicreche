@@ -264,7 +264,11 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
       ```bash
       python manage.py migrate
       ```
-  16. Run app by typing the following into terminal on root folder:
+  16. Create Stripe product and prices. In order for subscription system to work properly, db has to be syncronised with stripe by runing this command:
+      ```bash
+      python manage.py dj_stripe_sync_plans_from_stripe
+      ```
+  17. Run app by typing the following into terminal on root folder:
       ```bash
       python manage.py runserver
       ```
@@ -272,8 +276,8 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
       ```bash
       npm run serve
       ```
-  17. Browse app by accessing [127.0.0.1:8000](http://127.0.0.1:8000/) into a browser. At this point, if configured right, the app should run properly and login screen will be displayed
-  18. Create a superuser:
+  18. Browse app by accessing [127.0.0.1:8000](http://127.0.0.1:8000/) into a browser. At this point, if configured right, the app should run properly and login screen will be displayed
+  19. Create a superuser:
       ```bash
       python manage.py createsuperuser
       ```
@@ -297,7 +301,13 @@ Heroku Postgres and Heroku Redis. These will create the following config vars: `
   10. Under the **Automatic deploys** section, click **Enable Automatic Deploys**. The deployment will be now automatic with every github `push` command.
   11. Under the **Manual deploy** section, click **Deploy Branch** for initial deploy.
   12. Make sure you run `npm run build` before pushing, if any changes were made to frontend.
-  13. You can now browse the deployed app by clicking **Open app** button on top right of the dashboard.
+  13. Create Stripe product and prices. In order for subscription system to work properly, db has to be syncronised with stripe by runing this command in heroku bash:
+      ```bash
+      heroku login
+      heroku run bash
+      python manage.py dj_stripe_sync_plans_from_stripe
+      ```
+  14. You can now browse the deployed app by clicking **Open app** button on top right of the dashboard.
 
 ## Credits
 - [This article](https://soshace.com/upload-multiple-images-to-a-django-model-without-plugins/) and [this solution](https://www.py4u.net/discuss/192406) for multiple file upload using admin and API.

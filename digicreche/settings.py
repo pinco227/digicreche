@@ -281,6 +281,3 @@ if not STRIPE_LIVE_MODE:
 else:
     STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY', default='')
     STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY', default='')
-
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
