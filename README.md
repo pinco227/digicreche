@@ -210,6 +210,97 @@ This is an MVP of a child-care management app. It is a RESTful API SPA built usi
 ## Testing
   ### [Click Here for Full Testing Process](https://github.com/pinco227/digicreche/blob/main/TEST.md)
 
+## Deployment
+- ### Forking the GitHub Repository
+  By forking the GitHub Repository you make a copy of the original repository on your GitHub account to view and/or make changes without affecting the original repository by using the following steps:
+  1. Log in to GitHub and locate the [digicreche repository](https://github.com/pinco227/digicreche).
+  2. At the top right of the Repository, locate and click the "**Fork**" Button.
+  3. You should now have a copy of the original repository in your GitHub account.
+- ### Local Machine
+  1. Log in to GitHub and locate the [digicreche repository](https://github.com/pinco227/digicreche) (or the forked repo into your profile).
+  2. At the top of the Repository just above the list of files, locate and click the "**Code**" dropdown.
+  3. To clone the repository using HTTPS, under "**Clone**", make sure "**HTTPS**" is selected and copy the link.
+  4. Open Git Bash.
+  5. Change the current working directory to the location where you want the cloned directory to be made.
+  6. Type ```git clone```, and then paste the URL you copied in Step 3.
+      ```bash
+      git clone https://github.com/pinco227/digicreche.git
+      ```
+  7. Press Enter. Your local clone will be created.
+      ```bash
+      $ git clone https://github.com/pinco227/digicreche.git
+      Cloning into 'digicreche'...
+      remote: Enumerating objects: XXX, done.
+      remote: Counting objects: 100% (XXX/XXX), done.
+      remote: Compressing objects: 100% (XXX/XXX), done.
+      remote: Total XXX (delta XXX), reused XXX (delta XXX), pack-reused 0
+      Receiving objects: 100% (XXX/XXX), XXX MiB | XXX MiB/s, done.
+      Resolving deltas: 100% (XXX/XXX), done.
+      ```
+      > Click [Here](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop) to retrieve pictures for some of the buttons and more detailed explanations of the above process.
+  8. I recommend using a virtual environment such as [venv](https://docs.python.org/3/library/venv.html).
+  9. Make sure you have python and npm installed on your machine.
+  10. Create [Stripe account](https://www.stripe.com/).
+  11. Set the following environmental variables into your virtual environment:
+      ```bash
+      export SECRET_KEY='<secret_key>'
+      export DEVELOPMENT=True
+      export DJANGO_SETTINGS_MODULE=digicreche.settings
+      export STRIPE_TEST_PUBLIC_KEY='<stripe_test_pkey>'
+      export STRIPE_TEST_SECRET_KEY='<stripe_test_skey>'
+      export STRIPE_WH_SECRET='<stripe_webhook_secret>'
+      ```
+  12. Install required `python` packages by running the following command into terminal:
+      ```bash
+      pip install -r requirements.txt
+      ```
+  13. Change directory to `frontend`
+      ```bash
+      cd frontend
+      ```
+  14. Install required node packages by running this command in frontend directory:
+      ```bash
+      npm install
+      ```
+  15. Migrate the database by runing following command in terminal at root level:
+      ```bash
+      python manage.py migrate
+      ```
+  16. Run app by typing the following into terminal on root folder:
+      ```bash
+      python manage.py runserver
+      ```
+      And this command on a separate terminal on frontend directory:
+      ```bash
+      npm run serve
+      ```
+  17. Browse app by accessing [127.0.0.1:8000](http://127.0.0.1:8000/) into a browser. At this point, if configured right, the app should run properly and login screen will be displayed
+  18. Create a superuser:
+      ```bash
+      python manage.py createsuperuser
+      ```
+- ### Heroku
+  1. Make sure the `requirements.txt` file is up to date. Type the followings into terminal:
+      ```bash
+      pip freeze --local > requirements.txt
+      ```
+  2. Commit and push changes to forked repository.
+  3. Create a [Heroku](https://heroku.com) account and click **New** on top right of the dashboard to **Create a new app**.
+  4. Create and configure AWS [AWS IAM](https://console.aws.amazon.com/iam/) User (retrieve access keys) and [AWS S3 bucket](https://s3.console.aws.amazon.com/s3).
+  5. Within the newly created heroku app go to **Settings** tab and press **Reveal Config Vars**. Add following variables: `HOSTNAME`, `SECRET_KEY`, `STRIPE_TEST_PUBLIC_KEY`, `STRIPE_TEST_SECRET_KEY`, `STRIPE_WH_SECRET`, `USE_AWS`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_S3_REGION_NAME`, `AWS_STORAGE_BUCKET_NAME`.
+  6. Within heroku app, go to **Resources** tab and add the following add-ons: 
+Heroku Postgres and Heroku Redis. These will create the following config vars: `DATABASE_URL`, `REDIS_TLS_URL`, `REDIS_URL`.
+  7. Make sure you have heroku-cli installed in your machine. Scale heroku app by typing the following into terminal:
+      ```bash
+      heroku ps:scale web=1:free worker=1:free
+      ```
+  8. Go to **Deploy** tab and under the **Deployment method** click on the **Github** icon.
+  9.  Right under this section, type the `digicreche` and search for the forked repository into your GitHub account. Select the right repository and click **Connect**.
+  10. Under the **Automatic deploys** section, click **Enable Automatic Deploys**. The deployment will be now automatic with every github `push` command.
+  11. Under the **Manual deploy** section, click **Deploy Branch** for initial deploy.
+  12. Make sure you run `npm run build` before pushing, if any changes were made to frontend.
+  13. You can now browse the deployed app by clicking **Open app** button on top right of the dashboard.
+
 ## Credits
 - [This article](https://soshace.com/upload-multiple-images-to-a-django-model-without-plugins/) and [this solution](https://www.py4u.net/discuss/192406) for multiple file upload using admin and API.
 - [Alexandr Ogurtov](https://github.com/aogz) for his [websocket consumer and store mutations](https://github.com/aogz/django-vue-websocket-chat/blob/master/chat/consumers.py) that served as a model in creating DigiCreche's websocket consumer and Vue store mutations.
