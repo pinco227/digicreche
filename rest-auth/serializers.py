@@ -1,12 +1,12 @@
 from accounts.models import DigiCrecheUser
 from django.db import transaction
+from django.utils.functional import lazy
 from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_auth.serializers import LoginSerializer
 from rest_framework import serializers
 from schools.models import School
-from django.utils.functional import lazy
 
 
 # CREDIT: https://stackoverflow.com/a/52732608
@@ -35,10 +35,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     postcode = serializers.CharField(
         max_length=20, allow_null=True, allow_blank=True)
     country = CountryField()
-    # school = serializers.ChoiceField(
-    #     choices=[('', 'None')] + list(
-    #         School.objects.all().values_list('id', 'name')),
-    #     required=False)
     school = serializers.ChoiceField(
         choices=lazy(get_schools, tuple)(),
         required=False)

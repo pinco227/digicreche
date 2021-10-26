@@ -1,5 +1,6 @@
 from django import forms
 from django_registration.forms import RegistrationForm
+
 from .models import DigiCrecheUser
 
 

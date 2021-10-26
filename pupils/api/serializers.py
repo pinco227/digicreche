@@ -1,8 +1,7 @@
-from rest_framework import serializers
-from pupils.models import Pupil
-from rooms.models import Room
-# from accounts.api.serializers import UserSerializer
 from django.contrib.auth import get_user_model
+from pupils.models import Pupil
+from rest_framework import serializers
+from rooms.models import Room
 
 
 class RoomRelatedField(serializers.PrimaryKeyRelatedField):
@@ -29,7 +28,6 @@ class PupilSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pupil
-        # exclude = ['photo', 'personal_details', ]
         fields = '__all__'
 
     def get_school_slug(self, instance):

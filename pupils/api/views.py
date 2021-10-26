@@ -1,16 +1,15 @@
+from core.api.permissions import SubscriptionPaidOrReadOnly
+from pupils.api.permissions import (IsSchoolManager,
+                                    IsSchoolManagerOrParentRUD,
+                                    IsSchoolManagerParentTeacherRUD,
+                                    IsSchoolManagerTeacherSafe)
+from pupils.api.serializers import (PupilDetailsSerializer,
+                                    PupilPhotoSerializer, PupilRoomSerializer,
+                                    PupilSerializer)
+from pupils.models import Pupil
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from schools.models import School
-from pupils.models import Pupil
-from pupils.api.serializers import (PupilSerializer,
-                                    PupilPhotoSerializer,
-                                    PupilDetailsSerializer,
-                                    PupilRoomSerializer)
-from pupils.api.permissions import (IsSchoolManager,
-                                    IsSchoolManagerTeacherSafe,
-                                    IsSchoolManagerOrParentRUD,
-                                    IsSchoolManagerParentTeacherRUD)
-from core.api.permissions import SubscriptionPaidOrReadOnly
 
 
 class UnassignedListAPIView(generics.ListAPIView):

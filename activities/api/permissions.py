@@ -1,7 +1,7 @@
+from pupils.models import Pupil
 from rest_framework import permissions
 from rest_framework.generics import get_object_or_404
 from schools.models import School
-from pupils.models import Pupil
 
 
 class IsSchoolManagerTeacherParentRUD(permissions.BasePermission):

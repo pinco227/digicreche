@@ -1,5 +1,5 @@
-from rest_framework import serializers
 from accounts.models import DigiCrecheUser
+from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):

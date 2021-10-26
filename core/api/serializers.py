@@ -1,5 +1,5 @@
+from djstripe.models import PaymentMethod, Plan, Subscription
 from rest_framework import serializers
-from djstripe.models import Plan, Subscription, PaymentMethod
 
 
 class PlanSerializer(serializers.ModelSerializer):

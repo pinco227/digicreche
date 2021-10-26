@@ -45,7 +45,7 @@ export const store = createStore({
       state.log.push(event);
     },
     SOCKET_ONCLOSE(state, event) {
-      console.log("Close");
+      console.info("Websocket connection closed.");
       state.log.push(event);
     },
     SOCKET_ONERROR(state, event) {
@@ -68,7 +68,7 @@ export const store = createStore({
     },
     // mutations for reconnect methods
     SOCKET_RECONNECT(state, count) {
-      console.log("Reconnect: ", count);
+      console.info("Reconnect: ", count);
       state.log.push({ reconnect: count });
     },
     SOCKET_RECONNECT_ERROR(state, event) {

@@ -1,6 +1,6 @@
+from activities.api import views as av
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from activities.api import views as av
 
 router = DefaultRouter()
 router.register(r'activity_types', av.ActivityTypeViewSet)

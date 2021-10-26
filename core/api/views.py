@@ -114,7 +114,6 @@ class CreateCustomerSubscription(APIView):
             }
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
-            print(str(e))
             return Response({'error': str(e)},
                             status=status.HTTP_400_BAD_REQUEST)
 

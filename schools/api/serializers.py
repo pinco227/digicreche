@@ -1,6 +1,6 @@
+from accounts.models import DigiCrecheUser
 from rest_framework import serializers
 from schools.models import School
-from accounts.models import DigiCrecheUser
 
 
 class ManagerRelatedField(serializers.PrimaryKeyRelatedField):
@@ -42,7 +42,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         """
-        Check if email is userd by other managers
+        Check if email is used by other managers
         """
         schools = School.objects.filter(
             email=data['email']).exclude(manager=data['manager'])

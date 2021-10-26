@@ -20,7 +20,7 @@ class SchoolViewSet(viewsets.ModelViewSet):
         slugs = School.objects.filter(slug=slug)
         if slugs:
             slug = slug + '-' + str(self.request.user.id)
-        print(slug)
+
         serializer.save(manager=self.request.user, slug=slug)
 
 

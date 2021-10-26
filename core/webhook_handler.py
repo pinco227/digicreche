@@ -1,8 +1,8 @@
 import djstripe.models as sm
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
-from schools.models import School
 from django.shortcuts import get_object_or_404
+from schools.models import School
 
 
 class StripeWH_Handler:

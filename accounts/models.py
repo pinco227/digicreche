@@ -2,10 +2,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
-from phonenumber_field.modelfields import PhoneNumberField
-from schools.models import School
-from rooms.models import Room
 from djstripe.models import Customer
+from phonenumber_field.modelfields import PhoneNumberField
+from rooms.models import Room
+from schools.models import School
 
 from .managers import CustomUserManager
 

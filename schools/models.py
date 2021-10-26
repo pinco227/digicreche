@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django_countries.fields import CountryField
-from phonenumber_field.modelfields import PhoneNumberField
 from djstripe.models import Subscription
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class School(models.Model):

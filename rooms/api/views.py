@@ -1,3 +1,4 @@
+from core.api.permissions import SubscriptionPaidOrReadOnly
 from django.contrib.auth import get_user_model
 from rest_framework import generics, status
 from rest_framework.generics import get_object_or_404
@@ -5,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rooms.api.permissions import (IsSchoolManager,
                                    IsSchoolManagerOrTeacherParentReadOnly)
-from core.api.permissions import SubscriptionPaidOrReadOnly
 from rooms.api.serializers import RoomSerializer
 from rooms.models import Room
 from schools.models import School

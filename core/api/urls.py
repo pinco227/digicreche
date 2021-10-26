@@ -1,5 +1,5 @@
-from django.urls import path
 from core.api import views as cv
+from django.urls import path
 
 urlpatterns = [
     path('countries/', cv.ListCountries.as_view(), name='contry-list'),

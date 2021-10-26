@@ -1,11 +1,11 @@
+from accounts.forms import DigiCrecheUserForm
+from core.views import IndexTemplateView
+from core.webhooks import stripe_webhook
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django_registration.backends.one_step.views import RegistrationView
-from accounts.forms import DigiCrecheUserForm
-from django.conf import settings
-from django.conf.urls.static import static
-from core.views import IndexTemplateView
-from core.webhooks import stripe_webhook
 
 redirect_regx = r'^.*$' if settings.USE_AWS else r'^(?!media).*$'
 

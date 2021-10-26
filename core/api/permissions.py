@@ -1,7 +1,7 @@
+from activities.models import Activity
 from rest_framework import permissions
 from rest_framework.generics import get_object_or_404
 from schools.models import School
-from activities.models import Activity
 
 
 class SubscriptionPaidOrReadOnly(permissions.BasePermission):

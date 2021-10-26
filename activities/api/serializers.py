@@ -1,6 +1,6 @@
-from rest_framework import serializers
-from activities.models import Activity, ActivityType, ActivityImage
+from activities.models import Activity, ActivityImage, ActivityType
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from rest_framework import serializers
 
 
 class ActivityTypeSerializer(serializers.ModelSerializer):
