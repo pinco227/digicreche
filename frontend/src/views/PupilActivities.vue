@@ -250,7 +250,8 @@ ul.timeline {
   background: linear-gradient(180deg, var(--light-bg) 0%, var(--body-bg) 100%);
   box-shadow: 3px 5px 10px -10px var(--body-text);
 }
-.timeline > :deep(li) > .timeline-panel > .timeline-heading > h4 {
+.timeline > :deep(li) > .timeline-panel > .timeline-heading > h3 {
+  font-size: 1.5rem;
   color: rgb(36, 43, 51);
   color: var(--orange-accent-dark);
 }

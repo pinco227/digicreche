@@ -16,6 +16,7 @@
             v-if="contacts.length"
             data-bs-toggle="modal"
             data-bs-target="#contactsModal"
+            aria-label="Open contact list"
           >
             <i class="fas fa-plus"></i>
           </button>

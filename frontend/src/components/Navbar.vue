@@ -8,7 +8,11 @@
       <ul class="nav">
         <!-- SCHOOLS (for managers) -->
         <li class="nav-item" v-if="user.user_type == 1">
-          <router-link :to="{ name: 'manager-schools' }" class="nav-link">
+          <router-link
+            :to="{ name: 'manager-schools' }"
+            class="nav-link"
+            aria-label="My schools"
+          >
             <i class="fas fa-school"></i>
           </router-link>
         </li>
@@ -26,6 +30,7 @@
               },
             }"
             class="nav-link"
+            aria-label="School pupils"
           >
             <i class="fas fa-users"></i>
           </router-link>
@@ -44,6 +49,7 @@
               },
             }"
             class="nav-link"
+            aria-label="School rooms"
           >
             <i class="fas fa-book-open"></i>
           </router-link>
@@ -68,13 +74,18 @@
               },
             }"
             class="nav-link"
+            aria-label="Room pupils"
           >
             <i class="fas fa-user-friends"></i>
           </router-link>
         </li>
         <!-- CHILDREN (for parents) -->
         <li class="nav-item" v-if="user.user_type == 3">
-          <router-link :to="{ name: 'parent-children' }" class="nav-link">
+          <router-link
+            :to="{ name: 'parent-children' }"
+            class="nav-link"
+            aria-label="My children"
+          >
             <i class="fas fa-user-friends"></i>
           </router-link>
         </li>
@@ -96,19 +107,28 @@
               },
             }"
             class="nav-link"
+            aria-label="Pupil activities"
           >
             <i class="fas fa-basketball-ball"></i>
           </router-link>
         </li>
         <!-- CHAT -->
         <li class="nav-item">
-          <router-link :to="{ name: 'chat' }" class="nav-link">
+          <router-link
+            :to="{ name: 'chat' }"
+            class="nav-link"
+            aria-label="Chat"
+          >
             <i class="fas fa-comments"></i>
           </router-link>
         </li>
         <!-- USER ACCOUNT -->
         <li class="nav-item">
-          <router-link :to="{ name: 'user_account' }" class="nav-link">
+          <router-link
+            :to="{ name: 'user_account' }"
+            class="nav-link"
+            aria-label="User account"
+          >
             <i class="fas fa-user-circle"></i>
           </router-link>
         </li>
@@ -120,6 +140,7 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+            aria-label="Menu"
           >
             <i class="fas fa-ellipsis-v"></i>
           </a>

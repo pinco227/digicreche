@@ -52,7 +52,6 @@ export default {
 }
 #single-message .timestamp {
   font-size: 0.7rem;
-  color: #777;
 }
 #single-message .sender-name {
   font-size: 0.7rem;

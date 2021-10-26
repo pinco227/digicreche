@@ -14,6 +14,7 @@
       :class="{
         disabled: noSubscription,
       }"
+      aria-label="Remove teacher from room"
     >
       <i class="fa fa-trash"></i>
     </button>

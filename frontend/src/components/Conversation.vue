@@ -30,7 +30,7 @@
           required="required"
           autofocus
         />
-        <button type="submit" class="btn">
+        <button type="submit" class="btn" aria-label="Send message">
           <i class="fas fa-paper-plane"></i>
         </button>
       </div>

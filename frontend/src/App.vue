@@ -103,6 +103,12 @@ a:hover {
 .btn {
   border-radius: 0;
 }
+.btn-link {
+  color: var(--green-accent-dark);
+}
+.btn-link:hover {
+  color: var(--orange-accent-dark);
+}
 .btn-light {
   color: var(--body-text);
   background-color: var(--light-bg);
@@ -114,7 +120,9 @@ a:hover {
   border-color: var(--green-accent);
 }
 .btn-check:focus + .btn-success,
-.btn-success:focus {
+.btn-success:focus,
+.btn-check:focus + .btn,
+.btn:focus {
   box-shadow: 0 0 0 0.25rem rgba(0, 218, 11, 0.15);
 }
 .btn-primary {

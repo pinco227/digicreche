@@ -27,6 +27,7 @@
               @click="editPhoto = !editPhoto"
               v-if="isManager"
               :disabled="noSubscription"
+              aria-label="Edit photo"
             >
               <i class="fas fa-pen"></i>
             </button>
@@ -66,7 +67,7 @@
               </a>
             </form>
           </div>
-          <h2>{{ first_name }} {{ last_name }}</h2>
+          <h3>{{ first_name }} {{ last_name }}</h3>
           <!-- PUPIL PERSONAL DETAILS -->
           <div
             v-if="!editPersonalDetails"
@@ -81,6 +82,7 @@
               v-if="isManager || user.user_type == 3"
               @click="editPersonalDetails = true"
               :disabled="noSubscription"
+              aria-label="Edit personal details"
             >
               <i class="fas fa-pen"></i>
             </button>
@@ -153,6 +155,7 @@
                 <router-link
                   :to="{ name: 'chat', params: { chatId: teacher.id } }"
                   v-if="teacher.id != user.pk"
+                  :aria-label="'Chat with ' + teacher.name"
                 >
                   <i class="fas fa-comment"></i>
                 </router-link>
@@ -177,6 +180,7 @@
                 {{ parent.name }}
                 <router-link
                   :to="{ name: 'chat', params: { chatId: parent.id } }"
+                  :aria-label="'Chat with ' + parent.name"
                 >
                   <i class="fas fa-comment"></i>
                 </router-link>
@@ -195,6 +199,7 @@
               @click="editInfo = true"
               v-if="isManager"
               :disabled="noSubscription"
+              aria-label="Edit pupil's info"
             >
               <i class="fas fa-pen"></i>
             </button>

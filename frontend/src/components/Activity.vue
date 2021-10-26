@@ -5,7 +5,7 @@
     </div>
     <div class="timeline-panel">
       <div class="timeline-heading">
-        <h4>{{ activity_type.name }}</h4>
+        <h3>{{ activity_type.name }}</h3>
         <small>{{
           moment(activity.created_at).format("dddd, DD/MM/YYYY, h:mm a")
         }}</small>

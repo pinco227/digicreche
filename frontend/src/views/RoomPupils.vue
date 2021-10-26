@@ -19,7 +19,7 @@
             Edit Room
           </router-link>
         </span>
-        <span id="addPupil" class="d-inline-block" tabindex="1">
+        <span id="addPupil" class="d-inline-block" tabindex="0">
           <router-link
             :to="{
               name: 'add-pupil',
@@ -57,7 +57,7 @@
                 @unassign-teacher="unassignTeacher"
               />
             </span>
-            <span id="assignTeacherPop" class="d-inline-block" tabindex="2">
+            <span id="assignTeacherPop" class="d-inline-block" tabindex="0">
               <a
                 role="button"
                 v-if="isManager"
@@ -67,7 +67,8 @@
                   disabled: noSubscription,
                 }"
                 id="assignNewTeacher"
-                tabindex="3"
+                tabindex="0"
+                aria-label="Assign a teacher"
               >
                 <i class="fas fa-plus"></i>
               </a>
@@ -80,12 +81,12 @@
     <div class="row justify-content-center my-2 g-2">
       <PupilComponent v-for="pupil in pupils" :pupil="pupil" :key="pupil.id" />
       <div v-if="isManager" class="col-6 col-md-3 col-lg-2 text-center">
-        <span id="assignPupilPop" tabindex="4">
+        <span id="assignPupilPop" tabindex="0">
           <button
             role="button"
             class="w-100 btn btn-block btn-outline-success tile"
             id="assignNewPupil"
-            tabindex="5"
+            tabindex="0"
             :class="{
               disabled: noSubscription || !unassignedPupils.length,
             }"
