@@ -18,6 +18,8 @@
   - `Uncaught (in promise) SyntaxError: Unexpected end of JSON input` This error was thrown when assigning and removing teachers to/from rooms. The assignment was fulfilled, but there was no dynamic change on the page, unless refreshed. This was caused by the fact that teacher assignment endpoints only return status and no json.
   - **FIXED**: by checking if the `content-type` header of the response equals `application/json`, if not, then `response.text()` is called instead. For consistency, the api endpoints for assigning and removing teachers to/from rooms, were edited to return json response, for both 2XX and 4XX status codes.
 - ### Issues found while testing:
+  - Plan tile not showing on the school subscription page.
+  - **FIXED**: this was not a functionality issue. The code was checking if the current subscription's plan has the same primary key as the any of the prices fetched from the `/api/prices/` endpoint, and adds the matching price into the selectedPrice variable that was used as condition for rendering the tile. The issue was with matching, as the prices were fetched from Price djstripe db table, while the foreign key of the subscription for plan was pointing to Plan db table, and they happened to have different primary key. This was not spotted on development environment as the prices on Price table and plans on Plan table had exact same primary keys. This was sorted by extracting prices from Plan table and give them as result to the up-mentioned API endpoint, instead of Price table.
 
 ## Testing user stories
   - #### As a user I need to:
@@ -145,3 +147,7 @@ Performance has been tested using Chrome's **Lighthouse** tool for both desktop 
     > Javascript has been validated during building process by **VSCode** extension **[ESLint](https://eslint.org/)** and by NPM Vue ESLint. **No errors or issues** :heavy_check_mark:.
   - ### Python :heavy_check_mark:
     > Python has been validated during building process by **VSCode** integrated extensions **[Pylint](https://www.pylint.org/)** and **[Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)**, which are in compliance with PEP8 style guide. **No errors or issues**.
+
+## Further Testing
+  - ### Overflow :heavy_check_mark:
+    > Every page was tested for overflow by using the [Unicorn Revealer](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln?hl=en-GB) chrome extension to highlight the elements margins. **No issues found**.
