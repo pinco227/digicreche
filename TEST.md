@@ -64,12 +64,18 @@
         > - clicking on a room opens the room pupils page.
         > - clicking on Edit school opens the school editor.
         > - clicking on Add room opens the room editor.
+        > ### School Pupils :heavy_check_mark:
+        > - clicking on a pupil opens the pupil's activities page.
+        > - clicking on an unassigned pupil opens the pupil's infos page.
+        > - clicking on Add pupil opens the pupil editor.
         > ### Room Pupils :heavy_check_mark:
         > - clicking on a pupil opens the pupil's activities page.
         > - clicking on Edit room opens the room editor.
         > - clicking on Add pupil opens the pupil editor.
         > - clicking + teachers opens the unassigned teachers popover, clicking on a teacher in the list, assigns teacher to room. Clicking on red trash beside teacher, opens the confirm dialog and then unassigns teacher.
         > - clicking + Assign pupil opens the unassigned pupils popover, clicking on a pupil in the list, assigns pupil to room.
+        > ### Children (parent) :heavy_check_mark:
+        > - clicking on a pupil opens the pupil's activities page.
         > ### Pupil Activities :heavy_check_mark:
         > - clicking on a photo, opens the image lightbox.
         > - clicking on + opens the add activity form. Filling the form and submitting it, adds activity to pupil.
@@ -80,6 +86,14 @@
         > - personal details: add new, save, add new, reset, works as expected.
         > - clicking on teacher's or parent's chat icon, opens chat window.
         > - clicking delete pupil, opens a confirm dialog, then deletes the pupil.
+        > ### Account :heavy_check_mark:
+        > - clicking on Update, submits the form and validates data. Errors are displayed if data is invalid. Success notification is displayed if data was submitted successfully.
+        > ### Manage Subscriptions :heavy_check_mark:
+        > - clicking on a school, opens school's subscription page.
+        > ### School Subscription :heavy_check_mark:
+        > - if no subscription, clicking on a price will display the card form, submitting card info, updates the page with new subscription data.
+        > - clicking on cancel subscription, updates the page and Re-activate subscription button appears.
+        > - clicking on re-activate button, updates the page and cancel button apperas.
 
    - ### Testing form validation
         > :heavy_check_mark: **Login** and **Registration** form: this form has built-in validation from all-auth package and backend validation from user model.
