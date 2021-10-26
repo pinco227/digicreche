@@ -126,3 +126,22 @@ Performance has been tested using Chrome's **Lighthouse** tool for both desktop 
 > :heavy_check_mark:
 >
 >   ![LightHouse Performance Result for Landing page](https://github.com/digicreche/dev.pi/blob/main/docs/perf.png)  
+
+## Testing Accessibility
+  - [a11y Color Contrast Accessibility Validator](https://color.a11y.com/Contrast/) - Login and registration pages only
+    > :heavy_check_mark: The only found issue is the contrast between brand logo and background, this is because the validator doesn't see the colour effect applied on text, but just the transparent colour. This is a design choice and it is intentional.
+  - Google Chrome Lighthouse
+    > :heavy_check_mark: Tested on every page and result was 100% consistent throughout application.
+
+## Code Validation
+  - ### HTML :heavy_check_mark:
+    > Html was tested and validated with [W3C Validator](https://validator.w3.org/).
+    > - Any found errors are part of third-party packages that are compiling or injecting html code.
+
+  - ### CSS :heavy_check_mark:
+    > Custom CSS was validated with [W3C CSS](https://jigsaw.w3.org/css-validator/).
+    > - No errors found!
+  - ### JavaScript :heavy_check_mark:
+    > Javascript has been validated during building process by **VSCode** extension **[ESLint](https://eslint.org/)** and by NPM Vue ESLint. **No errors or issues** :heavy_check_mark:.
+  - ### Python :heavy_check_mark:
+    > Python has been validated during building process by **VSCode** integrated extensions **[Pylint](https://www.pylint.org/)** and **[Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)**, which are in compliance with PEP8 style guide. **No errors or issues**.
