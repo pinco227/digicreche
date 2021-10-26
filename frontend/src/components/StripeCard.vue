@@ -29,7 +29,10 @@
             <label
               class="card tile price-tile align-items-stretch"
               :for="price.id"
-              @click="displayCard = true"
+              @click="
+                displayCard = true;
+                scrollToBottom();
+              "
             >
               <div class="card-body">
                 <span class="price-title">
@@ -127,6 +130,11 @@ export default {
     },
   },
   methods: {
+    scrollToBottom() {
+      setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+      }, 300);
+    },
     // STRIPE METHODS
     onSubscriptionComplete(result) {
       // Payment was successful.

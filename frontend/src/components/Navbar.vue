@@ -168,7 +168,7 @@
                 }"
                 class="dropdown-item"
               >
-                Manage Subscriptions <i class="fas fa-wallet"></i>
+                My Subscriptions <i class="fas fa-wallet"></i>
               </router-link>
             </li>
             <!-- SUBSCRIPTION (for managers) -->
@@ -181,7 +181,7 @@
                 }"
                 class="dropdown-item"
               >
-                Subscription <i class="far fa-credit-card"></i>
+                Manage Subscription <i class="far fa-credit-card"></i>
               </router-link>
             </li>
             <!-- CONTACT MANAGER (for teachers and parents) -->

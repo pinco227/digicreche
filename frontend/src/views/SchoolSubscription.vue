@@ -199,8 +199,6 @@ export default {
           this.getSubscriptionData();
           this.getPaymentData();
         }
-        // if (this.school.is_active) {
-        // }
       } else {
         if (Object.prototype.hasOwnProperty.call(data.body, "detail")) {
           this.$toast.error(data.body.detail);
@@ -316,13 +314,13 @@ export default {
     },
   },
   created() {
+    this.getPrices();
     if (!this.isManager) {
       this.$emit("setPermission", false);
     } else {
       this.getSchoolData();
       setPageTitle("School Subscription");
     }
-    this.getPrices();
   },
 };
 </script>
